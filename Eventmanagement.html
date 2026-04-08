@@ -311,10 +311,10 @@ body {
 
 .all-events-title {
   color: #114500;
-  margin: 0 0 10px 0;  
+  margin: 0 0 15px 3px;  
   padding-left: 3px;   
   font-weight: 600;
-  font-size: 22px;     
+  font-size: 20px;     
 }
 
 /******************************** STATUS ********************************/
@@ -341,94 +341,62 @@ body {
   margin-top: 10px;
 }
 
-/******************************** FILTER BAR/SEARCH BAR ********************************/
-.filter-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #f1f1f1;
-  padding: 10px 15px;
-  border-radius: 12px;
-}
-.search-box {
-  display: flex;
-  align-items: center;
-  background: #ddd;
-  padding: 8px 12px;
-  border-radius: 20px;
-  width: 300px;
-}
-.search-box input {
-  border: none;
-  background: transparent;
-  outline: none;
-  margin-left: 8px;
-  width: 100%;
-}
-
-/******************************** FILTER BUTTONS / COMPLETE, UPCOMING CANCELLED ********************************/
-.filter-buttons button {
-  padding: 8px 18px;
-  border-radius: 20px;
-  border: 1px solid #333;
-  background: white;  
-  color: #333;        
-  cursor: pointer;
-  margin-left: 8px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-.filter-buttons button:hover {
-  background: #114500; 
-  color: white;
-  border: none;
-}
-.filter-buttons .active {
-  background: #114500;  
-  color: white;
-  border: none;
-}
 /******************************** ALL EVENTS / TABLE ********************************/
 .mini-table {
-  background: white;         
-  padding: 20px 30px;         
-  border-radius: 12px;        
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);  
-  margin-top: 20px;          
-}
-.all-events-title {
-  color: #114500;
-  margin: 0 30px 15px 30px;
-  font-weight: 600;
-  font-size: 20px;
-}
-.events-table {
   background: white;
   border-radius: 12px;
   padding: 20px 30px;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-  width: calc(100% - 60px); /* align with margins */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-top: 20px;
+}
+.all-events-title {
+  color: #114500;
+  margin: 0 40px 20px 20px;
+  font-weight: 600;
+  font-size: 20px;
+  margin-left: 2px;
+}
+.events-table {
+  display: flex;
+  flex-direction: column;
+  border: 3px solid #114500;
+  border-radius: 12px;
+  padding: 5px;
   margin: 0 30px 10px 30px;
+  background: white;
+  height: 270px;
+}
+
+.table-body {
+  overflow-y: auto;     
 }
 .table-header {
+  flex: 0 0 auto; 
+  padding: 10px 30px;
   display: grid;
   grid-template-columns: 1.8fr 2.5fr 2fr 0.9fr 1.8fr 1.3fr 1.2fr 1.3fr;
   gap: 10px;
   font-weight: 600;
   font-size: 14px;
   color: #114500;
-  border-bottom: 2px solid #ccc;
-  padding-bottom: 8px;
   border-bottom: 3px solid #ccc;
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 2;
 }
 .table-row {
   display: grid;
   grid-template-columns: 1.8fr 2.5fr 2fr 0.9fr 1.8fr 1.3fr 1.2fr 1.3fr;
   gap: 10px;
-  align-items: center;
-  padding: 12px 0;
-  font-size: 14px;
+  padding-left: 30px;
+  height: 50px;
   border-bottom: 1px solid #eee;
+  align-items: center; 
+}
+.table-wrapper {
+  flex: 1 1 auto;  
+  overflow-y: auto; 
 }
 .table-row:hover {
   background: #f9f9f9;
@@ -459,6 +427,8 @@ body {
 .actions {
   display: flex;
   gap: 5px;
+  justify-content: center; 
+  align-items: center;     
 }
 
 .actions button i {
@@ -625,93 +595,167 @@ body {
       <h2>0</h2>
     </div>
   </div>
-
-<!--------------------------------------- SEARCH AND FILTER ---------------------------------------------> 
-  <div class="filter-bar">
-    <div class="search-box">
-      <span>🔍</span>
-      <input type="text" placeholder="Search Events ...">
-    </div>
-
-<div class="filter-buttons">
-  <button id="btn-all">All</button>
-  <button id="btn-upcoming">Upcoming</button>
-  <button id="btn-completed">Completed</button>
-</div>
-  </div>
-
 <!--------------------------------------- ALL EVENTS ---------------------------------------------> 
 <div class="mini-table">
 
-<h3 class="all-events-title">All Events</h3>
-  
-<div class="events-table">
-  <div class="table-header">
-    <span>Name</span>
-    <span>Email</span>
-    <span>Contact Number</span>
-    <span>Guests</span>
-    <span>Location</span>
-    <span>Revenue</span>
-    <span>Status</span>
-    <span>Actions</span>
-  </div>
+  <h3 class="all-events-title">All Events</h3>
 
-<!--------------------------------------- SAMPLE 1 ---------------------------------------------> 
-  <div class="table-row completed">
-    <span>Michael Bersamina</span>
-    <span>mb@example.com</span>
-    <span>0917-123-4567</span>
-    <span>10</span>
-    <span>Bacoor, Cavite</span>
-    <span>₱00000</span>
-      <select class="status-select completed">
-        <option value="completed">Completed</option>
-        <option value="upcoming">Upcoming</option>
-        <option value="cancelled">Cancelled</option>
-      </select>
-    <div class="actions">
-      <button class="delete"><i class="fa-solid fa-trash"></i></button>
+  <div class="events-table">
+
+    <!-- HEADER -->
+    <div class="table-header">
+      <span>Name</span>
+      <span>Email</span>
+      <span>Contact Number</span>
+      <span>Guests</span>
+      <span>Location</span>
+      <span>Revenue</span>
+      <span>Status</span>
+      <span>Actions</span>
     </div>
-  </div>
 
-<!--------------------------------------- SAMPLE 2 ---------------------------------------------> 
-  <div class="table-row upcoming">
-    <span>Antoneth Condino</span>
-    <span>ac@example.com</span>
-    <span>0911-123-4567</span>
-    <span>50</span>
-    <span>Bacoor, Cavite</span>
-    <span>₱00000</span>
-      <select class="status-select completed">
-        <option value="completed">Completed</option>
-        <option value="upcoming">Upcoming</option>
-        <option value="cancelled">Cancelled</option>
-      </select>
-    <div class="actions">
-      <button class="delete"><i class="fa-solid fa-trash"></i></button>
-    </div>
-  </div>
+    <!-- SCROLLABLE BODY -->
+    <div class="table-body">
 
-<!--------------------------------------- SAMPLE 3 ---------------------------------------------> 
-  <div class="table-row cancelled">
-    <span>Jeryll Boldadora</span>
-    <span>jb@example.com</span>
-    <span>0934-120-4567</span>
-    <span>50</span>
-    <span>Bacoor, Cavite</span>
-    <span>₱00000</span>
-      <select class="status-select completed">
-        <option value="completed">Completed</option>
-        <option value="upcoming">Upcoming</option>
-        <option value="cancelled">Cancelled</option>
-      </select>
-    <div class="actions">
-      <button class="delete"><i class="fa-solid fa-trash"></i></button>
+      <!-- ROWS (6 visible) -->
+      <div class="table-row completed">
+        <span>Michael Bersamina</span>
+        <span>mb@example.com</span>
+        <span>0917-123-4567</span>
+        <span>10</span>
+        <span>Bacoor, Cavite</span>
+        <span>₱00000</span>
+        <span>
+          <select class="status-select completed">
+            <option>Completed</option>
+            <option>Upcoming</option>
+            <option>Cancelled</option>
+          </select>
+        </span>
+        <div class="actions">
+          <button class="delete"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      </div>
+
+      <div class="table-row upcoming">
+        <span>Antoneth Condino</span>
+        <span>ac@example.com</span>
+        <span>0911-123-4567</span>
+        <span>50</span>
+        <span>Bacoor, Cavite</span>
+        <span>₱00000</span>
+        <span>
+          <select class="status-select upcoming">
+            <option>Completed</option>
+            <option selected>Upcoming</option>
+            <option>Cancelled</option>
+          </select>
+        </span>
+        <div class="actions">
+          <button class="delete"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      </div>
+
+      <div class="table-row cancelled">
+        <span>Jeryll Boldadora</span>
+        <span>jb@example.com</span>
+        <span>0934-120-4567</span>
+        <span>50</span>
+        <span>Bacoor, Cavite</span>
+        <span>₱00000</span>
+        <span>
+          <select class="status-select cancelled">
+            <option>Completed</option>
+            <option>Upcoming</option>
+            <option selected>Cancelled</option>
+          </select>
+        </span>
+        <div class="actions">
+          <button class="delete"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      </div>
+
+      <!-- duplicate to test scroll -->
+      <div class="table-row completed">
+        <span>Test User 1</span>
+        <span>test1@email.com</span>
+        <span>0912-000-0001</span>
+        <span>20</span>
+        <span>Cavite</span>
+        <span>₱1000</span>
+        <span>
+          <select class="status-select completed">
+            <option selected>Completed</option>
+            <option>Upcoming</option>
+            <option>Cancelled</option>
+          </select>
+        </span>
+        <div class="actions">
+          <button class="delete"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      </div>
+
+      <div class="table-row upcoming">
+        <span>Test User 2</span>
+        <span>test2@email.com</span>
+        <span>0912-000-0002</span>
+        <span>15</span>
+        <span>Cavite</span>
+        <span>₱2000</span>
+        <span>
+          <select class="status-select upcoming">
+            <option>Completed</option>
+            <option selected>Upcoming</option>
+            <option>Cancelled</option>
+          </select>
+        </span>
+        <div class="actions">
+          <button class="delete"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      </div>
+
+      <div class="table-row cancelled">
+        <span>Test User 3</span>
+        <span>test3@email.com</span>
+        <span>0912-000-0003</span>
+        <span>30</span>
+        <span>Cavite</span>
+        <span>₱3000</span>
+        <span>
+          <select class="status-select cancelled">
+            <option>Completed</option>
+            <option>Upcoming</option>
+            <option selected>Cancelled</option>
+          </select>
+        </span>
+        <div class="actions">
+          <button class="delete"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      </div>
+
+      <!-- extra row (scroll trigger) -->
+      <div class="table-row completed">
+        <span>Extra User</span>
+        <span>extra@email.com</span>
+        <span>0912-999-9999</span>
+        <span>40</span>
+        <span>Cavite</span>
+        <span>₱4000</span>
+        <span>
+          <select class="status-select completed">
+            <option selected>Completed</option>
+            <option>Upcoming</option>
+            <option>Cancelled</option>
+          </select>
+        </span>
+        <div class="actions">
+          <button class="delete"><i class="fa-solid fa-trash"></i></button>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
-
 <!--------------------------------------- LEGEND ---------------------------------------------> 
   <div class="status-legend">
     <div class="legend-item">
@@ -731,6 +775,8 @@ body {
 </div>
 </div>
 
+</body>
+</html>
 <script>
 /******************************** Sidebar : BUTTON PAGE ********************************/
 function goToBooking() {
@@ -852,6 +898,3 @@ menuBtn.onclick = function() {
   main.classList.toggle("full");
 };
 </script>
-
-</body>
-</html>
