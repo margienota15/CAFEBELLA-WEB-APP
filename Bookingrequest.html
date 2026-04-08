@@ -84,6 +84,13 @@ body {
   line-height: 1;
   transition: all 0.3s ease;
 }
+.menu button.active {
+  background: #2e7d32; /* your green */
+  color: white;
+}
+.menu button.active img.icon {
+  filter: brightness(0) invert(1); /* make icon visible on green */
+}
 .menu button:hover {
   background: #2e7d32; 
   color: white;
@@ -454,16 +461,16 @@ body {
 
   <div class="sidebar-overlay"></div>
 
-  <div class="menu">
-    <button><img src="IMAGES/dashboardpic.png" class="icon">Dashboard</button>
-    <button><img src="IMAGES/POSicon.png" class="icon">POS</button>
-    <button onclick="goToBooking()"><img src="IMAGES/Bookingicon.png" class="icon">Receive Booking Request</button>
-    <button><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
-    <button><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
-    <button><img src="IMAGES/feedbackicon.png" class="icon">Customer Feedback</button>
-    <button><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
-    <button><img src="IMAGES/settingsicon.png" class="icon">Settings</button>
-  </div>
+<div class="menu">
+  <button data-page="Dashboard.html"><img src="IMAGES/dashboardpic.png" class="icon">Dashboard</button>
+  <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">POS</button>
+  <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Receive Booking Request</button>
+  <button data-page="Eventmanagement.html"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
+  <button data-page="Inventory.html"><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
+  <button data-page="Feedback.html"><img src="IMAGES/feedbackicon.png" class="icon">Customer Feedback</button>
+  <button data-page="Calendar.html"><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
+  <button data-page="Settings.html"><img src="IMAGES/settingsicon.png" class="icon">Settings</button>
+</div>
 </div>
 
 <!--------------------------------------- MAIN ---------------------------------------------> 
@@ -671,6 +678,50 @@ body {
 function goToBooking() {
   window.location.href = "Bookingrequest.html";
 }
+function goToEventManagement() {
+  window.location.href = "Eventmanagement.html";
+}
+
+  // ------------------ SIDEBAR ACTIVE BUTTON ------------------
+  const sidebarButtons = document.querySelectorAll('.sidebar .menu button');
+
+  // Get the current page name from URL
+  function getCurrentPage() {
+    return window.location.pathname.split("/").pop(); // e.g., Bookingrequest.html
+  }
+
+  // Highlight the sidebar button that matches the current page
+  function highlightSidebar() {
+    const currentPage = getCurrentPage().toLowerCase();
+    sidebarButtons.forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.dataset.page.toLowerCase() === currentPage) {
+        btn.classList.add('active');
+      }
+    });
+  }
+
+  // Call it immediately
+  highlightSidebar();
+
+  // Navigate when button clicked
+  sidebarButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetPage = btn.dataset.page;
+
+      // Highlight immediately
+      sidebarButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Navigate to target page
+      window.location.href = targetPage;
+    });
+  });
+
+  // Optional: update highlight on browser back/forward
+  window.addEventListener('popstate', () => {
+    highlightSidebar();
+  });
 /******************************** ADMIN DROPDOWN ********************************/
 function toggleDropdown() {
   const dropdown = document.getElementById("adminDropdown");
@@ -700,6 +751,8 @@ menuBtn.onclick = function() {
   sidebar.classList.toggle("hide");
   main.classList.toggle("full");
 };
+
+
 </script>
 
 </body>
