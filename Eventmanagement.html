@@ -85,6 +85,13 @@ body {
   line-height: 1;
   transition: all 0.3s ease;
 }
+.menu button.active {
+  background: #2e7d32; /* your green */
+  color: white;
+}
+.menu button.active img.icon {
+  filter: brightness(0) invert(1); /* make icon visible on green */
+}
 .menu button:hover {
   background: #2e7d32; 
   color: white;
@@ -585,16 +592,16 @@ body {
 
   <div class="sidebar-overlay"></div>
 
-  <div class="menu">
-    <button><img src="IMAGES/dashboardpic.png" class="icon">Dashboard</button>
-    <button><img src="IMAGES/POSicon.png" class="icon">POS</button>
-    <button onclick="goToBooking()"><img src="IMAGES/Bookingicon.png" class="icon">Receive Booking Request</button>
-    <button onclick="goToEventManagement()"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
-    <button><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
-    <button><img src="IMAGES/feedbackicon.png" class="icon">Customer Feedback</button>
-    <button><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
-    <button><img src="IMAGES/settingsicon.png" class="icon">Settings</button>
-  </div>
+<div class="menu">
+  <button data-page="Dashboard.html"><img src="IMAGES/dashboardpic.png" class="icon">Dashboard</button>
+  <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">POS</button>
+  <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Receive Booking Request</button>
+  <button data-page="Eventmanagement.html"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
+  <button data-page="Inventory.html"><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
+  <button data-page="Feedback.html"><img src="IMAGES/feedbackicon.png" class="icon">Customer Feedback</button>
+  <button data-page="Calendar.html"><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
+  <button data-page="Settings.html"><img src="IMAGES/settingsicon.png" class="icon">Settings</button>
+</div>
 </div>
 
 <!--------------------------------------- MAIN ---------------------------------------------> 
@@ -700,7 +707,7 @@ body {
     <span>Bacoor, Cavite</span>
     <span>₱00000</span>
       <select class="status-select completed">
-        <option value="completed" selected>Completed</option>
+        <option value="completed">Completed</option>
         <option value="upcoming">Upcoming</option>
         <option value="cancelled">Cancelled</option>
       </select>
@@ -719,7 +726,7 @@ body {
     <span>₱00000</span>
       <select class="status-select completed">
         <option value="completed">Completed</option>
-        <option value="upcoming" selected>Upcoming</option>
+        <option value="upcoming">Upcoming</option>
         <option value="cancelled">Cancelled</option>
       </select>
     <div class="actions">
@@ -738,7 +745,7 @@ body {
       <select class="status-select completed">
         <option value="completed">Completed</option>
         <option value="upcoming">Upcoming</option>
-        <option value="cancelled" selected>Cancelled</option>
+        <option value="cancelled">Cancelled</option>
       </select>
     <div class="actions">
       <button class="delete"><i class="fa-solid fa-trash"></i></button>
@@ -766,6 +773,8 @@ body {
 </div>
 
 <script>
+
+/******************************** TABLE ROW STATUS ********************************/
 document.querySelectorAll(".edit").forEach(btn => {
   btn.addEventListener("click", () => {
     const row = btn.closest(".table-row");
@@ -805,28 +814,63 @@ function goToEventManagement() {
   window.location.href = "Eventmanagement.html";
 }
 
-/******************************** FILTER BUTTON / All Upcoming Completed   ********************************/
-const buttons = document.querySelectorAll('.filter-buttons button');
+  // ------------------ SIDEBAR ACTIVE BUTTON ------------------//
+  const sidebarButtons = document.querySelectorAll('.sidebar .menu button');
 
-buttons.forEach(btn => {
+  // Get the current page name from URL
+  function getCurrentPage() {
+    return window.location.pathname.split("/").pop(); // e.g., Bookingrequest.html
+  }
+
+  // Highlight the sidebar button that matches the current page
+  function highlightSidebar() {
+    const currentPage = getCurrentPage().toLowerCase();
+    sidebarButtons.forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.dataset.page.toLowerCase() === currentPage) {
+        btn.classList.add('active');
+      }
+    });
+  }
+
+  // Call it immediately
+  highlightSidebar();
+
+  // Navigate when button clicked
+  sidebarButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetPage = btn.dataset.page;
+
+      // Highlight immediately
+      sidebarButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Navigate to target page
+      window.location.href = targetPage;
+    });
+  });
+
+  // Optional: update highlight on browser back/forward
+  window.addEventListener('popstate', () => {
+    highlightSidebar();
+  });
+// ------------------ FILTER BUTTONS ------------------
+const filterButtons = document.querySelectorAll('.filter-buttons button');
+filterButtons.forEach(btn => {
   btn.addEventListener('click', () => {
-    buttons.forEach(b => b.classList.remove('active')); // tanggalin sa lahat
-    btn.classList.add('active'); // lagyan ng green yung clicked
+    filterButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
   });
 });
-/******************************** ADMIN DROPDOWN ********************************/
+
+// ------------------ ADMIN DROPDOWN ------------------
 function toggleDropdown() {
   const dropdown = document.getElementById("adminDropdown");
   dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
 }
 
-function login() {
-  alert("Redirect to Login Page");
-}
-
-function logout() {
-  alert("Logged out!");
-}
+function login() { alert("Redirect to Login Page"); }
+function logout() { alert("Logged out!"); }
 
 window.onclick = function(e) {
   if (!e.target.closest('.admin')) {
@@ -834,7 +878,7 @@ window.onclick = function(e) {
   }
 }
 
-/******************************** SIDEBAR TOGGLE ********************************/
+// ------------------ SIDEBAR TOGGLE ------------------
 const menuBtn = document.getElementById("menu-btn");
 const sidebar = document.querySelector(".sidebar");
 const main = document.querySelector(".main");
