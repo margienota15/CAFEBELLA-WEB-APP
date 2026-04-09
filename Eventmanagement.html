@@ -291,17 +291,6 @@ body {
   z-index: 10;
 }
 
-/******************************** GREEN BACKGROUND ********************************/
-.title-green {
-  position: absolute;
-  top: 100px;
-  left: 0;
-  width: 100%;
-  height: calc(100% - 100px);
-  background: #1a9276;
-  z-index: 0;
-}
-
 /******************************** BOOKING CONTAINER ********************************/
 .booking-container {
   position: relative; 
@@ -568,9 +557,6 @@ body {
     <p>Manage all approve and completed events</p>
   </div>
 
-<!--------------------------------------- GREEN BACKGROUND ---------------------------------------------> 
-  <div class="title-green"></div>
-
 <div class="booking-container">
 
 <!--------------------------------------- TOP STATUS ---------------------------------------------> 
@@ -602,7 +588,6 @@ body {
 
   <div class="events-table">
 
-    <!-- HEADER -->
     <div class="table-header">
       <span>Name</span>
       <span>Email</span>
@@ -614,13 +599,12 @@ body {
       <span>Actions</span>
     </div>
 
-    <!-- SCROLLABLE BODY -->
     <div class="table-body">
 
-      <!-- ROWS (6 visible) -->
+<!--------------------------------------- SAMPLE 1 ---------------------------------------------> 
       <div class="table-row completed">
-        <span>Michael Bersamina</span>
-        <span>mb@example.com</span>
+        <span>Margie Nota</span>
+        <span>mn@example.com</span>
         <span>0917-123-4567</span>
         <span>10</span>
         <span>Bacoor, Cavite</span>
@@ -628,122 +612,6 @@ body {
         <span>
           <select class="status-select completed">
             <option>Completed</option>
-            <option>Upcoming</option>
-            <option>Cancelled</option>
-          </select>
-        </span>
-        <div class="actions">
-          <button class="delete"><i class="fa-solid fa-trash"></i></button>
-        </div>
-      </div>
-
-      <div class="table-row upcoming">
-        <span>Antoneth Condino</span>
-        <span>ac@example.com</span>
-        <span>0911-123-4567</span>
-        <span>50</span>
-        <span>Bacoor, Cavite</span>
-        <span>₱00000</span>
-        <span>
-          <select class="status-select upcoming">
-            <option>Completed</option>
-            <option selected>Upcoming</option>
-            <option>Cancelled</option>
-          </select>
-        </span>
-        <div class="actions">
-          <button class="delete"><i class="fa-solid fa-trash"></i></button>
-        </div>
-      </div>
-
-      <div class="table-row cancelled">
-        <span>Jeryll Boldadora</span>
-        <span>jb@example.com</span>
-        <span>0934-120-4567</span>
-        <span>50</span>
-        <span>Bacoor, Cavite</span>
-        <span>₱00000</span>
-        <span>
-          <select class="status-select cancelled">
-            <option>Completed</option>
-            <option>Upcoming</option>
-            <option selected>Cancelled</option>
-          </select>
-        </span>
-        <div class="actions">
-          <button class="delete"><i class="fa-solid fa-trash"></i></button>
-        </div>
-      </div>
-
-      <!-- duplicate to test scroll -->
-      <div class="table-row completed">
-        <span>Test User 1</span>
-        <span>test1@email.com</span>
-        <span>0912-000-0001</span>
-        <span>20</span>
-        <span>Cavite</span>
-        <span>₱1000</span>
-        <span>
-          <select class="status-select completed">
-            <option selected>Completed</option>
-            <option>Upcoming</option>
-            <option>Cancelled</option>
-          </select>
-        </span>
-        <div class="actions">
-          <button class="delete"><i class="fa-solid fa-trash"></i></button>
-        </div>
-      </div>
-
-      <div class="table-row upcoming">
-        <span>Test User 2</span>
-        <span>test2@email.com</span>
-        <span>0912-000-0002</span>
-        <span>15</span>
-        <span>Cavite</span>
-        <span>₱2000</span>
-        <span>
-          <select class="status-select upcoming">
-            <option>Completed</option>
-            <option selected>Upcoming</option>
-            <option>Cancelled</option>
-          </select>
-        </span>
-        <div class="actions">
-          <button class="delete"><i class="fa-solid fa-trash"></i></button>
-        </div>
-      </div>
-
-      <div class="table-row cancelled">
-        <span>Test User 3</span>
-        <span>test3@email.com</span>
-        <span>0912-000-0003</span>
-        <span>30</span>
-        <span>Cavite</span>
-        <span>₱3000</span>
-        <span>
-          <select class="status-select cancelled">
-            <option>Completed</option>
-            <option>Upcoming</option>
-            <option selected>Cancelled</option>
-          </select>
-        </span>
-        <div class="actions">
-          <button class="delete"><i class="fa-solid fa-trash"></i></button>
-        </div>
-      </div>
-
-      <!-- extra row (scroll trigger) -->
-      <div class="table-row completed">
-        <span>Extra User</span>
-        <span>extra@email.com</span>
-        <span>0912-999-9999</span>
-        <span>40</span>
-        <span>Cavite</span>
-        <span>₱4000</span>
-        <span>
-          <select class="status-select completed">
-            <option selected>Completed</option>
             <option>Upcoming</option>
             <option>Cancelled</option>
           </select>
