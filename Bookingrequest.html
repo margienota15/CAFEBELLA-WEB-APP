@@ -297,7 +297,7 @@
   overflow-y: hidden;
   padding: 20px;
   box-sizing: border-box;
-  background: #1a9276;
+
 }
 .booking-container::-webkit-scrollbar {
   height: 10px;
@@ -486,6 +486,25 @@
   font-size: 0.9em;
   color: orange;
 }
+
+.no-booking {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px; /* adjust as needed */
+  color: #555;
+  font-size: 16px;
+  font-weight: 600;
+  gap: 10px;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  background: #f9f9f9;
+  margin-top: 20px;
+}
+.no-booking img {
+  filter: grayscale(50%);
+}
 </style>
 </head>
 
@@ -549,326 +568,379 @@
   </div>
 
 <div class="slider-wrapper">
-<div class="booking-wrapper">
-  <!-- CARDS CONTAINER -->
-  <div class="booking-container">
+  <div class="booking-wrapper">
+    <!-- CARDS CONTAINER -->
+    <div class="booking-container">
 
-    <!-- CARD 1 -->
-    <div class="card">
-      <div class="card-header">
-        <div class="name">Michael Bersamina</div>
-        <div class="status">Pending</div>
-      </div>
-
-      <div class="contact">
-        <span>mb@example.com</span>
-        <span>09123456789</span>
-      </div>
-
-      <div class="info-group">
-        <div class="info-row">
-          <img src="IMAGES/calendaricon.png">
-          <div class="text">
-            <span class="label">Event Package</span>
-            <span class="value">Tattoo Event</span>
+      <!-- CARD 1 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="name">Michael Bersamina</div>
+          <div class="status">Pending</div>
+        </div>
+        <div class="contact">
+          <span>mb@example.com</span>
+          <span>09123456789</span>
+        </div>
+        <div class="info-group">
+          <div class="info-row">
+            <img src="IMAGES/calendaricon.png">
+            <div class="text">
+              <span class="label">Event Package</span>
+              <span class="value">Tattoo Event</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/adminicon.png">
+            <div class="text">
+              <span class="label">Guests</span>
+              <span class="value">10 Guests</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/paymenttypeicon.png">
+            <div class="text">
+              <span class="label">Payment Type</span>
+              <span class="value">Fullpayment</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/paymentoptionicon.png">
+            <div class="text">
+              <span class="label">Payment Option</span>
+              <span class="value">GCash</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/clockicon.png">
+            <div class="text">
+              <span class="label">Date & Time</span>
+              <span class="value">12-15-2026 | 6:00pm</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/locationicon.png">
+            <div class="text">
+              <span class="label">Location</span>
+              <span class="value">Bacoor, Cavite</span>
+            </div>
           </div>
         </div>
-
-        <div class="info-row">
-          <img src="IMAGES/adminicon.png">
-          <div class="text">
-            <span class="label">Guests</span>
-            <span class="value">10 Guests</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/clockicon.png">
-          <div class="text">
-            <span class="label">Date & Time</span>
-            <span class="value">12-15-2026 | 6:00pm</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/locationicon.png">
-          <div class="text">
-            <span class="label">Location</span>
-            <span class="value">Bacoor, Cavite</span>
-          </div>
+        <div class="buttons">
+          <button class="btn accept">Accept</button>
+          <button class="btn decline">Decline</button>
         </div>
       </div>
 
-      <div class="buttons">
-        <button class="btn accept">Accept</button>
-        <button class="btn decline">Decline</button>
+      <!-- CARD 2 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="name">Jeryll Boldadora</div>
+          <div class="status">Pending</div>
+        </div>
+        <div class="contact">
+          <span>jb@example.com</span>
+          <span>09123456789</span>
+        </div>
+        <div class="info-group">
+          <div class="info-row">
+            <img src="IMAGES/calendaricon.png">
+            <div class="text">
+              <span class="label">Event Package</span>
+              <span class="value">Coffee Booth</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/adminicon.png">
+            <div class="text">
+              <span class="label">Guests</span>
+              <span class="value">30 Guests</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/paymenttypeicon.png">
+            <div class="text">
+              <span class="label">Payment Type</span>
+              <span class="value">Fullpayment</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/paymentoptionicon.png">
+            <div class="text">
+              <span class="label">Payment Option</span>
+              <span class="value">GCash</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/clockicon.png">
+            <div class="text">
+              <span class="label">Date & Time</span>
+              <span class="value">11-20-2026 | 2:00pm</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/locationicon.png">
+            <div class="text">
+              <span class="label">Location</span>
+              <span class="value">Imus, Cavite</span>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="btn accept">Accept</button>
+          <button class="btn decline">Decline</button>
+        </div>
       </div>
+
+      <!-- CARD 3 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="name">Antoneth Condino</div>
+          <div class="status">Pending</div>
+        </div>
+        <div class="contact">
+          <span>a@example.com</span>
+          <span>09123456789</span>
+        </div>
+        <div class="info-group">
+          <div class="info-row">
+            <img src="IMAGES/calendaricon.png">
+            <div class="text">
+              <span class="label">Event Package</span>
+              <span class="value">Matcha Booth</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/adminicon.png">
+            <div class="text">
+              <span class="label">Guests</span>
+              <span class="value">50 Guests</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/paymenttypeicon.png">
+            <div class="text">
+              <span class="label">Payment Type</span>
+              <span class="value">Fullpayment</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/paymentoptionicon.png">
+            <div class="text">
+              <span class="label">Payment Option</span>
+              <span class="value">GCash</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/clockicon.png">
+            <div class="text">
+              <span class="label">Date & Time</span>
+              <span class="value">11-20-2026 | 2:00pm</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/locationicon.png">
+            <div class="text">
+              <span class="label">Location</span>
+              <span class="value">Imus, Cavite</span>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="btn accept">Accept</button>
+          <button class="btn decline">Decline</button>
+        </div>
+      </div>
+
+      <!-- CARD 4 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="name">John Benedict Adao</div>
+          <div class="status">Pending</div>
+        </div>
+        <div class="contact">
+          <span>jb@example.com</span>
+          <span>09123456789</span>
+        </div>
+        <div class="info-group">
+          <div class="info-row">
+            <img src="IMAGES/calendaricon.png">
+            <div class="text">
+              <span class="label">Event Package</span>
+              <span class="value">Matcha Booth</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/adminicon.png">
+            <div class="text">
+              <span class="label">Guests</span>
+              <span class="value">50 Guests</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/paymenttypeicon.png">
+            <div class="text">
+              <span class="label">Payment Type</span>
+              <span class="value">Fullpayment</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/paymentoptionicon.png">
+            <div class="text">
+              <span class="label">Payment Option</span>
+              <span class="value">GCash</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/clockicon.png">
+            <div class="text">
+              <span class="label">Date & Time</span>
+              <span class="value">11-20-2026 | 2:00pm</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/locationicon.png">
+            <div class="text">
+              <span class="label">Location</span>
+              <span class="value">Bacoor, Cavite</span>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="btn accept">Accept</button>
+          <button class="btn decline">Decline</button>
+        </div>
+      </div>
+
+      <!-- CARD 5 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="name">Gemuel Diaz</div>
+          <div class="status">Pending</div>
+        </div>
+        <div class="contact">
+          <span>gd@example.com</span>
+          <span>09123456789</span>
+        </div>
+        <div class="info-group">
+          <div class="info-row">
+            <img src="IMAGES/calendaricon.png">
+            <div class="text">
+              <span class="label">Event Package</span>
+              <span class="value">Matcha Booth</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/adminicon.png">
+            <div class="text">
+              <span class="label">Guests</span>
+              <span class="value">50 Guests</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/paymenttypeicon.png">
+            <div class="text">
+              <span class="label">Payment Type</span>
+              <span class="value">Fullpayment</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/paymentoptionicon.png">
+            <div class="text">
+              <span class="label">Payment Option</span>
+              <span class="value">GCash</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/clockicon.png">
+            <div class="text">
+              <span class="label">Date & Time</span>
+              <span class="value">11-20-2026 | 2:00pm</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/locationicon.png">
+            <div class="text">
+              <span class="label">Location</span>
+              <span class="value">Las Pinas</span>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="btn accept">Accept</button>
+          <button class="btn decline">Decline</button>
+        </div>
+      </div>
+
+      <!-- CARD 6 -->
+      <div class="card">
+        <div class="card-header">
+          <div class="name">Anton Lopez</div>
+          <div class="status">Pending</div>
+        </div>
+        <div class="contact">
+          <span>al@example.com</span>
+          <span>09123456789</span>
+        </div>
+        <div class="info-group">
+          <div class="info-row">
+            <img src="IMAGES/calendaricon.png">
+            <div class="text">
+              <span class="label">Event Package</span>
+              <span class="value">Tattoo Event</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/adminicon.png">
+            <div class="text">
+              <span class="label">Guests</span>
+              <span class="value">25 Guests</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/paymenttypeicon.png">
+            <div class="text">
+              <span class="label">Payment Type</span>
+              <span class="value">Fullpayment</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/paymentoptionicon.png">
+            <div class="text">
+              <span class="label">Payment Option</span>
+              <span class="value">GCash</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/clockicon.png">
+            <div class="text">
+              <span class="label">Date & Time</span>
+              <span class="value">12-25-2026 | 4:00pm</span>
+            </div>
+          </div>
+          <div class="info-row">
+            <img src="IMAGES/locationicon.png">
+            <div class="text">
+              <span class="label">Location</span>
+              <span class="value">Muntinlupa</span>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          <button class="btn accept">Accept</button>
+          <button class="btn decline">Decline</button>
+        </div>
+      </div>
+
     </div>
 
-    <!-- CARD 1 -->
-    <div class="card">
-      <div class="card-header">
-        <div class="name">Michael Bersamina</div>
-        <div class="status">Pending</div>
-      </div>
-
-      <div class="contact">
-        <span>mb@example.com</span>
-        <span>09123456789</span>
-      </div>
-
-      <div class="info-group">
-        <div class="info-row">
-          <img src="IMAGES/calendaricon.png">
-          <div class="text">
-            <span class="label">Event Package</span>
-            <span class="value">Tattoo Event</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/adminicon.png">
-          <div class="text">
-            <span class="label">Guests</span>
-            <span class="value">10 Guests</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/clockicon.png">
-          <div class="text">
-            <span class="label">Date & Time</span>
-            <span class="value">12-15-2026 | 6:00pm</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/locationicon.png">
-          <div class="text">
-            <span class="label">Location</span>
-            <span class="value">Bacoor, Cavite</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="buttons">
-        <button class="btn accept">Accept</button>
-        <button class="btn decline">Decline</button>
-      </div>
+    <!-- NO BOOKING MESSAGE -->
+    <div class="no-booking" style="display: none; text-align: center; margin-top: 50px;">
+      <img src="IMAGES/nobookingicon.gif" alt="No booking" style="width:80px; margin-bottom: 15px;">
+      <p>No booking requests yet</p>
     </div>
 
-    <!-- CARD 2 -->
-    <div class="card">
-      <div class="card-header">
-        <div class="name">Jeryll Boldadora</div>
-        <div class="status">Pending</div>
-      </div>
-
-      <div class="contact">
-        <span>jb@example.com</span>
-        <span>09123456789</span>
-      </div>
-
-      <div class="info-group">
-        <div class="info-row">
-          <img src="IMAGES/calendaricon.png">
-          <div class="text">
-            <span class="label">Event Package</span>
-            <span class="value">Coffee Booth</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/adminicon.png">
-          <div class="text">
-            <span class="label">Guests</span>
-            <span class="value">30 Guests</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/clockicon.png">
-          <div class="text">
-            <span class="label">Date & Time</span>
-            <span class="value">11-20-2026 | 2:00pm</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/locationicon.png">
-          <div class="text">
-            <span class="label">Location</span>
-            <span class="value">Imus, Cavite</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="buttons">
-        <button class="btn accept">Accept</button>
-        <button class="btn decline">Decline</button>
-      </div>
-    </div>
-
-    <!-- CARD 3 -->
-    <div class="card">
-      <div class="card-header">
-        <div class="name">Antoneth Condino</div>
-        <div class="status">Pending</div>
-      </div>
-
-      <div class="contact">
-        <span>a@example.com</span>
-        <span>09123456789</span>
-      </div>
-
-      <div class="info-group">
-        <div class="info-row">
-          <img src="IMAGES/calendaricon.png">
-          <div class="text">
-            <span class="label">Event Package</span>
-            <span class="value">Matcha Booth</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/adminicon.png">
-          <div class="text">
-            <span class="label">Guests</span>
-            <span class="value">50 Guests</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/clockicon.png">
-          <div class="text">
-            <span class="label">Date & Time</span>
-            <span class="value">11-20-2026 | 2:00pm</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/locationicon.png">
-          <div class="text">
-            <span class="label">Location</span>
-            <span class="value">Imus, Cavite</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="buttons">
-        <button class="btn accept">Accept</button>
-        <button class="btn decline">Decline</button>
-      </div>
-    </div>
-
-    <!-- CARD 4 -->
-    <div class="card">
-      <div class="card-header">
-        <div class="name">John Benedict Adao</div>
-        <div class="status">Pending</div>
-      </div>
-
-      <div class="contact">
-        <span>jb@example.com</span>
-        <span>09123456789</span>
-      </div>
-
-      <div class="info-group">
-        <div class="info-row">
-          <img src="IMAGES/calendaricon.png">
-          <div class="text">
-            <span class="label">Event Package</span>
-            <span class="value">Matcha Booth</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/adminicon.png">
-          <div class="text">
-            <span class="label">Guests</span>
-            <span class="value">50 Guests</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/clockicon.png">
-          <div class="text">
-            <span class="label">Date & Time</span>
-            <span class="value">11-20-2026 | 2:00pm</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/locationicon.png">
-          <div class="text">
-            <span class="label">Location</span>
-            <span class="value">Bacoor, Cavite</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="buttons">
-        <button class="btn accept">Accept</button>
-        <button class="btn decline">Decline</button>
-      </div>
-    </div>
-
-        <!-- CARD 3 -->
-    <div class="card">
-      <div class="card-header">
-        <div class="name">Gemuel Diaz</div>
-        <div class="status">Pending</div>
-      </div>
-
-      <div class="contact">
-        <span>gd@example.com</span>
-        <span>09123456789</span>
-      </div>
-
-      <div class="info-group">
-        <div class="info-row">
-          <img src="IMAGES/calendaricon.png">
-          <div class="text">
-            <span class="label">Event Package</span>
-            <span class="value">Matcha Booth</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/adminicon.png">
-          <div class="text">
-            <span class="label">Guests</span>
-            <span class="value">50 Guests</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/clockicon.png">
-          <div class="text">
-            <span class="label">Date & Time</span>
-            <span class="value">11-20-2026 | 2:00pm</span>
-          </div>
-        </div>
-
-        <div class="info-row">
-          <img src="IMAGES/locationicon.png">
-          <div class="text">
-            <span class="label">Location</span>
-            <span class="value">Las pinas</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="buttons">
-        <button class="btn accept">Accept</button>
-        <button class="btn decline">Decline</button>
-      </div>
-    </div>
   </div>
-</div>
-
-
-</div>
 </div>
 </body>
 </html>
@@ -953,6 +1025,19 @@ menuBtn.onclick = function() {
 };
 
 /******************************** ACCEPT / DECLINE BUTTONS ********************************/
+const bookingContainer = document.querySelector('.booking-container');
+const noBooking = document.querySelector('.no-booking');
+
+function checkEmptyState() {
+  // If no cards remain
+  if (!bookingContainer || bookingContainer.children.length === 0) {
+    noBooking.style.display = 'flex'; // or 'block'
+  } else {
+    noBooking.style.display = 'none';
+  }
+}
+
+// Loop through each card
 document.querySelectorAll('.card').forEach(card => {
   const acceptBtn = card.querySelector('.accept');
   const declineBtn = card.querySelector('.decline');
@@ -961,18 +1046,28 @@ document.querySelectorAll('.card').forEach(card => {
   // Accept action
   acceptBtn.addEventListener('click', () => {
     statusEl.textContent = 'Accepted';
-    statusEl.style.color = '#2e7d32'; // green color
+    statusEl.style.color = '#2e7d32'; // green
     statusEl.style.fontWeight = 'bold';
     statusEl.style.background = '#d0f0d0'; // light green background
     statusEl.style.padding = '3px 8px';
     statusEl.style.borderRadius = '12px';
-    acceptBtn.style.display = 'none'; // hide Accept button
-    declineBtn.style.display = 'none'; // hide Decline button
+    acceptBtn.style.display = 'none';
+    declineBtn.style.display = 'none';
+
+    // Remove card after a short delay
+    setTimeout(() => {
+      card.remove();
+      checkEmptyState();
+    }, 500);
   });
 
   // Decline action
   declineBtn.addEventListener('click', () => {
-    card.remove(); // remove the card from the DOM
+    card.remove();
+    checkEmptyState();
   });
 });
+
+// Initial check in case there are no cards to start
+checkEmptyState();
 </script>
