@@ -83,11 +83,11 @@ body {
   transition: all 0.3s ease;
 }
 .menu button.active {
-  background: #2e7d32; /* your green */
+  background: #2e7d32; 
   color: white;
 }
 .menu button.active img.icon {
-  filter: brightness(0) invert(1); /* make icon visible on green */
+  filter: brightness(0) invert(1); 
 }
 .menu button:hover {
   background: #2e7d32; 
@@ -647,6 +647,9 @@ body {
 </html>
 <script>
 /******************************** Sidebar : BUTTON PAGE ********************************/
+function goToDashboard() {
+  window.location.href = "Dashboard.html";
+}
 function goToBooking() {
   window.location.href = "Bookingrequest.html";
 }
@@ -730,8 +733,6 @@ document.querySelectorAll(".delete").forEach(btn => {
   });
 });
 
-
-
 /******************************** FILTER BUTTONS ********************************/
 const filterButtons = document.querySelectorAll('.filter-buttons button');
 filterButtons.forEach(btn => {
@@ -746,9 +747,9 @@ function toggleDropdown() {
   const dropdown = document.getElementById("adminDropdown");
   dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
 }
-
-function login() { alert("Redirect to Login Page"); }
-function logout() { alert("Logged out!"); }
+function logout() {
+  window.location.href = "login.html";
+}
 
 window.onclick = function(e) {
   if (!e.target.closest('.admin')) {
