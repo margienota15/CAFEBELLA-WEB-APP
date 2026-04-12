@@ -543,15 +543,7 @@ button.action {
   </div>
 
 <!--------------------------------------- CATEGORIES ---------------------------------------------> 
-    <div class="categories">
-      <button onclick="setActive(this, 'rice')" class="active">Fried Rice</button>
-      <button onclick="setActive(this, 'sizzling')">Sizzling</button>
-      <button onclick="setActive(this, 'noodles')">Noodles</button>
-      <button onclick="setActive(this, 'snacks')">Snacks</button>
-      <button onclick="setActive(this, 'coffee')">Coffee</button>
-      <button onclick="setActive(this, 'noncoffee')">Non-Coffee</button>
-      <button onclick="setActive(this, 'matcha')">Matcha</button>
-    </div>
+    <div class="categories" id="categories"></div>
 
     <div style="margin: 10px 0;">
       <button id="editMenuBtn" class="action">✏️ Edit Menu</button>
@@ -810,30 +802,117 @@ const menu = {
 let cart = [];
 let editMode = false;
 let currentCategory = "rice";
-
-/******************************** CATEGORY SELECT ********************************/
-function setActive(btn, cat){
-  document.querySelectorAll(".categories button").forEach(b => b.classList.remove("active"));
-  btn.classList.add("active");
-
-  currentCategory = cat;
-  renderCurrentCategory();
-}
 /******************************** EDIT MODE ********************************/
 document.getElementById("editMenuBtn").onclick = function(){
   editMode = !editMode;
 
   this.innerText = editMode ? "💾 Save Changes" : "✏️ Edit Menu";
-
-  // 🔥 THIS IS THE MISSING PART
   this.classList.toggle("save-mode", editMode);
 
+  renderCategories();        // 🔥 IMPORTANT
   renderCurrentCategory();
 };
+/******************************** CATEGORY RENDER ********************************/
+function renderCategories(){
+  const container = document.getElementById("categories");
+  container.innerHTML = "";
+
+  Object.keys(menu).forEach(cat => {
+    const btn = document.createElement("button");
+
+    btn.innerText = formatCategoryName(cat);
+    btn.classList.toggle("active", cat === currentCategory);
+
+    btn.onclick = () => {
+      currentCategory = cat;
+      renderCategories();
+      renderCurrentCategory();
+    };
+
+    // 🔥 DELETE BUTTON (EDIT MODE ONLY)
+    if(editMode){
+      const del = document.createElement("span");
+      del.innerText = " ❌";
+      del.style.color = "red";
+      del.style.marginLeft = "5px";
+      del.style.cursor = "pointer";
+
+      del.onclick = (e) => {
+        e.stopPropagation(); // para di mag select
+        deleteCategory(cat);
+      };
+
+      btn.appendChild(del);
+    }
+
+    container.appendChild(btn);
+  });
+
+  // ➕ ADD CATEGORY BUTTON
+  if(editMode){
+    const addBtn = document.createElement("button");
+    addBtn.innerText = "+ Add Category";
+    addBtn.className = "action";
+    addBtn.onclick = addCategory;
+
+    container.appendChild(addBtn);
+  }
+}
+/******************************** DELETE CATEGORIES ********************************/
+function deleteCategory(cat){
+  if(!confirm(`Delete "${cat}" category?`)) return;
+
+  delete menu[cat];
+
+  const keys = Object.keys(menu);
+
+  // 🔥 ADD THIS CHECK
+  if(keys.length === 0){
+    currentCategory = null;
+    document.getElementById("products").innerHTML = "<p>No categories available</p>";
+    renderCategories();
+    return;
+  }
+
+  // auto switch kung nabura current
+  if(cat === currentCategory){
+    currentCategory = keys[0];
+  }
+
+  renderCategories();
+  renderCurrentCategory();
+}
+/******************************** FORMAT CATEGORY NAME ********************************/
+function formatCategoryName(cat){
+  return cat.charAt(0).toUpperCase() + cat.slice(1);
+}
+
+/******************************** ADD CATEGORY ********************************/
+function addCategory(){
+  const name = prompt("Enter category name (no spaces):");
+
+  if(!name) return;
+
+  if(menu[name]){
+    alert("Category already exists!");
+    return;
+  }
+
+  menu[name] = [];
+  currentCategory = name;
+
+  renderCategories();
+  renderCurrentCategory();
+}
 /******************************** MAIN RENDER ********************************/
 function renderCurrentCategory(){
   const container = document.getElementById("products");
   container.innerHTML = "";
+
+  if(!currentCategory || !menu[currentCategory]){
+    container.innerHTML = "<p>No category selected</p>";
+    return;
+  }
 
   menu[currentCategory].forEach((item, index) => {
     const div = document.createElement("div");
@@ -905,6 +984,7 @@ function addProduct(){
 
 /******************************** DEFAULT LOAD ********************************/
 currentCategory = "rice";
+renderCategories();      // 🔥 ADD THIS
 renderCurrentCategory();
 
 /******************************** PAYMENT MODAL ********************************/
