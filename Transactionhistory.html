@@ -344,11 +344,6 @@
   letter-spacing: 0.3px;
 }
 /******************************** FILTER BUTTON ********************************/
-/* FILTER BAR */
-.filter-bar {
-  margin-bottom: 15px;
-}
-
 /* SEARCH STYLE */
 .search-box input {
   width: 100%;
@@ -359,8 +354,9 @@
   outline: none;
   margin-bottom: 10px;
 }
-
-/* FILTER BUTTONS */
+.filter-bar {
+  margin-bottom: 15px;
+}
 .filter-buttons {
   display: flex;
   justify-content: center; /* 🔥 CENTER HORIZONTALLY */
@@ -369,12 +365,36 @@
   flex-wrap: wrap;
   width: 100%; /* important para gumana ang center */
 }
-
 .filter-buttons button {
   display: flex;
   align-items: center;
   gap: 6px;
-
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: none;
+  background: #e3e7ea;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+}
+.filter-buttons button:hover {
+  background: #114500;
+  color: white;
+}
+.filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.filter-right {
+  display: flex;
+  gap: 10px;
+}
+.filter-right button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   padding: 8px 14px;
   border-radius: 20px;
   border: none;
@@ -384,26 +404,55 @@
   transition: 0.2s;
 }
 
-.filter-buttons button:hover {
+.filter-right button img {
+  width: 18px;
+  height: 18px;
+}
+
+.filter-right button:hover {
   background: #114500;
   color: white;
 }
-.filter-bar {
-  display: flex;
-  justify-content: center;
+
+.filter-right button:hover img {
+  filter: brightness(0) invert(1);
 }
 .filter-buttons button img {
   width: 18px;
   height: 18px;
 }
-
 .filter-buttons button:hover {
   background: #114500;
   color: white;
 }
-
 .filter-buttons button:hover img {
   filter: brightness(0) invert(1);
+}
+
+/******************************** SOURCE ********************************/
+.source-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.source-buttons button {
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: none;
+  background: #dfe5e8;
+  cursor: pointer;
+  font-size: 13px;
+  transition: 0.2s;
+}
+
+.source-buttons button:hover {
+  background: #114500;
+  color: white;
+}
+
+.source-buttons button.active {
+  background: #114500;
+  color: white;
 }
 /* ================= MODAL ANIMATION UPGRADE ================= */
 .date-modal {
@@ -475,39 +524,7 @@
   background: #114500;
   color: white;
 }
-/******************************** FILTER ********************************/
-.filter-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
 
-/* LEFT BUTTON GROUP */
-.source-buttons {
-  display: flex;
-  gap: 8px;
-}
-
-.source-buttons button {
-  padding: 8px 14px;
-  border-radius: 20px;
-  border: none;
-  background: #dfe5e8;
-  cursor: pointer;
-  font-size: 13px;
-  transition: 0.2s;
-}
-
-.source-buttons button:hover {
-  background: #114500;
-  color: white;
-}
-
-.source-buttons button.active {
-  background: #114500;
-  color: white;
-}
 /******************************** TRANSACTION CARD ********************************/
 .card {
     background: white;
@@ -647,38 +664,38 @@
 <!--------------------------------------- FILTER ---------------------------------------------> 
 <div class="filter-bar">
 
-        <!-- LEFT SIDE -->
-        <div class="source-buttons">
-            <button class="src active" onclick="setSource('all', this)">ALL</button>
-            <button class="src" onclick="setSource('POS', this)">POS</button>
-            <button class="src" onclick="setSource('ONLINE_BOOKING', this)">ONLINE BOOKING</button>
-        </div>
+    <!-- LEFT SIDE -->
+    <div class="source-buttons">
+        <button class="src active" onclick="setSource('all', this)">ALL</button>
+        <button class="src" onclick="setSource('POS', this)">POS</button>
+        <button class="src" onclick="setSource('ONLINE_BOOKING', this)">ONLINE BOOKING</button>
+    </div>
 
-        <!-- RIGHT SIDE -->
-        <div class="filter-buttons">
+    <!-- RIGHT SIDE -->
+    <div class="filter-right">
 
-            <button onclick="openDateModal()">
+        <button onclick="openDateModal()">
             <img src="IMAGES/dateicon.png"> Date
-            </button>
+        </button>
 
-            <button onclick="openTransactionModal()">
+        <button onclick="openTransactionModal()">
             <img src="IMAGES/transactionicon.png"> Transaction
-            </button>
+        </button>
 
-            <button onclick="openAmountModal()">
+        <button onclick="openAmountModal()">
             <img src="IMAGES/amounticon.png"> Amount
-            </button>
+        </button>
 
-            <button onclick="openStatusModal()">
+        <button onclick="openStatusModal()">
             <img src="IMAGES/statusicon.png"> Status
-            </button>
+        </button>
 
-        </div>
-    <!-- TRANSACTIONS -->
-    <div id="historyContainer"></div>
+    </div>
 
-</div>
+</div> <!-- ✅ IMPORTANT CLOSING TAG -->
 
+<!-- TRANSACTIONS -->
+<div id="historyContainer"></div>
 <!--------------------------------------- DATE MODAL ---------------------------------------------> 
 <div id="dateModal" class="date-modal">
     <div class="date-content">
