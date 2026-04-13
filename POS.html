@@ -23,7 +23,7 @@
     background: #f4f6f9;
   }
 
-/******************************** SIDEBAR ********************************/
+/******************************** SIDEBAR (PRO UI) ********************************/
 .sidebar {
   width: 270px;
   height: 100vh;
@@ -40,20 +40,15 @@
   position: fixed;
   left: 0;
   top: 0;
-  transition: transform 0.3s ease;
+
+  box-shadow: 8px 0 25px rgba(0,0,0,0.15);
   z-index: 100;
+
+  transition: all 0.3s ease;
 }
+
 .sidebar.hide {
   transform: translateX(-100%);
-}
-.sidebar-overlay {
-  position: absolute;
-  top: 150px;
-  left: 15px;
-  right: 15px;
-  bottom: 15px;
-  background: rgba(201, 247, 255, 0.5);
-  z-index: 0;
 }
 
 /******************************** MENU BUTTON ********************************/
@@ -63,42 +58,50 @@
   padding-bottom: 15px;
   border-bottom: 2px solid white;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 .menu button {
   width: 100%;
-  padding: 12px;
-  margin: 8px 0;
+  padding: 12px 14px;
   border: none;
   border-radius: 12px;
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(5px);
-  cursor: pointer;
-  text-align: left;
-  font-weight: bold;
-  font-size: 15px;      
-  font-weight: 600;      
-  letter-spacing: 0.3px; 
-  color: #fff;
-  padding-left: 40px; 
+  background: transparent;
+  color: #e8f5e9;
   display: flex;
   align-items: center;
-  gap: 10px;
-  line-height: 1;
-  transition: all 0.3s ease;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
 }
 .menu button.active {
-  background: #ffffff;
-  color: #1b5e20;
+  background: linear-gradient(135deg, #66bb6a, #43a047);
+  color: white;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
 }
-.menu button.active img.icon {
-  filter: brightness(0) invert(1); 
+.menu button.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 20px;
+  width: 4px;
+  background: #c8facc;
+  border-radius: 0 4px 4px 0;
 }
 .menu button:hover {
-  background: #ffffff;
-  color: #1b5e20;
+  background: rgba(255,255,255,0.08);
+  transform: translateX(6px);
 }
-.menu button:hover img.icon {
-  filter: brightness(0) invert(1);
+.menu button img.icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* 🔥 makes icons WHITE */
+  opacity: 0.95;
+  transition: 0.2s;
 }
 .menu button img.icon {
   width: 25px;
@@ -206,6 +209,24 @@
   font-size: 11px;
   color: gray;
 }
+.admin-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 18px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.admin-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+.admin-header img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #66bb6a;
+}
 .arrow {
   font-size: 12px;
   color: #555;
@@ -234,25 +255,7 @@
   background: #2e7d32;
   color: white;
 }
-.admin-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding-bottom: 10px;      
-  border-bottom: 2px solid white; 
-  margin-top: 60px;
-}
-.admin-header h2 {
-  margin: 0; 
-  font-size: 22px;
-}
-.admin-header img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #2e7d32;
-}
+
 
 /******************************** NAVBAR ********************************/
 .title-container {
@@ -773,14 +776,12 @@ button.action:hover {
         <h2>Hello, Admin!</h2>
       </div>
 
-      <div class="sidebar-overlay"></div>
-
 <!--------------------------------------- MENU SIDEBAR ---------------------------------------------> 
     <div class="menu">
       <button data-page="Dashboard.html"><img src="IMAGES/dashboardpic.png" class="icon">Dashboard</button>
       <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">Point of Sale</button>
       <button data-page="Transactionhistory.html"><img src="IMAGES/transactionhistoryicon.png" class="icon">Transaction History</button>
-      <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Receive Booking Request</button>
+      <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Booking Request</button>
       <button data-page="Eventmanagement.html"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
       <button data-page="Inventory.html"><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
       <button data-page="Feedback.html"><img src="IMAGES/feedbackicon.png" class="icon">Customer Feedback</button>
