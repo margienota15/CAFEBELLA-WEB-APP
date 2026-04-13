@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Admin Dashboard</title>
+<title>Receive Booking Request</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Domine:wght@400;600&display=swap" rel="stylesheet">
 
@@ -43,10 +43,10 @@
 }
 .sidebar-overlay {
   position: absolute;
-  top: 150px;  
+  top: 150px;
   left: 15px;
   right: 15px;
-  bottom: 85px;
+  bottom: 15px;
   background: rgba(201, 247, 255, 0.5);
   z-index: 0;
 }
@@ -567,17 +567,18 @@
   <div class="sidebar-overlay"></div>
 
 <!--------------------------------------- MENU SIDEBAR ---------------------------------------------> 
-<div class="menu">
-  <button data-page="Dashboard.html"><img src="IMAGES/dashboardpic.png" class="icon">Dashboard</button>
-  <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">POS</button>
-  <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Receive Booking Request</button>
-  <button data-page="Eventmanagement.html"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
-  <button data-page="Inventory.html"><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
-  <button data-page="Feedback.html"><img src="IMAGES/feedbackicon.png" class="icon">Customer Feedback</button>
-  <button data-page="Calendar.html"><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
-  <button data-page="Settings.html"><img src="IMAGES/settingsicon.png" class="icon">Settings</button>
-</div>
-</div>
+    <div class="menu">
+      <button data-page="Dashboard.html"><img src="IMAGES/dashboardpic.png" class="icon">Dashboard</button>
+      <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">POS</button>
+      <button data-page="Transactionhistory.html"><img src="IMAGES/transactionhistoryicon.png" class="icon">Transaction History</button>
+      <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Receive Booking Request</button>
+      <button data-page="Eventmanagement.html"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
+      <button data-page="Inventory.html"><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
+      <button data-page="Feedback.html"><img src="IMAGES/feedbackicon.png" class="icon">Customer Feedback</button>
+      <button data-page="Calendar.html"><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
+      <button data-page="Settings.html"><img src="IMAGES/settingsicon.png" class="icon">Settings</button>
+    </div>
+    </div>
 
 <!--------------------------------------- MAIN ---------------------------------------------> 
 <div class="main">
@@ -1229,6 +1230,12 @@
 /******************************** Sidebar : BUTTON PAGE ********************************/
 function goToDashboard() {
   window.location.href = "Dashboard.html";
+}
+function goToPOS() {
+  window.location.href = "POS.html";
+}
+function goToTransactionHistory() {
+  window.location.href = "Transactionhistory.html";
 }
 function goToBooking() {
   window.location.href = "Bookingrequest.html";
