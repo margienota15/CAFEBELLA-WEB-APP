@@ -256,7 +256,6 @@
   color: white;
 }
 
-
 /******************************** NAVBAR ********************************/
 .title-container {
   display: flex;
@@ -779,21 +778,21 @@ button.action:hover {
 <!--------------------------------------- MENU SIDEBAR ---------------------------------------------> 
     <div class="menu">
       <button data-page="Dashboard.html"><img src="IMAGES/dashboardpic.png" class="icon">Dashboard</button>
+      <button data-page="Calendar.html"><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
       <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">Point of Sale</button>
       <button data-page="Transactionhistory.html"><img src="IMAGES/transactionhistoryicon.png" class="icon">Transaction History</button>
       <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Booking Request</button>
       <button data-page="Eventmanagement.html"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
       <button data-page="Inventory.html"><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
       <button data-page="Feedback.html"><img src="IMAGES/feedbackicon.png" class="icon">Customer Feedback</button>
-      <button data-page="Calendar.html"><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
       <button data-page="Settings.html"><img src="IMAGES/settingsicon.png" class="icon">Settings</button>
     </div>
-    </div>
+    </div> 
 
 <!--------------------------------------- MAIN ---------------------------------------------> 
     <div class="main">
 
-  <!--------------------------------------- TOPBAR ---------------------------------------------> 
+<!--------------------------------------- TOPBAR ---------------------------------------------> 
     <div class="topbar">
       <div class="left-section">
         <button id="menu-btn">☰</button>
@@ -1030,6 +1029,8 @@ window.onclick = function(e) {
     document.getElementById("adminDropdown").style.display = "none";
   }
 }
+
+/******************************** ORDER ITEMS ********************************/
 function renderCart(){
   const container = document.getElementById("orderItems");
   container.innerHTML = "";
@@ -1069,12 +1070,13 @@ function renderCart(){
   document.getElementById("total").innerText = "₱" + total.toFixed(2);
 }
 
+/******************************** EDIT MENU : REMOVE ITEM ********************************/
 function removeItem(index){
   cart.splice(index, 1);
   renderCart();
 }
 
-/******************************** 🔥 PRODUCT MODAL FUNCTIONS (DITO MO ILAGAY) ********************************/
+/******************************** PRODUCT MODAL FUNCTIONS : OPEN AND CLOSE ********************************/
 let selectedProduct = null;
 let selectedQty = 1;
 
@@ -1099,11 +1101,13 @@ function closeProductModal(){
     }
   });
 
+/******************************** CHANGE QUANTITY ********************************/
 function changeQty(val){
   selectedQty = Math.max(1, selectedQty + val);
   document.getElementById("qtyDisplay").innerText = selectedQty;
 }
 
+/******************************** ADD TO CART ********************************/
 function addToCartFromModal(){
   let existing = cart.find(i => i.name === selectedProduct.name);
 
@@ -1119,7 +1123,8 @@ function addToCartFromModal(){
   renderCart();
   closeProductModal();
 }
-/******************************** MENU ********************************/
+
+/******************************** MENU LIST ********************************/
 
 const menu = {
   rice: [
@@ -1181,7 +1186,8 @@ const menu = {
 let cart = [];
 let editMode = false;
 let currentCategory = "rice";
-/******************************** EDIT MODE ********************************/
+
+/******************************** EDIT MENU BUTTON ********************************/
 document.getElementById("editMenuBtn").onclick = function(){
   editMode = !editMode;
 
@@ -1191,6 +1197,7 @@ document.getElementById("editMenuBtn").onclick = function(){
   renderCategories();        // 🔥 IMPORTANT
   renderCurrentCategory();
 };
+
 /******************************** CATEGORY RENDER ********************************/
 function renderCategories(){
   const container = document.getElementById("categories");
@@ -1237,6 +1244,7 @@ function renderCategories(){
     container.appendChild(addBtn);
   }
 }
+
 /******************************** DELETE CATEGORIES ********************************/
 function deleteCategory(cat){
   if(!confirm(`Delete "${cat}" category?`)) return;
@@ -1261,6 +1269,7 @@ function deleteCategory(cat){
   renderCategories();
   renderCurrentCategory();
 }
+
 /******************************** FORMAT CATEGORY NAME ********************************/
 function formatCategoryName(cat){
   return cat.charAt(0).toUpperCase() + cat.slice(1);
@@ -1283,6 +1292,7 @@ function addCategory(){
   renderCategories();
   renderCurrentCategory();
 }
+
 /******************************** MAIN RENDER ********************************/
 function renderCurrentCategory(){
   const container = document.getElementById("products");
@@ -1346,6 +1356,7 @@ function renderCurrentCategory(){
     container.appendChild(addBtn);
   }
 }
+
 /******************************** ADD PRODUCT ********************************/
 function addProduct(){
   const name = prompt("Enter product name:");
