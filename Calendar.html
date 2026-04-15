@@ -16,7 +16,7 @@
   -moz-osx-font-smoothing: grayscale;
   transition: all 0.2s ease-in-out;
 }
-  body {
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -135,8 +135,8 @@
   margin-left: 270px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow: auto; /* 🔥 allow scroll */
 }
 .main.full {
   margin-left: 0;
@@ -300,9 +300,9 @@
   display: flex;
   flex-direction: column;
   padding: 20px 30px;
-  height: 100%;
-  overflow: hidden;
   min-height: 0; /* 🔥 IMPORTANT */
+  height: auto;
+  overflow: visible;
 }
 
 /******************************** TOOLBAR ********************************/
@@ -381,9 +381,19 @@ button:hover{
 }
 .mini-calendar{
   width:100%;
-  max-height: 380px;   /* 🔥 mas balanced */
-  overflow:hidden;
-  padding:16px;
+  max-height: 380px;
+  padding:18px;
+  border-radius:20px;
+
+  background: linear-gradient(180deg, #ffffff, #f9fbff);
+  border:1px solid #e6edf5;
+
+  box-shadow:
+    0 10px 25px rgba(0,0,0,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+
+  position: relative;
+  overflow: hidden;
 }
 .mini-calendar h4{
   font-size:14px;
@@ -420,37 +430,152 @@ button:hover{
 .mini-selected {
   outline: 2px solid #3b82f6;
 }
+.mini-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:12px;
+}
 
+.mini-header h4{
+  font-size:14px;
+  font-weight:600;
+  color:#111827;
+}
+
+/* NAV BUTTONS */
+.mini-nav{
+  display:flex;
+  gap:6px;
+}
+
+.mini-nav button{
+  width:28px;
+  height:28px;
+  border-radius:8px;
+  border:none;
+  background:#f1f5f9;
+  cursor:pointer;
+  font-size:12px;
+}
+
+.mini-nav button:hover{
+  background:#16a34a;
+  color:white;
+}
+
+/* DAYS LABEL */
+.mini-weekdays{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  font-size:11px;
+  color:#6b7280;
+  margin-bottom:6px;
+  text-align:center;
+}
+
+/* GRID */
+.mini-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:6px;
+}
+
+/* DAY CELL */
+.mini-day {
+  position: relative;
+  text-align:center;
+  padding:8px 0;
+  border-radius:10px;
+  font-size:12px;
+  cursor:pointer;
+
+  background:white;
+  border:1px solid #eef2f7;
+
+  transition:0.2s ease;
+}
+
+.mini-day:hover {
+  background:#ecfdf5;
+  border-color:#16a34a;
+  transform: translateY(-2px);
+}
+
+/* TODAY */
+.mini-today {
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  color: white;
+  font-weight:600;
+  box-shadow: 0 6px 12px rgba(22,163,74,0.3);
+}
+
+/* SELECTED */
+.mini-selected {
+  outline: 2px solid #3b82f6;
+}
+
+/* EVENT DOT */
+.mini-day.has-event::after{
+  content:"";
+  position:absolute;
+  bottom:4px;
+  left:50%;
+  transform:translateX(-50%);
+  width:5px;
+  height:5px;
+  background:#16a34a;
+  border-radius:50%;
+}
 /******************************** HEADER ********************************/
 .header{
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:15px;
+  font-weight:600;
 }
 /******************************** DAY ********************************/
 .day-note{
   position:absolute;
-  top:8px;
-  left:8px;
-  right:8px;
-
-  background:#16a34a;
-  color:white;
-  font-size:12px;
-  padding:6px 8px;
-  border-radius:8px;
-
-  text-align:center;
-  cursor:pointer;
-
-  box-shadow:0 4px 10px rgba(0,0,0,0.15);
-  z-index:10;
+  left:0;
+  right:0;
+  height:2px;
+  background:#d93025; /* Google red */
+  z-index:20;
+}
+.day-note::before{
+  content:"";
+  position:absolute;
+  left:-6px;
+  top:50%;
+  transform:translateY(-50%);
+  width:12px;
+  height:12px;
+  background:#d93025;
+  border-radius:50%;
+}
+.day-note::before{
+  content:"";
+  position:absolute;
+  left:-6px;
+  top:50%;
+  transform:translateY(-50%);
+  width:12px;
+  height:12px;
+  background:#ef4444;
+  border-radius:50%;
 }
 .day-col{
   position:relative;
   border-left:1px solid #eef2f7;
-  height:700px;   /* 🔥 fixed big height para sakto ang timeline */
+  height: 1440px; /* 24 hours × 60px */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 59px,
+    #e5e7eb 60px
+  );
 }
 #dayEvents{
   max-height: 300px;
@@ -462,8 +587,8 @@ button:hover{
 .week{
   display:grid;
   grid-template-columns:70px repeat(7,1fr);
-  height: 600px;        /* 🔥 FIXED VIEWPORT */
-  overflow:hidden;
+  height: 500px;
+  overflow-y: auto; /* ✅ allow scroll */
 }
 .week-days{
   display: contents;
@@ -477,27 +602,41 @@ button:hover{
 .week-grid{
   display: contents;
 }
+.week-header{
+  display:grid;
+  grid-template-columns:70px repeat(7,1fr);
+  margin-bottom:10px;
+}
+
+.week-header div{
+  text-align:center;
+  font-weight:600;
+  font-size:13px;
+  color:#374151;
+}
 /******************************** TIME COLUMN ********************************/
 .time-col{
   width:70px;
   font-size:12px;
   color:#6b7280;
+  border-right: 1px solid #eef2f7;
+  height: 720px;
+  overflow: hidden; /* 🔥 NO SCROLL */
 
-  height:100%;
-  overflow-y:auto;     /* 🔥 SCROLL ENABLED */
 }
 .time-slot,
 .hour-line{
-  height: calc(100% / 12); /* 🔥 auto fit sa container */
+  height: 60px; /* SAME as event calculation */
+  border-top: 1px solid #eef2f7;
 }
 
 /******************************** EVENT BLOCK ********************************/
 .event-block {
   position:absolute;
-  left:8px;
-  right:8px;
-  border-radius:10px;
-  padding:8px 10px;
+  left:6px;
+  right:6px;
+  border-radius:12px;
+  padding:6px 8px;
   font-size:12px;
   font-weight:600;
   color:#fff;
@@ -505,9 +644,8 @@ button:hover{
   display:flex;
   align-items:center;
 
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-
-  transition:0.2s ease;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  border-left:4px solid rgba(255,255,255,0.5);
 }
 
 .event-block:hover{
@@ -671,7 +809,8 @@ button:hover{
 }
 
 .panel{
-  overflow:auto;
+  max-height: 500px;
+  overflow-y:auto;
 }
 
 .panel h3{
@@ -769,19 +908,39 @@ button:hover{
 <div class="layout">
 
 <!--------------------------------------- MINI CALENDAR ---------------------------------------------> 
-  <div class="mini-calendar">
+<div class="mini-calendar">
+
+  <div class="mini-header">
     <h4 id="miniMonth"></h4>
-    <div class="mini-grid" id="miniGrid"></div>
+
+    <div class="mini-nav">
+      <button onclick="change(-1)">◀</button>
+      <button onclick="change(1)">▶</button>
+    </div>
   </div>
+
+  <div class="mini-weekdays">
+    <div>S</div><div>M</div><div>T</div><div>W</div>
+    <div>T</div><div>F</div><div>S</div>
+  </div>
+
+  <div class="mini-grid" id="miniGrid"></div>
+
+</div>
 <!--------------------------------------- CALENDAR ---------------------------------------------> 
 <div class="calendar">
 
 <div class="header">
   <button onclick="change(-1)">◀</button>
-  <button onclick="today()">Today</button>
+
+  <div style="font-weight:700;font-size:16px;">
+    TODAY
+  </div>
+
   <button onclick="change(1)">▶</button>
 </div>
 
+<div class="week-header" id="weekHeader"></div>
 
 <div class="week">
   <div class="time-col" id="timeCol"></div>
@@ -938,7 +1097,8 @@ let events = JSON.parse(localStorage.getItem("events")) || [
 function render(){
 
   renderTime();
-
+  renderWeekHeader();
+  
   const weekGrid = document.getElementById("weekGrid");
   weekGrid.innerHTML = "";
 
@@ -955,32 +1115,43 @@ function render(){
     let col = document.createElement("div");
     col.className = "day-col";
 
-    /* 🔥 NOTES PER DAY (DITO TAMANG PLACE) */
+    // ✅ TODAY HIGHLIGHT
+    if(day.toDateString() === new Date().toDateString()){
+      col.style.background = "#f0fdf4";
+    }
+
+    // 🔥 GET EVENTS PER DAY
     let dayEvents = events.filter(e => e.date === dayStr);
 
+    // 🔴 NOTE LINE (earliest event)
     if(dayEvents.length > 0){
+
       let note = document.createElement("div");
       note.className = "day-note";
-      note.innerText = dayEvents.length + " bookings";
 
+      let earliest = dayEvents.reduce((a,b)=> a.time < b.time ? a : b);
+      let [hour, min] = earliest.time.split(":");
+
+      let top = ((hour - 7) * 60) + (min);
+
+      note.style.top = top + "px";
       note.onclick = () => openDayView(dayStr);
 
       col.appendChild(note);
     }
-    /* 🔥 END */
 
-    // TIME LINES
+    // ⏱ TIME GRID LINES
     for(let h=7; h<=18; h++){
       let line = document.createElement("div");
       line.className = "hour-line";
       col.appendChild(line);
     }
 
-    // EVENTS (BLOCKS)
+    // 📦 EVENTS BLOCKS
     dayEvents.forEach(e=>{
       let [hour, min] = e.time.split(":");
 
-      let top = ((hour - 7) * 60) + (min/60 * 60);
+      let top = ((hour - 7) * 60) + (parseInt(min));
 
       let div = document.createElement("div");
       div.className = "event-block " + color(e.status);
@@ -988,7 +1159,6 @@ function render(){
       div.style.height = "50px";
 
       div.innerText = e.title;
-
       div.onclick = () => openPopup(e);
 
       col.appendChild(div);
@@ -997,11 +1167,15 @@ function render(){
     weekGrid.appendChild(col);
   }
 
+  // 📅 MONTH TEXT
   document.getElementById("monthText").innerText =
     date.toLocaleDateString('default',{month:'long',year:'numeric'});
 
   renderMini();
   renderSide();
+
+  // 🔥 CURRENT TIME LINE (kung meron ka nito)
+  addCurrentTimeLine();
 }
 
 function renderTime(){
@@ -1022,13 +1196,41 @@ function renderSide(){
 
   document.getElementById("todayList").innerHTML =
     events.filter(e=>e.date===today)
-    .map(e=>`<div class='item'>${e.time} - ${e.title}</div>`).join("");
+    .map(e=>`
+    <div class='item' onclick="openPopup(${JSON.stringify(e).replace(/"/g, '&quot;')})" style="cursor:pointer">
+        ${e.time} - ${e.title}
+    </div>
+    `)
 
   document.getElementById("pendingList").innerHTML =
     events.filter(e=>e.status==="Pending")
-    .map(e=>`<div class='item'>${e.time} - ${e.title}</div>`).join("");
+    .map(e=>`
+    <div class='item' onclick="openPopup(${JSON.stringify(e).replace(/"/g, '&quot;')})" style="cursor:pointer">
+        ${e.time} - ${e.title}
+    </div>
+    `)
 }
 
+function addCurrentTimeLine(){
+  const now = new Date();
+  const hour = now.getHours();
+  const min = now.getMinutes();
+
+  if(hour < 7 || hour > 18) return;
+
+  const top = ((hour - 7) * 60) + (min);
+
+  const line = document.createElement("div");
+  line.style.position = "absolute";
+  line.style.left = "0";
+  line.style.right = "0";
+  line.style.height = "2px";
+  line.style.background = "red";
+  line.style.top = top + "px";
+  line.style.zIndex = "50";
+
+  document.querySelectorAll(".day-col")[now.getDay()]?.appendChild(line);
+}
 /* POPUP */
 function openPopup(e){
   let popup = document.getElementById("popup");
@@ -1077,7 +1279,7 @@ function add(){
   render();
 }
 function change(v){
-  date.setMonth(date.getMonth()+v);
+  date.setDate(date.getDate() + (v * 7)); // 🔥 WEEK SHIFT
   render();
 }
 
@@ -1244,6 +1446,26 @@ function openDayView(date){
     : "<p>No bookings for this day.</p>";
 
   document.getElementById("dayModal").style.display = "flex";
+}
+
+function renderWeekHeader(){
+  const el = document.getElementById("weekHeader");
+  el.innerHTML = "<div></div>";
+
+  let start = new Date(date);
+  start.setDate(date.getDate() - date.getDay());
+
+  for(let i=0;i<7;i++){
+    let d = new Date(start);
+    d.setDate(start.getDate()+i);
+
+    el.innerHTML += `
+      <div>
+        ${d.toLocaleDateString('en-US',{weekday:'short'})}<br>
+        <span style="font-size:12px;color:#9ca3af">${d.getDate()}</span>
+      </div>
+    `;
+  }
 }
 </script>
 
