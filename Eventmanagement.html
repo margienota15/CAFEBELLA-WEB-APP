@@ -268,18 +268,18 @@ body {
   justify-content: center;
   padding-left: 3px;
   margin-left: 0;
-  padding-top: 9px;
+  padding: 10px 0 5px 0;
 }
 
 .title-container h1 {
-  font-size: 28px;
-  margin-bottom: 10px;
+  font-size: 22px;
+  margin-bottom: 4px;
   color: #114500;
 }
 
 .title-container p {
-  font-size: 16px;
-  color: #555;
+  font-size: 13px;
+  color: #666;
 }
 
 .content-wrapper {
@@ -295,7 +295,7 @@ body {
 .booking-container {
   position: relative; 
   z-index: 11;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .all-events-title {
@@ -307,27 +307,27 @@ body {
 }
 
 /******************************** STATUS ********************************/
-
 .stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 12px;
 }
 .stat-box {
-  background: #e9e9e9;
-  padding: 20px;
-  border-radius: 12px;
-  text-align: left;
+  background: #ffffff;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 .stat-box p {
-  color: #666;
-  font-size: 14px;
+  font-size: 12px;
+  color: #777;
 }
 .stat-box h2 {
+  font-size: 22px;
   color: #114500;
-  font-size: 32px;
-  margin-top: 10px;
+  margin-top: 6px;
 }
 
 /******************************** ALL EVENTS / TABLE ********************************/
@@ -348,47 +348,43 @@ body {
 .events-table {
   display: flex;
   flex-direction: column;
-  border: 3px solid #114500;
-  border-radius: 12px;
   padding: 5px;
   margin: 0 30px 10px 30px;
   background: white;
-  height: 270px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  overflow: hidden;
+  height: 240px; /* compressed */
 }
 
 .table-body {
-  overflow-y: auto;     
+  height: 100%;
+  overflow-y: auto;  
 }
 .table-header {
-  flex: 0 0 auto; 
-  padding: 10px 30px;
   display: grid;
-  grid-template-columns: 1.8fr 2.5fr 2fr 0.9fr 1.8fr 1.3fr 1.2fr 1.3fr;
-  gap: 10px;
+  grid-template-columns: 1.5fr 2fr 1.5fr 0.8fr 1.5fr 1fr 1fr 0.8fr;
+  padding: 10px 12px;
+  font-size: 12px;
   font-weight: 600;
-  font-size: 14px;
+  background: #f8fafc;
   color: #114500;
-  border-bottom: 3px solid #ccc;
-  position: sticky;
-  top: 0;
-  background: white;
-  z-index: 2;
+  border-bottom: 1px solid #eee;
 }
 .table-row {
   display: grid;
-  grid-template-columns: 1.8fr 2.5fr 2fr 0.9fr 1.8fr 1.3fr 1.2fr 1.3fr;
-  gap: 10px;
-  padding-left: 30px;
-  height: 50px;
-  border-bottom: 1px solid #eee;
-  align-items: center; 
+  grid-template-columns: 1.5fr 2fr 1.5fr 0.8fr 1.5fr 1fr 1fr 0.8fr;
+  padding: 10px 12px;
+  font-size: 12px;
+  align-items: center;
+  border-bottom: 1px solid #f1f1f1;
 }
 .table-wrapper {
   flex: 1 1 auto;  
   overflow-y: auto; 
 }
 .table-row:hover {
-  background: #f9f9f9;
+  background: #f9fafb;
 }
 .table-row.completed {
   background-color: #7fbf6a;
@@ -445,16 +441,18 @@ body {
   font-weight: 500;
 }
 .status-select {
-  padding: 6px 14px;
   border-radius: 20px;
-  border: 1px solid #ccc;
   font-weight: 600;
   cursor: pointer;
-  outline: none;
   appearance: none;
   background-color: #f5f5f5;
   color: #333;
   transition: all 0.3s ease;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  border: 1px solid #ddd;
+  outline: none;
 }
 .status-select.completed {
   color: #2e7d32; 
@@ -511,16 +509,16 @@ body {
 <!--------------------------------------- MENU SIDEBAR ---------------------------------------------> 
     <div class="menu">
       <button data-page="Dashboard.html"><img src="IMAGES/dashboardpic.png" class="icon">Dashboard</button>
-      <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">POS</button>
+      <button data-page="Calendar.html"><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
+      <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">Point of Sale</button>
       <button data-page="Transactionhistory.html"><img src="IMAGES/transactionhistoryicon.png" class="icon">Transaction History</button>
-      <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Receive Booking Request</button>
+      <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Booking Request</button>
       <button data-page="Eventmanagement.html"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
       <button data-page="Inventory.html"><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
       <button data-page="Feedback.html"><img src="IMAGES/feedbackicon.png" class="icon">Customer Feedback</button>
-      <button data-page="Calendar.html"><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
       <button data-page="Settings.html"><img src="IMAGES/settingsicon.png" class="icon">Settings</button>
     </div>
-    </div>
+    </div> 
 
 <!--------------------------------------- MAIN ---------------------------------------------> 
 <div class="main">
