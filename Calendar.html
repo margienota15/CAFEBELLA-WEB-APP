@@ -21,8 +21,9 @@ body {
     margin: 0;
     padding: 0;
     background: #f4f6f9;
+    height: 100vh;
+    overflow: hidden; /* 🔥 NO PAGE SCROLL */
 }
-
 :root{
   --primary:#16a34a;
   --primary2:#22c55e;
@@ -135,8 +136,8 @@ body {
   margin-left: 270px;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-  overflow: auto; /* 🔥 allow scroll */
+  height: 100vh; /* 🔥 FIX FULL HEIGHT */
+  overflow: hidden;
 }
 .main.full {
   margin-left: 0;
@@ -300,9 +301,9 @@ body {
   display: flex;
   flex-direction: column;
   padding: 20px 30px;
-  min-height: 0; /* 🔥 IMPORTANT */
-  height: auto;
-  overflow: visible;
+
+  overflow: hidden; /* no scroll outside */
+  min-height: 0;
 }
 
 /******************************** TOOLBAR ********************************/
@@ -357,12 +358,13 @@ button:hover{
 }
 
 /******************************** LAYOUT ********************************/
-.layout{
-  display:grid;
+.layout {
+  display: grid;
   grid-template-columns: 220px 1.6fr 320px;
-  gap:14px;
-  padding:0 15px 15px;
-  align-items:start;   /* 🔥 important */
+  gap: 14px;
+
+  flex: 1;
+  min-height: 0;
 }
 /******************************** CALENDAR ********************************/
 .calendar,
@@ -375,9 +377,13 @@ button:hover{
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
   display:flex;
   flex-direction:column;
-
   height: auto;              /* 🔥 NO FULL STRETCH */
   max-height: 650px;        /* 🔥 LIMIT TOTAL HEIGHT */
+}
+.calendar {
+  height: 100%;
+  max-height: none;
+  overflow-y: auto;
 }
 .mini-calendar{
   width:100%;
@@ -450,14 +456,20 @@ button:hover{
 }
 
 .mini-nav button{
-  width:28px;
-  height:28px;
-  border-radius:8px;
-  border:none;
-  background:#f1f5f9;
+  width:32px;
+  height:32px;
+  border-radius:10px;
+  border:1px solid #e5e7eb;
+  background:white;
   cursor:pointer;
-  font-size:12px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transition:0.2s ease;
 }
+
 
 .mini-nav button:hover{
   background:#16a34a;
@@ -536,40 +548,10 @@ button:hover{
   font-weight:600;
 }
 /******************************** DAY ********************************/
-.day-note{
-  position:absolute;
-  left:0;
-  right:0;
-  height:2px;
-  background:#d93025; /* Google red */
-  z-index:20;
-}
-.day-note::before{
-  content:"";
-  position:absolute;
-  left:-6px;
-  top:50%;
-  transform:translateY(-50%);
-  width:12px;
-  height:12px;
-  background:#d93025;
-  border-radius:50%;
-}
-.day-note::before{
-  content:"";
-  position:absolute;
-  left:-6px;
-  top:50%;
-  transform:translateY(-50%);
-  width:12px;
-  height:12px;
-  background:#ef4444;
-  border-radius:50%;
-}
 .day-col{
-  position:relative;
-  border-left:1px solid #eef2f7;
-  height: 1440px; /* 24 hours × 60px */
+  position: relative;
+  border-left: 1px solid #eef2f7;
+  height: 1440px; /* ✅ MUST MATCH TIME */
   background-image: repeating-linear-gradient(
     to bottom,
     transparent,
@@ -584,11 +566,11 @@ button:hover{
   padding-right: 5px;
 }
 /******************************** WEEK ********************************/
-.week{
-  display:grid;
-  grid-template-columns:70px repeat(7,1fr);
-  height: 500px;
-  overflow-y: auto; /* ✅ allow scroll */
+.week {
+  display: grid;
+  grid-template-columns: 70px repeat(7,1fr);
+  height: 100%;
+  overflow-y: auto;
 }
 .week-days{
   display: contents;
@@ -617,17 +599,23 @@ button:hover{
 /******************************** TIME COLUMN ********************************/
 .time-col{
   width:70px;
-  font-size:12px;
+  font-size:11px;
   color:#6b7280;
   border-right: 1px solid #eef2f7;
-  height: 720px;
-  overflow: hidden; /* 🔥 NO SCROLL */
-
+  height: 1440px; /* ✅ FULL 24 HOURS */
+  background: #fafafa;
 }
-.time-slot,
-.hour-line{
-  height: 60px; /* SAME as event calculation */
-  border-top: 1px solid #eef2f7;
+.time-slot{
+  height: 60px; /* ✅ 1 hour = 60px */
+  display: flex;
+  align-items: flex-start;
+  padding-top: 2px;
+  padding-left: 6px;
+  font-size: 11px;
+  color: #6b7280;
+  border-bottom: 1px solid #f1f5f9;
+  font-weight: 500;
+  letter-spacing: 0.3px;
 }
 
 /******************************** EVENT BLOCK ********************************/
@@ -914,8 +902,8 @@ button:hover{
     <h4 id="miniMonth"></h4>
 
     <div class="mini-nav">
-      <button onclick="change(-1)">◀</button>
-      <button onclick="change(1)">▶</button>
+    <button onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+    <button onclick="changeMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
     </div>
   </div>
 
@@ -1081,6 +1069,9 @@ menuBtn.onclick = function() {
 };
 
 
+let currentWeek = new Date();
+let currentMonth = new Date();
+
 let date = new Date();
 let selected = null;
 let filterStatus = "All";
@@ -1102,7 +1093,7 @@ function render(){
   const weekGrid = document.getElementById("weekGrid");
   weekGrid.innerHTML = "";
 
-  let start = new Date(date);
+    let start = new Date(currentWeek);
   start.setDate(date.getDate() - date.getDay());
 
   for(let i=0;i<7;i++){
@@ -1123,35 +1114,21 @@ function render(){
     // 🔥 GET EVENTS PER DAY
     let dayEvents = events.filter(e => e.date === dayStr);
 
-    // 🔴 NOTE LINE (earliest event)
-    if(dayEvents.length > 0){
-
-      let note = document.createElement("div");
-      note.className = "day-note";
-
-      let earliest = dayEvents.reduce((a,b)=> a.time < b.time ? a : b);
-      let [hour, min] = earliest.time.split(":");
-
-      let top = ((hour - 7) * 60) + (min);
-
-      note.style.top = top + "px";
-      note.onclick = () => openDayView(dayStr);
-
-      col.appendChild(note);
-    }
-
     // ⏱ TIME GRID LINES
-    for(let h=7; h<=18; h++){
-      let line = document.createElement("div");
-      line.className = "hour-line";
-      col.appendChild(line);
+    for(let h=0; h<24; h++){
+    let line = document.createElement("div");
+    line.className = "hour-line";
+    col.appendChild(line);
     }
 
     // 📦 EVENTS BLOCKS
     dayEvents.forEach(e=>{
-      let [hour, min] = e.time.split(":");
+    const [h, m] = e.time.split(":");
 
-      let top = ((hour - 7) * 60) + (parseInt(min));
+    const hour = Number(h);
+    const min = Number(m);
+
+    const top = hour * 60 + min;
 
       let div = document.createElement("div");
       div.className = "event-block " + color(e.status);
@@ -1173,22 +1150,26 @@ function render(){
 
   renderMini();
   renderSide();
-
-  // 🔥 CURRENT TIME LINE (kung meron ka nito)
-  addCurrentTimeLine();
 }
 
 function renderTime(){
   const timeCol = document.getElementById("timeCol");
   timeCol.innerHTML = "";
 
-  for(let h=0; h<24; h++){
+  for(let h = 0; h < 24; h++){
+
+    let label = String(h).padStart(2,'0') + ":00";
+
+    if(h === 0) label = "00:00 → midnight";
+    if(h === 12) label = "12:00 → noon";
+
     let div = document.createElement("div");
     div.className = "time-slot";
-    div.innerText = `${String(h).padStart(2,'0')}:00`;
+    div.innerText = label;
+
     timeCol.appendChild(div);
   }
-}
+} 
 
 function renderSide(){
 
@@ -1197,30 +1178,39 @@ function renderSide(){
   document.getElementById("todayList").innerHTML =
     events.filter(e=>e.date===today)
     .map(e=>`
-    <div class='item' onclick="openPopup(${JSON.stringify(e).replace(/"/g, '&quot;')})" style="cursor:pointer">
-        ${e.time} - ${e.title}
-    </div>
-    `)
+      <div class='item' onclick="openPopup(${JSON.stringify(e).replace(/"/g, '&quot;')})" style="cursor:pointer">
+          ${e.time} - ${e.title}
+      </div>
+    `).join(""); // ✅ DITO
 
   document.getElementById("pendingList").innerHTML =
     events.filter(e=>e.status==="Pending")
     .map(e=>`
-    <div class='item' onclick="openPopup(${JSON.stringify(e).replace(/"/g, '&quot;')})" style="cursor:pointer">
-        ${e.time} - ${e.title}
-    </div>
-    `)
+      <div class='item' onclick="openPopup(${JSON.stringify(e).replace(/"/g, '&quot;')})" style="cursor:pointer">
+          ${e.time} - ${e.title}
+      </div>
+    `).join(""); // ✅ DITO
 }
 
 function addCurrentTimeLine(){
+
+  // remove old lines first
+  document.querySelectorAll(".current-line").forEach(e => e.remove());
+
   const now = new Date();
   const hour = now.getHours();
   const min = now.getMinutes();
 
-  if(hour < 7 || hour > 18) return;
+  const top = (hour * 60) + min;
 
-  const top = ((hour - 7) * 60) + (min);
+  const colIndex = now.getDay();
+
+  const col = document.querySelectorAll(".day-col")[colIndex];
+
+  if(!col) return;
 
   const line = document.createElement("div");
+  line.className = "current-line";
   line.style.position = "absolute";
   line.style.left = "0";
   line.style.right = "0";
@@ -1229,7 +1219,7 @@ function addCurrentTimeLine(){
   line.style.top = top + "px";
   line.style.zIndex = "50";
 
-  document.querySelectorAll(".day-col")[now.getDay()]?.appendChild(line);
+  col.appendChild(line);
 }
 /* POPUP */
 function openPopup(e){
@@ -1279,8 +1269,13 @@ function add(){
   render();
 }
 function change(v){
-  date.setDate(date.getDate() + (v * 7)); // 🔥 WEEK SHIFT
+  currentWeek.setDate(currentWeek.getDate() + (v * 7));
+  date = new Date(currentWeek);
   render();
+}
+function changeMonth(v){
+  currentMonth.setMonth(currentMonth.getMonth() + v);
+  renderMini();
 }
 
 function today(){
@@ -1362,12 +1357,12 @@ function renderMini(){
   const grid = document.getElementById("miniGrid");
   grid.innerHTML = "";
 
-  const y = date.getFullYear();
-  const m = date.getMonth();
+    const y = currentMonth.getFullYear();
+    const m = currentMonth.getMonth();
 
-  document.getElementById("miniMonth").innerText =
-    date.toLocaleString('default',{month:'long',year:'numeric'});
-
+    document.getElementById("miniMonth").innerText =
+    currentMonth.toLocaleString('default',{month:'long',year:'numeric'});
+    
   let first = new Date(y,m,1).getDay();
   let last = new Date(y,m+1,0).getDate();
 
@@ -1394,9 +1389,10 @@ function renderMini(){
     }
 
     div.onclick = ()=>{
-      selected = dayStr;
-      date = new Date(dayStr);
-      render();
+    selected = dayStr;
+    currentWeek = new Date(dayStr);
+    date = new Date(dayStr);
+    render();
     };
 
     grid.appendChild(div);
@@ -1408,7 +1404,7 @@ function renderWeekDays(){
   const el = document.getElementById("weekDays");
   el.innerHTML = "<div></div>";
 
-  let start = new Date(date);
+    let start = new Date(currentWeek);
   start.setDate(date.getDate() - date.getDay());
 
   for(let i=0;i<7;i++){
@@ -1452,7 +1448,7 @@ function renderWeekHeader(){
   const el = document.getElementById("weekHeader");
   el.innerHTML = "<div></div>";
 
-  let start = new Date(date);
+    let start = new Date(currentWeek);
   start.setDate(date.getDate() - date.getDay());
 
   for(let i=0;i<7;i++){
