@@ -16,14 +16,13 @@
   -moz-osx-font-smoothing: grayscale;
   transition: all 0.2s ease-in-out;
 }
-body {
+  body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background: #f4f6f9;
-    height: 100vh;
-    overflow: hidden; /* 🔥 NO PAGE SCROLL */
 }
+
 :root{
   --primary:#16a34a;
   --primary2:#22c55e;
@@ -136,7 +135,7 @@ body {
   margin-left: 270px;
   display: flex;
   flex-direction: column;
-  height: 100vh; /* 🔥 FIX FULL HEIGHT */
+  height: 100vh;
   overflow: hidden;
 }
 .main.full {
@@ -301,9 +300,9 @@ body {
   display: flex;
   flex-direction: column;
   padding: 20px 30px;
-
-  overflow: hidden; /* no scroll outside */
-  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  min-height: 0; /* 🔥 IMPORTANT */
 }
 
 /******************************** TOOLBAR ********************************/
@@ -358,13 +357,12 @@ button:hover{
 }
 
 /******************************** LAYOUT ********************************/
-.layout {
-  display: grid;
+.layout{
+  display:grid;
   grid-template-columns: 220px 1.6fr 320px;
-  gap: 14px;
-
-  flex: 1;
-  min-height: 0;
+  gap:14px;
+  padding:0 15px 15px;
+  align-items:start;   /* 🔥 important */
 }
 /******************************** CALENDAR ********************************/
 .calendar,
@@ -377,29 +375,15 @@ button:hover{
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
   display:flex;
   flex-direction:column;
+
   height: auto;              /* 🔥 NO FULL STRETCH */
   max-height: 650px;        /* 🔥 LIMIT TOTAL HEIGHT */
 }
-.calendar {
-  height: 100%;
-  max-height: none;
-  overflow-y: auto;
-}
 .mini-calendar{
   width:100%;
-  max-height: 380px;
-  padding:18px;
-  border-radius:20px;
-
-  background: linear-gradient(180deg, #ffffff, #f9fbff);
-  border:1px solid #e6edf5;
-
-  box-shadow:
-    0 10px 25px rgba(0,0,0,0.06),
-    inset 0 1px 0 rgba(255,255,255,0.8);
-
-  position: relative;
-  overflow: hidden;
+  max-height: 380px;   /* 🔥 mas balanced */
+  overflow:hidden;
+  padding:16px;
 }
 .mini-calendar h4{
   font-size:14px;
@@ -436,128 +420,37 @@ button:hover{
 .mini-selected {
   outline: 2px solid #3b82f6;
 }
-.mini-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:12px;
-}
 
-.mini-header h4{
-  font-size:14px;
-  font-weight:600;
-  color:#111827;
-}
-
-/* NAV BUTTONS */
-.mini-nav{
-  display:flex;
-  gap:6px;
-}
-
-.mini-nav button{
-  width:32px;
-  height:32px;
-  border-radius:10px;
-  border:1px solid #e5e7eb;
-  background:white;
-  cursor:pointer;
-
-  display:flex;
-  align-items:center;
-  justify-content:center;
-
-  transition:0.2s ease;
-}
-
-
-.mini-nav button:hover{
-  background:#16a34a;
-  color:white;
-}
-
-/* DAYS LABEL */
-.mini-weekdays{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  font-size:11px;
-  color:#6b7280;
-  margin-bottom:6px;
-  text-align:center;
-}
-
-/* GRID */
-.mini-grid{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:6px;
-}
-
-/* DAY CELL */
-.mini-day {
-  position: relative;
-  text-align:center;
-  padding:8px 0;
-  border-radius:10px;
-  font-size:12px;
-  cursor:pointer;
-
-  background:white;
-  border:1px solid #eef2f7;
-
-  transition:0.2s ease;
-}
-
-.mini-day:hover {
-  background:#ecfdf5;
-  border-color:#16a34a;
-  transform: translateY(-2px);
-}
-
-/* TODAY */
-.mini-today {
-  background: linear-gradient(135deg, #16a34a, #22c55e);
-  color: white;
-  font-weight:600;
-  box-shadow: 0 6px 12px rgba(22,163,74,0.3);
-}
-
-/* SELECTED */
-.mini-selected {
-  outline: 2px solid #3b82f6;
-}
-
-/* EVENT DOT */
-.mini-day.has-event::after{
-  content:"";
-  position:absolute;
-  bottom:4px;
-  left:50%;
-  transform:translateX(-50%);
-  width:5px;
-  height:5px;
-  background:#16a34a;
-  border-radius:50%;
-}
 /******************************** HEADER ********************************/
 .header{
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:15px;
-  font-weight:600;
 }
 /******************************** DAY ********************************/
+.day-note{
+  position:absolute;
+  top:8px;
+  left:8px;
+  right:8px;
+
+  background:#16a34a;
+  color:white;
+  font-size:12px;
+  padding:6px 8px;
+  border-radius:8px;
+
+  text-align:center;
+  cursor:pointer;
+
+  box-shadow:0 4px 10px rgba(0,0,0,0.15);
+  z-index:10;
+}
 .day-col{
-  position: relative;
-  border-left: 1px solid #eef2f7;
-  height: 1440px; /* ✅ MUST MATCH TIME */
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent,
-    transparent 59px,
-    #e5e7eb 60px
-  );
+  position:relative;
+  border-left:1px solid #eef2f7;
+  height:700px;   /* 🔥 fixed big height para sakto ang timeline */
 }
 #dayEvents{
   max-height: 300px;
@@ -566,11 +459,11 @@ button:hover{
   padding-right: 5px;
 }
 /******************************** WEEK ********************************/
-.week {
-  display: grid;
-  grid-template-columns: 70px repeat(7,1fr);
-  height: 100%;
-  overflow-y: auto;
+.week{
+  display:grid;
+  grid-template-columns:70px repeat(7,1fr);
+  height: 600px;        /* 🔥 FIXED VIEWPORT */
+  overflow:hidden;
 }
 .week-days{
   display: contents;
@@ -584,47 +477,27 @@ button:hover{
 .week-grid{
   display: contents;
 }
-.week-header{
-  display:grid;
-  grid-template-columns:70px repeat(7,1fr);
-  margin-bottom:10px;
-}
-
-.week-header div{
-  text-align:center;
-  font-weight:600;
-  font-size:13px;
-  color:#374151;
-}
 /******************************** TIME COLUMN ********************************/
 .time-col{
   width:70px;
-  font-size:11px;
+  font-size:12px;
   color:#6b7280;
-  border-right: 1px solid #eef2f7;
-  height: 1440px; /* ✅ FULL 24 HOURS */
-  background: #fafafa;
+
+  height:100%;
+  overflow-y:auto;     /* 🔥 SCROLL ENABLED */
 }
-.time-slot{
-  height: 60px; /* ✅ 1 hour = 60px */
-  display: flex;
-  align-items: flex-start;
-  padding-top: 2px;
-  padding-left: 6px;
-  font-size: 11px;
-  color: #6b7280;
-  border-bottom: 1px solid #f1f5f9;
-  font-weight: 500;
-  letter-spacing: 0.3px;
+.time-slot,
+.hour-line{
+  height: calc(100% / 12); /* 🔥 auto fit sa container */
 }
 
 /******************************** EVENT BLOCK ********************************/
 .event-block {
   position:absolute;
-  left:6px;
-  right:6px;
-  border-radius:12px;
-  padding:6px 8px;
+  left:8px;
+  right:8px;
+  border-radius:10px;
+  padding:8px 10px;
   font-size:12px;
   font-weight:600;
   color:#fff;
@@ -632,8 +505,9 @@ button:hover{
   display:flex;
   align-items:center;
 
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  border-left:4px solid rgba(255,255,255,0.5);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+
+  transition:0.2s ease;
 }
 
 .event-block:hover{
@@ -797,8 +671,7 @@ button:hover{
 }
 
 .panel{
-  max-height: 500px;
-  overflow-y:auto;
+  overflow:auto;
 }
 
 .panel h3{
@@ -825,7 +698,7 @@ button:hover{
       <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">Point of Sale</button>
       <button data-page="Transactionhistory.html"><img src="IMAGES/transactionhistoryicon.png" class="icon">Transaction History</button>
       <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Booking Request</button>
-      <button data-page="Eventmanagement.html"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
+      <button data-page="Eventmanagement.php"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
       <button data-page="Inventory.html"><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
       <button data-page="Feedback.html"><img src="IMAGES/feedbackicon.png" class="icon">Customer Feedback</button>
       <button data-page="Settings.html"><img src="IMAGES/settingsicon.png" class="icon">Settings</button>
@@ -863,8 +736,8 @@ button:hover{
 <!--------------------------------------- TITLE ---------------------------------------------> 
 <div class="dashboard-header">
   <div class="header-left">
-    <h1>Calendar Schedule</h1>
-    <p>Track and organize events across weekly and monthly timelines</p>
+    <h1>Dashboard Overview</h1>
+    <p>Monitor bookings, sales, and event activity in real time</p>
   </div>
 
   <div class="header-right">
@@ -896,39 +769,19 @@ button:hover{
 <div class="layout">
 
 <!--------------------------------------- MINI CALENDAR ---------------------------------------------> 
-<div class="mini-calendar">
-
-  <div class="mini-header">
+  <div class="mini-calendar">
     <h4 id="miniMonth"></h4>
-
-    <div class="mini-nav">
-    <button onclick="changeMonth(-1)"><i class="fa-solid fa-chevron-left"></i></button>
-    <button onclick="changeMonth(1)"><i class="fa-solid fa-chevron-right"></i></button>
-    </div>
+    <div class="mini-grid" id="miniGrid"></div>
   </div>
-
-  <div class="mini-weekdays">
-    <div>S</div><div>M</div><div>T</div><div>W</div>
-    <div>T</div><div>F</div><div>S</div>
-  </div>
-
-  <div class="mini-grid" id="miniGrid"></div>
-
-</div>
 <!--------------------------------------- CALENDAR ---------------------------------------------> 
 <div class="calendar">
 
 <div class="header">
   <button onclick="change(-1)">◀</button>
-
-  <div style="font-weight:700;font-size:16px;">
-    TODAY
-  </div>
-
+  <button onclick="today()">Today</button>
   <button onclick="change(1)">▶</button>
 </div>
 
-<div class="week-header" id="weekHeader"></div>
 
 <div class="week">
   <div class="time-col" id="timeCol"></div>
@@ -1069,9 +922,6 @@ menuBtn.onclick = function() {
 };
 
 
-let currentWeek = new Date();
-let currentMonth = new Date();
-
 let date = new Date();
 let selected = null;
 let filterStatus = "All";
@@ -1088,12 +938,11 @@ let events = JSON.parse(localStorage.getItem("events")) || [
 function render(){
 
   renderTime();
-  renderWeekHeader();
-  
+
   const weekGrid = document.getElementById("weekGrid");
   weekGrid.innerHTML = "";
 
-    let start = new Date(currentWeek);
+  let start = new Date(date);
   start.setDate(date.getDate() - date.getDay());
 
   for(let i=0;i<7;i++){
@@ -1106,29 +955,32 @@ function render(){
     let col = document.createElement("div");
     col.className = "day-col";
 
-    // ✅ TODAY HIGHLIGHT
-    if(day.toDateString() === new Date().toDateString()){
-      col.style.background = "#f0fdf4";
-    }
-
-    // 🔥 GET EVENTS PER DAY
+    /* 🔥 NOTES PER DAY (DITO TAMANG PLACE) */
     let dayEvents = events.filter(e => e.date === dayStr);
 
-    // ⏱ TIME GRID LINES
-    for(let h=0; h<24; h++){
-    let line = document.createElement("div");
-    line.className = "hour-line";
-    col.appendChild(line);
+    if(dayEvents.length > 0){
+      let note = document.createElement("div");
+      note.className = "day-note";
+      note.innerText = dayEvents.length + " bookings";
+
+      note.onclick = () => openDayView(dayStr);
+
+      col.appendChild(note);
+    }
+    /* 🔥 END */
+
+    // TIME LINES
+    for(let h=7; h<=18; h++){
+      let line = document.createElement("div");
+      line.className = "hour-line";
+      col.appendChild(line);
     }
 
-    // 📦 EVENTS BLOCKS
+    // EVENTS (BLOCKS)
     dayEvents.forEach(e=>{
-    const [h, m] = e.time.split(":");
+      let [hour, min] = e.time.split(":");
 
-    const hour = Number(h);
-    const min = Number(m);
-
-    const top = hour * 60 + min;
+      let top = ((hour - 7) * 60) + (min/60 * 60);
 
       let div = document.createElement("div");
       div.className = "event-block " + color(e.status);
@@ -1136,6 +988,7 @@ function render(){
       div.style.height = "50px";
 
       div.innerText = e.title;
+
       div.onclick = () => openPopup(e);
 
       col.appendChild(div);
@@ -1144,7 +997,6 @@ function render(){
     weekGrid.appendChild(col);
   }
 
-  // 📅 MONTH TEXT
   document.getElementById("monthText").innerText =
     date.toLocaleDateString('default',{month:'long',year:'numeric'});
 
@@ -1156,20 +1008,13 @@ function renderTime(){
   const timeCol = document.getElementById("timeCol");
   timeCol.innerHTML = "";
 
-  for(let h = 0; h < 24; h++){
-
-    let label = String(h).padStart(2,'0') + ":00";
-
-    if(h === 0) label = "00:00 → midnight";
-    if(h === 12) label = "12:00 → noon";
-
+  for(let h=0; h<24; h++){
     let div = document.createElement("div");
     div.className = "time-slot";
-    div.innerText = label;
-
+    div.innerText = `${String(h).padStart(2,'0')}:00`;
     timeCol.appendChild(div);
   }
-} 
+}
 
 function renderSide(){
 
@@ -1177,50 +1022,13 @@ function renderSide(){
 
   document.getElementById("todayList").innerHTML =
     events.filter(e=>e.date===today)
-    .map(e=>`
-      <div class='item' onclick="openPopup(${JSON.stringify(e).replace(/"/g, '&quot;')})" style="cursor:pointer">
-          ${e.time} - ${e.title}
-      </div>
-    `).join(""); // ✅ DITO
+    .map(e=>`<div class='item'>${e.time} - ${e.title}</div>`).join("");
 
   document.getElementById("pendingList").innerHTML =
     events.filter(e=>e.status==="Pending")
-    .map(e=>`
-      <div class='item' onclick="openPopup(${JSON.stringify(e).replace(/"/g, '&quot;')})" style="cursor:pointer">
-          ${e.time} - ${e.title}
-      </div>
-    `).join(""); // ✅ DITO
+    .map(e=>`<div class='item'>${e.time} - ${e.title}</div>`).join("");
 }
 
-function addCurrentTimeLine(){
-
-  // remove old lines first
-  document.querySelectorAll(".current-line").forEach(e => e.remove());
-
-  const now = new Date();
-  const hour = now.getHours();
-  const min = now.getMinutes();
-
-  const top = (hour * 60) + min;
-
-  const colIndex = now.getDay();
-
-  const col = document.querySelectorAll(".day-col")[colIndex];
-
-  if(!col) return;
-
-  const line = document.createElement("div");
-  line.className = "current-line";
-  line.style.position = "absolute";
-  line.style.left = "0";
-  line.style.right = "0";
-  line.style.height = "2px";
-  line.style.background = "red";
-  line.style.top = top + "px";
-  line.style.zIndex = "50";
-
-  col.appendChild(line);
-}
 /* POPUP */
 function openPopup(e){
   let popup = document.getElementById("popup");
@@ -1269,13 +1077,8 @@ function add(){
   render();
 }
 function change(v){
-  currentWeek.setDate(currentWeek.getDate() + (v * 7));
-  date = new Date(currentWeek);
+  date.setMonth(date.getMonth()+v);
   render();
-}
-function changeMonth(v){
-  currentMonth.setMonth(currentMonth.getMonth() + v);
-  renderMini();
 }
 
 function today(){
@@ -1357,12 +1160,12 @@ function renderMini(){
   const grid = document.getElementById("miniGrid");
   grid.innerHTML = "";
 
-    const y = currentMonth.getFullYear();
-    const m = currentMonth.getMonth();
+  const y = date.getFullYear();
+  const m = date.getMonth();
 
-    document.getElementById("miniMonth").innerText =
-    currentMonth.toLocaleString('default',{month:'long',year:'numeric'});
-    
+  document.getElementById("miniMonth").innerText =
+    date.toLocaleString('default',{month:'long',year:'numeric'});
+
   let first = new Date(y,m,1).getDay();
   let last = new Date(y,m+1,0).getDate();
 
@@ -1389,10 +1192,9 @@ function renderMini(){
     }
 
     div.onclick = ()=>{
-    selected = dayStr;
-    currentWeek = new Date(dayStr);
-    date = new Date(dayStr);
-    render();
+      selected = dayStr;
+      date = new Date(dayStr);
+      render();
     };
 
     grid.appendChild(div);
@@ -1404,7 +1206,7 @@ function renderWeekDays(){
   const el = document.getElementById("weekDays");
   el.innerHTML = "<div></div>";
 
-    let start = new Date(currentWeek);
+  let start = new Date(date);
   start.setDate(date.getDate() - date.getDay());
 
   for(let i=0;i<7;i++){
@@ -1442,26 +1244,6 @@ function openDayView(date){
     : "<p>No bookings for this day.</p>";
 
   document.getElementById("dayModal").style.display = "flex";
-}
-
-function renderWeekHeader(){
-  const el = document.getElementById("weekHeader");
-  el.innerHTML = "<div></div>";
-
-    let start = new Date(currentWeek);
-  start.setDate(date.getDate() - date.getDay());
-
-  for(let i=0;i<7;i++){
-    let d = new Date(start);
-    d.setDate(start.getDate()+i);
-
-    el.innerHTML += `
-      <div>
-        ${d.toLocaleDateString('en-US',{weekday:'short'})}<br>
-        <span style="font-size:12px;color:#9ca3af">${d.getDate()}</span>
-      </div>
-    `;
-  }
 }
 </script>
 
