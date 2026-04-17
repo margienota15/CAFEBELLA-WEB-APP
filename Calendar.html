@@ -110,7 +110,7 @@ body {
   width: 24px;
   height: 24px;
   object-fit: contain;
-  filter: brightness(0) invert(1); /* 🔥 makes icons WHITE */
+  filter: brightness(0) invert(1); 
   opacity: 0.95;
   transition: 0.2s;
 }
@@ -133,12 +133,12 @@ body {
 
 /*********************************** MAIN ********************************/
 .main {
-  flex: 1;
   margin-left: 270px;
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
+  padding: 0;
 }
 .main.full {
   margin-left: 0;
@@ -149,58 +149,53 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #e9e9e9;
-  padding: 15px 25px;
   background: #ffffff;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
   border-bottom: 1px solid #eee;
+  padding: 15px 0;
+  width: 100%;
 }
 .left-section {
   display: flex;
   align-items: center;
   gap: 15px;
+  padding-left: 20px;   
 }
+
 /******************************** CALENDAR ********************************/
 .calendar-header-card{
   display:flex;
   justify-content:space-between;
   align-items:center;
-
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 14px;
-
-  padding: 12px 18px;
-
-  margin-top: 16px;      /* ✅ ADD SPACE FROM TOPBAR */
-  margin-bottom: 14px;
-
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-
-  max-height: 90px;
+  border-radius: 16px;
+  padding: 16px 20px; 
+  margin: 16px 10px 14px; 
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 }
-
 .calendar-header-left h1{
   font-size: 20px;
   margin: 0;
   color: #114500;
 }
-
 .calendar-header-left p{
   font-size: 13px;
   margin-top: 3px;
   color: #6b7280;
 }
-
 .calendar-header-right .date-box{
-  background:#f4f6f9;
-  padding:8px 12px;
-  border-radius:10px;
+  background:#ecfdf5;
+  padding:10px 14px;
+  border-radius:12px;
   font-size:13px;
   display:flex;
   align-items:center;
   gap:8px;
   white-space:nowrap;
+  border: 1px solid #bbf7d0;
+  font-weight: 500;
+  color: #166534;
 }
 
 /******************************** SEARCH BAR ********************************/
@@ -213,7 +208,6 @@ body {
   border-radius: 25px;
   width: 350px;
 }
-
 .search-container span {
   margin-right: 10px;
   font-size: 16px;
@@ -237,6 +231,7 @@ body {
   border-radius: 50px;
   box-shadow: 0 3px 10px rgba(0,0,0,0.1);
   transition: 0.3s;
+  margin-right: 20px;   
 }
 .admin:hover {
   background: #f1f1f1;
@@ -318,13 +313,11 @@ body {
   margin-left: 0;
   padding-top: 9px;
 }
-
 .title-container h1 {
   font-size: 28px;
   margin-bottom: 10px;
   color: #114500;
 }
-
 .title-container p {
   font-size: 16px;  
   color: #555;
@@ -346,74 +339,6 @@ body {
   overflow: hidden;
 }
 
-/******************************** TOOLBAR ********************************/
-.toolbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin: 15px 0 20px;
-  padding: 0 10px;
-}
-
-/* LEFT SIDE (MONTH TITLE) */
-.toolbar h3{
-  font-size:24px;
-  font-weight:700;
-  color:#111827;
-  margin:0;
-}
-
-/* RIGHT SIDE WRAPPER */
-.toolbar-right{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
-}
-.toolbar-right select{
-  width:140px;
-}
-/******************************** SEARCH SELECT ********************************/
-.search{
-  width:180px;
-  padding:10px 12px;
-  border-radius:10px;
-  border:1px solid var(--border);
-}
-.search, select{
-  padding:10px 12px;
-  border-radius:10px;
-  border:1px solid var(--border);
-  background:white;
-  font-size:13px;
-}
-.search:focus, select:focus{
-  outline:none;
-  border-color:var(--primary);
-  box-shadow:0 0 0 3px rgba(22,163,74,0.15);
-}
-/******************************** BUTTON ********************************/
-button{
-  padding:10px 14px;
-  border-radius:10px;
-  border:none;
-  cursor:pointer;
-  font-size:13px;
-  transition:0.2s ease;
-}
-button:hover{
-  transform:translateY(-1px);
-}
-.btn-green{
-  background: linear-gradient(135deg,#16a34a,#22c55e);
-  border-radius:12px;
-  padding:10px 16px;
-  box-shadow:0 4px 12px rgba(22,163,74,0.3);
-}
-.btn-green:hover{
-  opacity:0.9;
-}
-
 /******************************** LAYOUT ********************************/
 .layout{
   display: grid;
@@ -424,6 +349,7 @@ button:hover{
   height: calc(100vh - 120px); /* 👈 mas mataas area */
   padding: 0 10px 10px;
 }
+
 /******************************** CALENDAR ********************************/
 .calendar,
 .mini-calendar,
@@ -435,9 +361,8 @@ button:hover{
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
   display:flex;
   flex-direction:column;
-
-  height: auto;              /* 🔥 NO FULL STRETCH */
-  max-height: none;   /* 👈 remove limit */
+  height: auto;            
+  max-height: none;   
 }
 .calendar{
   background:white;
@@ -445,10 +370,8 @@ button:hover{
   padding:16px;
   border:1px solid #eef2f7;
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-
   display:flex;
   flex-direction:column;
-
   height: auto;
   min-height: 100%;
   overflow: hidden;
@@ -466,7 +389,6 @@ button:hover{
   gap:16px;
   margin-bottom:10px;
 }
-
 .calendar-top button{
   background:#f1f5f9;
   border:none;
@@ -475,6 +397,8 @@ button:hover{
   font-weight:600;
   cursor:pointer;
 }
+
+/******************************** MINI CALENDAR ********************************/
 .mini-header{
   display:flex;
   justify-content:space-between;
@@ -490,7 +414,6 @@ button:hover{
   font-size:16px;
   transition:0.2s;
 }
-
 .mini-header button:hover{
   background:#16a34a;
   color:white;
@@ -504,8 +427,8 @@ button:hover{
   height: fit-content;
   max-height: 580px;
   overflow: hidden;
-  width: 320px;      /* 👈 default mo probably ~240px */
-  min-width: 300px;  /* 👈 prevents shrinking */
+  width: 320px;     
+  min-width: 300px;  
 }
 .mini-calendar h4{
   font-size:14px;
@@ -521,13 +444,13 @@ button:hover{
   overflow:hidden;
 }
 .mini-day {
-  text-align:center;      /* 🔥 bawas height */
+  text-align:center;      
   cursor:pointer;
   background:white;
   border:1px solid #eef2f7;
   transition:0.2s ease;
   font-weight:500;
-  padding:12px 0;   /* 👈 konting bigger click area */
+  padding:12px 0;   
   font-size:14px;
   border-radius:12px;
 }
@@ -545,13 +468,116 @@ button:hover{
 .mini-selected {
   outline: 2px solid #3b82f6;
 }
-/******************************** DASHBOARD ********************************/
-.dashboard-header{
-  border-radius:18px;
-  padding:20px 25px;
-  background: #ffffff;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+
+/******************************** CURRENT DAY LEFT SIDE (inside Hours Calendar ) ********************************/
+.left-today{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  font-size:12px;
+  border-right:1px solid #e5e7eb;
 }
+
+#leftDay{
+  font-weight:700;
+  color:#16a34a; /* BLUE */
+  font-size:18px;
+  letter-spacing:1px;
+}
+
+#leftDate{
+  font-size:42px;
+  font-weight:800;
+  color:#16a34a; 
+  line-height:1;
+}
+
+/******************************** WEEK ( inside Hours Calendar ) ********************************/
+.week{
+  display: grid;
+  grid-template-columns: 100px repeat(7,1fr);
+  height: fit-content;  
+  min-height: 0;
+  max-height: calc(var(--visible-hours) * var(--cell-height));
+  overflow-y: auto;
+}
+.week-days{
+  display:grid;
+  grid-template-columns:100px repeat(7,1fr);
+  align-items:center;
+  text-align:center;
+  border-bottom:1px solid #e5e7eb;
+  margin-bottom:5px;
+}
+.week-days > div{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.week-grid{
+  display: contents;
+  height: fit-content;
+}
+
+/******************************** TIMELINE ( inside Hour Calendar ) ********************************/
+.hour-line{
+  height: var(--cell-height);
+  min-height: var(--cell-height);
+  border-bottom:1px solid #f1f5f9;
+}
+.time-col{
+  width:100px;
+  background:#fafafa;
+  border-right:1px solid #e5e7eb;
+  height: 100%;
+}
+.time-slot{
+  height: var(--cell-height);
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  padding-right:10px;
+  font-size:12px;
+  color:#6b7280;
+}
+.time-slot span{
+  background: #ffffff;
+  padding: 4px 8px;
+  border-radius: 8px;
+  border: 1px solid #eef2f7;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+.time-slot:hover span{
+  background: #f9fafb;
+  border-color: #d1d5db;
+  color: #111827;
+  transform: translateX(-2px);
+}
+.current-hour{
+  background: transparent;
+  border-left: none;
+  font-weight: 600;
+}
+.current-hour span{
+  background: #f3f4f6;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  box-shadow: none;
+}
+.current-hour::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: #16a34a;
+  box-shadow: 0 0 12px #22c55e;
+  border-radius: 4px;
+}
+
 /******************************** HEADER ********************************/
 .header{
   display:flex;
@@ -577,22 +603,19 @@ button:hover{
   margin: 0;
 }
 
-/******************************** DAY ********************************/
+/******************************** NOTES INSIDE HOUR / EVENTS ********************************/
 .day-note{
   position:absolute;
   top:8px;
   left:8px;
   right:8px;
-
   background:#16a34a;
   color:white;
   font-size:12px;
   padding:6px 8px;
   border-radius:8px;
-
   text-align:center;
   cursor:pointer;
-
   box-shadow:0 4px 10px rgba(0,0,0,0.15);
   z-index:10;
 }
@@ -600,8 +623,7 @@ button:hover{
   position: relative;
   display: flex;
   flex-direction: column;
-
-  height: fit-content;   /* 🔥 no forced full stretch */
+  height: fit-content;  
 }
 .day-col .hour-line{
   height:60px;
@@ -630,12 +652,58 @@ button:hover{
   gap:6px;
 }
 
+/******************************** LEGEND / Coffee Booth Matcha Booth Tattoo Event ********************************/
+.legend-panel{
+  background:white;
+  border-radius:16px;
+  padding:16px;
+  border:1px solid #eef2f7;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  height: fit-content;
+  width: 220px;
+}
 .legend-panel h3{
-  font-size:14px;
-  margin-top:10px;
+  font-size:15px;
+  margin-bottom:12px;
+  color:#111827;
+  font-weight:700;
+}
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+  font-size:13px;
+  color:#374151;
+}
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:3px;
+}
+.yellow{ background:#facc15; }
+.green{ background:#22c55e; }
+.blue{ background:#3b82f6; }
+.panel{
+  background:white;
+  border-radius:20px;
+  padding:16px;
+  border:1px solid #eef2f7;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  height: 100%;
+  overflow: hidden;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.panel h3{
+  margin-bottom: 10px;
+  color: #111827;
+  font-size:15px;
+  font-weight:700;
 }
 
-
+/******************************** TODAY SCHEDULE ********************************/
 .side-box{
   margin-top:12px;
   padding:12px;
@@ -644,28 +712,23 @@ button:hover{
   background:#f9fafb;
   box-shadow:0 4px 10px rgba(0,0,0,0.04);
 }
-
 .today-box{
   border-left:4px solid #16a34a;
 }
-
 .pending-box{
   border-left:4px solid #f59e0b;
 }
-
 .box-header{
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:8px;
 }
-
 .box-header h4{
   font-size:13px;
   font-weight:700;
   color:#111827;
 }
-
 .badge{
   font-size:11px;
   background:#16a34a;
@@ -673,20 +736,16 @@ button:hover{
   padding:2px 8px;
   border-radius:999px;
 }
-
 .badge.pending{
   background:#f59e0b;
 }
-
 .box-list{
   display:flex;
   flex-direction:column;
   gap:6px;
-
-  max-height: none;   /* ❌ remove limit */
-  overflow: visible;  /* ❌ no scroll */
+  max-height: none;   
+  overflow: visible;  
 }
-
 .box-list .item{
   background:white;
   border:1px solid #eee;
@@ -695,122 +754,11 @@ button:hover{
   font-size:12px;
   transition:0.2s;
 }
-
 .box-list .item:hover{
   transform:translateX(3px);
   border-color:#16a34a;
 }
-/******************************** CURRENT DAY LEFT SIDE ********************************/
-.left-today{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  font-size:12px;
-  border-right:1px solid #e5e7eb;
-}
 
-#leftDay{
-  font-weight:600;
-  color:#6b7280;
-}
-
-#leftDate{
-  font-size:18px;
-  font-weight:700;
-  color:#114500;
-}
-/******************************** WEEK ********************************/
-.week{
-  display: grid;
-  grid-template-columns: 100px repeat(7,1fr);
-
-  height: fit-content;   /* 🔥 KEY FIX */
-  min-height: 0;
-  max-height: calc(var(--visible-hours) * var(--cell-height));
-  overflow-y: auto;
-}
-.week-days{
-  display:grid;
-  grid-template-columns:100px repeat(7,1fr);
-  align-items:center;
-  text-align:center;
-  border-bottom:1px solid #e5e7eb;
-  margin-bottom:5px;
-}
-.week-days > div{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-}
-.week-grid{
-  display: contents;
-  height: fit-content;
-}
-/******************************** TIME COLUMN (PRO UI UPGRADE) ********************************/
-.hour-line{
-  height: var(--cell-height);
-  min-height: var(--cell-height);
-  border-bottom:1px solid #f1f5f9;
-}
-.time-col{
-  width:100px;
-  background:#fafafa;
-  border-right:1px solid #e5e7eb;
-  height: 100%;
-}
-
-.time-slot{
-  height: var(--cell-height);
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  padding-right:10px;
-  font-size:12px;
-  color:#6b7280;
-}
-
-/* TIME LABEL DESIGN */
-.time-slot span{
-  background: #ffffff;
-  padding: 4px 8px;
-  border-radius: 8px;
-  border: 1px solid #eef2f7;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-}
-.time-slot:hover span{
-  background: #f9fafb;
-  border-color: #d1d5db;
-  color: #111827;
-  transform: translateX(-2px);
-}
-
-.current-hour{
-  background: transparent;
-  border-left: none;
-  font-weight: 600;
-}
-
-.current-hour span{
-  background: #f3f4f6;
-  color: #111827;
-  border: 1px solid #e5e7eb;
-  box-shadow: none;
-}
-
-/* glowing line indicator */
-.current-hour::before{
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 3px;
-  background: #16a34a;
-  box-shadow: 0 0 12px #22c55e;
-  border-radius: 4px;
-}
 /******************************** EVENT BLOCK ********************************/
 .event-block {
   position:absolute;
@@ -896,7 +844,6 @@ button:hover{
 .modal-content h3{
   margin-bottom:10px;
 }
-
 .modal-content input,
 .modal-content select{
   width:100%;
@@ -936,109 +883,8 @@ button:hover{
     color:white;
 }
 
-.dashboard-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
-  padding:10px 0;
-  background: transparent;
-  border-radius:0;
-  box-shadow:none;
-  border:none;
-}
-
-.current-hour {
-  background: #dcfce7;
-  border-left: 4px solid #16a34a;
-  font-weight: 700;
-}
-
-.date-box{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:10px 14px;
-  background:#f4f6f9;
-  border-radius:12px;
-  font-size:13px;
-  color:#333;
-  font-weight:500;
-}
-
-.date-box i{
-  background:#f1f5f9;
-  border-radius:12px;
-}
-/* SCROLL STYLE */
-::-webkit-scrollbar{
-  width:6px;
-}
-::-webkit-scrollbar-thumb{
-  background:#d1d5db;
-  border-radius:10px;
-}
-
-/******************************** LEGEND PANEL ********************************/
-.legend-panel{
-  background:white;
-  border-radius:16px;
-  padding:16px;
-  border:1px solid #eef2f7;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-
-  height: fit-content;
-  width: 220px;
-}
-
-.legend-panel h3{
-  font-size:15px;
-  margin-bottom:12px;
-  color:#111827;
-  font-weight:700;
-}
-
-.legend-item{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:10px;
-  font-size:13px;
-  color:#374151;
-}
-
-.dot{
-  width:10px;
-  height:10px;
-  border-radius:3px;
-}
-
-.yellow{ background:#facc15; }
-.green{ background:#22c55e; }
-.blue{ background:#3b82f6; }
-.panel{
-  background:white;
-  border-radius:20px;
-  padding:16px;
-  border:1px solid #eef2f7;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-
-  height: 100%;
-  overflow: hidden;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-
-.panel h3{
-  margin-bottom: 10px;
-  color: #111827;
-  font-size:15px;
-  font-weight:700;
-}
 </style>
 </head>
-
 <body>
 
 <!--------------------------------------- SIDEBAR ---------------------------------------------> 
@@ -1100,28 +946,13 @@ button:hover{
   <div class="calendar-header-right">
     <div class="date-box">
       <i class="fa-solid fa-calendar"></i>
-      <span>Today: April 17, 2026</span>
+      <span id="calendarDate"></span>
     </div>
   </div>
 </div>
 
 <!--------------------------------------- TOOLBAR ---------------------------------------------> 
 
-<!-- TOOLBAR -->
-<div class="toolbar">
-  <h3 id="monthText"></h3>
-
-  <div class="toolbar-right">
-    <input class="search" placeholder="Search..." oninput="search(this.value)">
-    <select onchange="filter(this.value)">
-      <option value="All">All</option>
-      <option value="Accepted">Accepted</option>
-      <option value="Pending">Pending</option>
-      <option value="Declined">Declined</option>
-    </select>
-    <button class="btn-green" onclick="openModal()">+ Add</button>
-  </div>
-</div>
 
 <div class="layout">
 
@@ -1136,7 +967,7 @@ button:hover{
 
     <div class="mini-grid" id="miniGrid"></div>
 </div>
-<!--------------------------------------- CALENDAR ---------------------------------------------> 
+<!--------------------------------------- HOUR CALENDAR ---------------------------------------------> 
 <div class="calendar">
 
   <!-- TOP NAV -->
@@ -1159,6 +990,7 @@ button:hover{
     </div>
   </div>
 
+<!--------------------------------------- LEGEND / Event Package --------------------------------------------->
 <div class="legend-panel">
   <h3>Event Packages</h3>
 
@@ -1196,7 +1028,7 @@ button:hover{
   </div>
 </div>
 
-<!-- MODAL -->
+<!--------------------------------------- MODAL --------------------------------------------->
 <div class="modal" id="modal">
   <div class="modal-content">
     <h3>Add Event</h3>
@@ -1219,7 +1051,8 @@ button:hover{
     <button onclick="closeConfirm()">Cancel</button>
   </div>
 </div>
-<!-- POPUP -->
+
+<!--------------------------------------- POP UP --------------------------------------------->
 <div class="popup" id="popup"></div>
 
 <div class="modal" id="dayModal">
@@ -1313,7 +1146,21 @@ menuBtn.onclick = function() {
   main.classList.toggle("full");
 };
 
+/******************************** CALENDAR CURRENT DATE DISPLAY / NAVBAR ********************************/
+function updatecalendarDate(){
+  const el = document.getElementById("calendarDate");
+  if(!el) return;
 
+  const now = new Date();
+
+  el.textContent = now.toLocaleDateString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+}
+/******************************** GLOBAL STATE VARIABLE ********************************/
 let date = new Date();
 let selected = null;
 let filterStatus = "All";
@@ -1330,6 +1177,7 @@ let events = JSON.parse(localStorage.getItem("events")) || [
 events = events.filter(e => !e.time.startsWith("10:"));
 localStorage.setItem("events", JSON.stringify(events));
 
+/******************************** render() ********************************/
 function render(){
 
   renderTime();
@@ -1364,9 +1212,6 @@ function render(){
     line.className = "hour-line";
     col.appendChild(line);
   }
-
-    // EVENTS (BLOCKS)
-// EVENTS (BLOCKS)
     dayEvents.forEach(e=>{
       let [hour, min] = e.time.split(":").map(Number);
 
@@ -1390,227 +1235,13 @@ function render(){
     weekGrid.appendChild(col);
   }
 
-  document.getElementById("monthText").innerText =
-    date.toLocaleDateString('default',{month:'long',year:'numeric'});
-
   renderMini();
   renderWeekDays();
   updateLeftToday();
   renderSide();
 }
 
-function formatHour(h){
-  const period = h >= 12 ? "PM" : "AM";
-  let hour = h % 12;
-  if(hour === 0) hour = 12;
-
-  if(hour === 12 && period === "PM") return "12:00 NN";
-
-  return `${hour}:00 ${period}`;
-}
-
-function renderTime(){
-
-  const timeCol = document.getElementById("timeCol");
-  timeCol.innerHTML = "";
-
-  let now = new Date().getHours();
-
-  // ✅ START: 10 AM (10)
-  // ✅ END: 11 PM (23)
-  for(let h = 10; h <= 23; h++){
-
-    let div = document.createElement("div");
-    div.className = "time-slot";
-
-    div.innerHTML = `<span>${formatHour(h)}</span>`;
-
-    if(h === now){
-      div.classList.add("current-hour");
-    }
-
-    timeCol.appendChild(div);
-  }
-}
-
-function renderSide(){
-
-  let today = new Date().toISOString().split("T")[0];
-
-  let todayEvents = events.filter(e => e.date === today);
-  let pendingEvents = events.filter(e => e.status === "Pending");
-
-  // LIMIT DISPLAY (NO SCROLL FIX)
-  let limit = 4;
-
-  document.getElementById("todayList").innerHTML =
-    (todayEvents.slice(0, limit).length
-      ? todayEvents.slice(0, limit).map(e=>`
-          <div class="item">${e.time} - ${e.title}</div>
-        `).join("")
-      : "<div class='item'>No events today</div>")
-    +
-    (todayEvents.length > limit ? `<div class="item">+ ${todayEvents.length - limit} more</div>` : "");
-
-  document.getElementById("pendingList").innerHTML =
-    (pendingEvents.slice(0, limit).length
-      ? pendingEvents.slice(0, limit).map(e=>`
-          <div class="item">${e.time} - ${e.title}</div>
-        `).join("")
-      : "<div class='item'>No pending events</div>")
-    +
-    (pendingEvents.length > limit ? `<div class="item">+ ${pendingEvents.length - limit} more</div>` : "");
-
-  document.getElementById("todayCount").innerText = todayEvents.length;
-  document.getElementById("pendingCount").innerText = pendingEvents.length;
-}
-function openModal(){
-  document.getElementById("modal").style.display="flex";
-}
-
-function add(){
-
-  let newDate = selected || new Date().toISOString().split("T")[0];
-  let newTime = document.getElementById("time").value;
-
-  let title = document.getElementById("title").value;
-  let status = document.getElementById("status").value;
-
-  // ❌ BLOCK 10:00 AM RANGE
-  if(newTime.startsWith("10:")){
-    alert("10:00 AM is not allowed");
-    return;
-  }
-
-  // ❌ EMPTY INPUT CHECK (recommended)
-  if(!title || !newTime){
-    alert("Please complete all fields");
-    return;
-  }
-
-  // ❌ CHECK IF TIME ALREADY EXISTS IN SAME DAY
-  let exists = events.find(e => 
-    e.date === newDate && e.time === newTime
-  );
-
-  if(exists){
-    alert("⚠️ This time slot already has a booking for this day!");
-    return;
-  }
-
-  // ✏️ EDIT MODE
-  if(editMode && editTarget){
-
-    editTarget.title = title;
-    editTarget.time = newTime;
-    editTarget.status = status;
-
-    editMode = false;
-    editTarget = null;
-
-  } 
-  // ➕ ADD NEW EVENT
-  else {
-
-    events.push({
-      date: newDate,
-      title: title,
-      time: newTime,
-      status: status
-    });
-  }
-
-  // 💾 SAVE + RELOAD UI
-  save();
-  closeModal();
-  render();
-}
-
-function change(v){
-  date.setDate(date.getDate() + (v * 7)); // ✅ 1 WEEK SHIFT
-  render();
-}
-function miniChange(v){
-  date.setDate(1);
-  date.setMonth(date.getMonth() + v);
-
-  selected = null; // reset selected day (optional)
-  render();
-}
-function today(){
-  date=new Date();
-  render();
-}
-
-function search(v){
-  searchText=v;
-  render();
-}
-
-function filter(v){
-  filterStatus=v;
-  render();
-}
-
-function color(s){
-  if(s==="Accepted") return "green";
-  if(s==="Pending") return "orange";
-  return "red";
-}
-
-render();
-
-
-function save(){
-  localStorage.setItem("events", JSON.stringify(events));
-}
-
-function deleteEvent(date,title){
-  deleteTarget = {date,title};
-  document.getElementById("confirmModal").style.display="flex";
-}
-function confirmDelete(){
-
-  events = events.filter(e =>
-    !(e.date === deleteTarget.date && e.title === deleteTarget.title)
-  );
-
-  save();
-  closeConfirm();
-  render();
-}
-function closeConfirm(){
-  document.getElementById("confirmModal").style.display="none";
-  deleteTarget = null;
-}
-function editEvent(date,title){
-
-  editMode = true;
-
-  editTarget = events.find(e =>
-    e.date === date && e.title === title
-  );
-
-  document.getElementById("title").value = editTarget.title;
-  document.getElementById("time").value = editTarget.time;
-  document.getElementById("status").value = editTarget.status;
-
-  openModal();
-}
-
-document.addEventListener("keydown", (e)=>{
-  if(e.key === "Escape"){
-    document.getElementById("modal").style.display="none";
-    document.getElementById("popup").style.display="none";
-  }
-});
-
-document.getElementById("modal").addEventListener("click", (e)=>{
-  if(e.target.classList.contains("modal")){
-    e.target.style.display="none";
-  }
-});
-
+/******************************** CALENDAR / renderMini() ********************************/
 function renderMini(){
 
   const grid = document.getElementById("miniGrid");
@@ -1622,7 +1253,6 @@ function renderMini(){
   document.getElementById("miniMonth").innerText =
     date.toLocaleString('default',{month:'long',year:'numeric'});
 
-  // ✅ ADD DAYS HEADER
   const days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
   days.forEach(d=>{
     let head = document.createElement("div");
@@ -1676,6 +1306,67 @@ function renderMini(){
   }
 }
 
+/******************************** MINI CALENDAR shifts Months / miniChange() ********************************/
+function miniChange(v){
+  date.setDate(1);
+  date.setMonth(date.getMonth() + v);
+  selected = null; 
+  render();
+}
+
+/******************************** MINI CALENDAR weeks displays / updateLeftToday() ********************************/
+function updateLeftToday(){
+  const now = new Date();
+
+  const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+
+  const day = dayNames[now.getDay()];
+  const dateNum = now.getDate();
+
+  document.getElementById("leftDay").innerText = day;
+  document.getElementById("leftDate").innerText = dateNum;
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  updatecalendarDate();
+  setInterval(updatecalendarDate, 60000);
+});
+
+/******************************** HOUR CALENDAR / renderTime() ********************************/
+function renderTime(){
+
+  const timeCol = document.getElementById("timeCol");
+  timeCol.innerHTML = "";
+
+  let now = new Date().getHours();
+
+  for(let h = 10; h <= 23; h++){
+
+    let div = document.createElement("div");
+    div.className = "time-slot";
+
+    div.innerHTML = `<span>${formatHour(h)}</span>`;
+
+    if(h === now){
+      div.classList.add("current-hour");
+    }
+
+    timeCol.appendChild(div);
+  }
+}
+
+/******************************** HOUR CALENDAR / formathour() ********************************/
+function formatHour(h){
+  const period = h >= 12 ? "PM" : "AM";
+  let hour = h % 12;
+  if(hour === 0) hour = 12;
+
+  if(hour === 12 && period === "PM") return "12:00 NN";
+
+  return `${hour}:00 ${period}`;
+}
+
+/******************************** HOUR CALENDAR / renderWeekDays() ********************************/
 function renderWeekDays(){
   const el = document.getElementById("weekDays");
 
@@ -1723,29 +1414,12 @@ function renderWeekDays(){
   }
 }
 
-function updateLeftToday(){
-  const now = new Date();
-
-  document.getElementById("leftDay").textContent =
-    now.toLocaleDateString('en-US', { weekday: 'short' }).toUpperCase();
-
-  document.getElementById("leftDate").textContent =
-    now.getDate();
+/******************************** HOUR CALENDAR shifts Weeks / change(v) ********************************/
+function change(v){
+  date.setDate(date.getDate() + (v * 7)); 
 }
 
-function updateTodayDate(){
-  const el = document.getElementById("todayDate");
-  const now = new Date();
-
-  el.textContent = "Today: " + now.toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric'
-  });
-}
-
-updateTodayDate();
-
+/******************************** HOUR CALENDAR view notes / openDayView() ********************************/
 function openDayView(date){
 
   let list = events.filter(e => e.date === date);
@@ -1762,6 +1436,173 @@ function openDayView(date){
 
   document.getElementById("dayModal").style.display = "flex";
 }
+
+/******************************** TODAY & PENDING  / renderSide() ********************************/
+function renderSide(){
+
+  let today = new Date().toISOString().split("T")[0];
+
+  let todayEvents = events.filter(e => e.date === today);
+  let pendingEvents = events.filter(e => e.status === "Pending");
+
+  let limit = 4;
+
+  document.getElementById("todayList").innerHTML =
+    (todayEvents.slice(0, limit).length
+      ? todayEvents.slice(0, limit).map(e=>`
+          <div class="item">${e.time} - ${e.title}</div>
+        `).join("")
+      : "<div class='item'>No events today</div>")
+    +
+    (todayEvents.length > limit ? `<div class="item">+ ${todayEvents.length - limit} more</div>` : "");
+
+  document.getElementById("pendingList").innerHTML =
+    (pendingEvents.slice(0, limit).length
+      ? pendingEvents.slice(0, limit).map(e=>`
+          <div class="item">${e.time} - ${e.title}</div>
+        `).join("")
+      : "<div class='item'>No pending events</div>")
+    +
+    (pendingEvents.length > limit ? `<div class="item">+ ${pendingEvents.length - limit} more</div>` : "");
+
+  document.getElementById("todayCount").innerText = todayEvents.length;
+  document.getElementById("pendingCount").innerText = pendingEvents.length;
+}
+
+/******************************** openModal() ********************************/
+function openModal(){
+  document.getElementById("modal").style.display="flex";
+}
+
+function add(){
+
+  let newDate = selected || new Date().toISOString().split("T")[0];
+  let newTime = document.getElementById("time").value;
+
+  let title = document.getElementById("title").value;
+  let status = document.getElementById("status").value;
+
+  if(newTime.startsWith("10:")){
+    alert("10:00 AM is not allowed");
+    return;
+  }
+
+  if(!title || !newTime){
+    alert("Please complete all fields");
+    return;
+  }
+
+  let exists = events.find(e => 
+    e.date === newDate && e.time === newTime
+  );
+
+  if(exists){
+    alert("⚠️ This time slot already has a booking for this day!");
+    return;
+  }
+
+  if(editMode && editTarget){
+
+    editTarget.title = title;
+    editTarget.time = newTime;
+    editTarget.status = status;
+
+    editMode = false;
+    editTarget = null;
+
+  } 
+
+  else {
+
+    events.push({
+      date: newDate,
+      title: title,
+      time: newTime,
+      status: status
+    });
+  }
+  save();
+  closeModal();
+  render();
+}
+
+
+
+function today(){
+  date=new Date();
+  render();
+}
+
+function search(v){
+  searchText=v;
+  render();
+}
+
+function filter(v){
+  filterStatus=v;
+  render();
+}
+
+function color(s){
+  if(s==="Accepted") return "green";
+  if(s==="Pending") return "orange";
+  return "red";
+
+  render();
+}
+
+function save(){
+  localStorage.setItem("events", JSON.stringify(events));
+}
+
+function deleteEvent(date,title){
+  deleteTarget = {date,title};
+  document.getElementById("confirmModal").style.display="flex";
+}
+function confirmDelete(){
+
+  events = events.filter(e =>
+    !(e.date === deleteTarget.date && e.title === deleteTarget.title)
+  );
+
+  save();
+  closeConfirm();
+  render();
+}
+function closeConfirm(){
+  document.getElementById("confirmModal").style.display="none";
+  deleteTarget = null;
+}
+
+
+function editEvent(date,title){
+
+  editMode = true;
+
+  editTarget = events.find(e =>
+    e.date === date && e.title === title
+  );
+
+  document.getElementById("title").value = editTarget.title;
+  document.getElementById("time").value = editTarget.time;
+  document.getElementById("status").value = editTarget.status;
+
+  openModal();
+}
+
+document.addEventListener("keydown", (e)=>{
+  if(e.key === "Escape"){
+    document.getElementById("modal").style.display="none";
+    document.getElementById("popup").style.display="none";
+  }
+});
+
+document.getElementById("modal").addEventListener("click", (e)=>{
+  if(e.target.classList.contains("modal")){
+    e.target.style.display="none";
+  }
+});
+
 </script>
 
 </body>
