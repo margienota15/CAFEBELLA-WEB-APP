@@ -304,20 +304,23 @@
   font-weight: 600;
   color: #114500;
 }
-/* 🔥 MODERN DASHBOARD HEADER */
-.dashboard-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.dashboard-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 
-  padding: 20px 30px;
-  margin-bottom: 15px;
-
-  background: linear-gradient(135deg, #ffffff, #f7f9fc);
-  border: 1px solid #eee;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   border-radius: 14px;
 
-  box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+  padding: 12px 18px;
+
+  margin-top: 16px;
+  margin-bottom: 14px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+
+  max-height: 90px;
 }
 .dashboard-scroll {
   flex: 1;
@@ -334,34 +337,27 @@
   background: #ccc;
   border-radius: 10px;
 }
-
-/* LEFT SIDE */
-.header-left h1 {
-  font-size: 24px;
-  font-weight: 700;
+.header-left h1{
+  font-size: 20px;
+  margin: 0;
   color: #114500;
 }
 
-.header-left p {
+.header-left p{
   font-size: 13px;
-  color: #666;
-  margin-top: 4px;
+  margin-top: 3px;
+  color: #6b7280;
 }
 
-/* RIGHT SIDE */
-.date-box {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  background: #eaf7ee;
-  color: #1b5e20;
-
-  padding: 8px 12px;
-  border-radius: 10px;
-
-  font-size: 13px;
-  font-weight: 500;
+.date-box{
+  background:#f4f6f9;
+  padding:8px 12px;
+  border-radius:10px;
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  white-space:nowrap;
 }
 
 .date-box i {
@@ -700,7 +696,7 @@
   <div class="header-right">
     <div class="date-box">
       <i class="fa-solid fa-calendar"></i>
-      <span>Today: April 14, 2026</span>
+      <span id="todayDate">Today: </span>
     </div>
   </div>
 </div>
@@ -947,6 +943,21 @@ new Chart(ctx, {
   }
 });
 
+function updateTodayDate() {
+  const today = new Date();
+
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  };
+
+  const formattedDate = today.toLocaleDateString('en-US', options);
+
+  document.getElementById("todayDate").textContent = "Today: " + formattedDate;
+}
+
+updateTodayDate();
 </script>
 
 </body>
