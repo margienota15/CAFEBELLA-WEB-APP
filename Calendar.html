@@ -561,8 +561,8 @@ body {
   font-weight: 600;
 }
 .current-hour span{
-  background: #f3f4f6;
-  color: #111827;
+  background: #025a24;
+  color: #ffffff;
   border: 1px solid #e5e7eb;
   box-shadow: none;
 }
@@ -1147,6 +1147,8 @@ menuBtn.onclick = function() {
 };
 
 /******************************** GLOBAL STATE VARIABLE ********************************/
+
+localStorage.removeItem("events"); 
 let date = new Date();
 let selected = null;
 let filterStatus = "All";
@@ -1155,10 +1157,7 @@ let editMode = false;
 let editTarget = null;
 let deleteTarget = null;
 
-let events = JSON.parse(localStorage.getItem("events")) || [
-  {date:"2026-04-15", title:"Tattoo Event", time:"18:00", status:"Accepted"},
-  {date:"2026-04-15", title:"Coffee Booth", time:"14:00", status:"Pending"}
-];
+let events = JSON.parse(localStorage.getItem("events")) || [];
 
 events = events.filter(e => !e.time.startsWith("10:"));
 localStorage.setItem("events", JSON.stringify(events));
@@ -1213,6 +1212,7 @@ function render(){
       div.style.height = "50px";
 
       div.innerText = e.title;
+      div.setAttribute("data-note", e.notes || "No notes");
 
       div.onclick = () => openPopup(e);
 
@@ -1289,9 +1289,12 @@ function renderSide(){
     +
     (pendingEvents.length > limit ? `<div class="item">+ ${pendingEvents.length - limit} more</div>` : "");
 
-  document.getElementById("todayCount").innerText = todayEvents.length;
-  document.getElementById("pendingCount").innerText = pendingEvents.length;
-}
+  document.getElementById("todayCount").innerText =
+    todayEvents.length === 0 ? "No Events" : todayEvents.length;
+  document.getElementById("pendingCount").innerText =
+    pendingEvents.length === 0 ? "No Pending" : pendingEvents.length;
+  }
+
 function openModal(){
   document.getElementById("modal").style.display="flex";
 }
@@ -1303,6 +1306,7 @@ function add(){
 
   let title = document.getElementById("title").value;
   let status = document.getElementById("status").value;
+  let notes = document.getElementById("notes").value;
 
   // ❌ BLOCK 10:00 AM RANGE
   if(newTime.startsWith("10:")){
@@ -1344,7 +1348,8 @@ function add(){
       date: newDate,
       title: title,
       time: newTime,
-      status: status
+      status: status,
+      notes: notes
     });
   }
 
