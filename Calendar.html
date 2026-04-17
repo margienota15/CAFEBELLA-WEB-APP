@@ -33,7 +33,7 @@ body {
   --muted:#6b7280;
   --border:#e5e7eb;
   --shadow:0 10px 25px rgba(0,0,0,0.08);
-  --cell-height: 52px;
+  --cell-height: 70px;   /* 👈 from 52px → 70px (bigger rows) */
   --visible-hours: 14;
 }
 
@@ -351,23 +351,34 @@ body {
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:20px;
-  margin-top:10px;
-}
-.toolbar h3{
-  font-size:26px;
-  font-weight:700;
-}
-.toolbar-right{
-  display:flex;
-  gap:10px;
-  align-items:center;
+  margin: 15px 0 20px;
+  padding: 0 10px;
 }
 
+/* LEFT SIDE (MONTH TITLE) */
+.toolbar h3{
+  font-size:24px;
+  font-weight:700;
+  color:#111827;
+  margin:0;
+}
+
+/* RIGHT SIDE WRAPPER */
+.toolbar-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.toolbar-right select{
+  width:140px;
+}
 /******************************** SEARCH SELECT ********************************/
 .search{
-  border-radius:12px;
-  background:#f9fafb;
+  width:180px;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid var(--border);
 }
 .search, select{
   padding:10px 12px;
@@ -406,11 +417,11 @@ button:hover{
 /******************************** LAYOUT ********************************/
 .layout{
   display: grid;
-  grid-template-columns: 260px 1fr 240px;
+  grid-template-columns: 320px 1fr 240px;
   gap: 18px;
   flex: 1;
   min-height: 0;
-  height: calc(100vh - 170px);
+  height: calc(100vh - 120px); /* 👈 mas mataas area */
   padding: 0 10px 10px;
 }
 /******************************** CALENDAR ********************************/
@@ -426,7 +437,7 @@ button:hover{
   flex-direction:column;
 
   height: auto;              /* 🔥 NO FULL STRETCH */
-  max-height: 650px;        /* 🔥 LIMIT TOTAL HEIGHT */
+  max-height: none;   /* 👈 remove limit */
 }
 .calendar{
   background:white;
@@ -438,8 +449,8 @@ button:hover{
   display:flex;
   flex-direction:column;
 
-  height: 100%;
-  min-height: 0;
+  height: auto;
+  min-height: 100%;
   overflow: hidden;
 }
 .calendar .header{
@@ -490,10 +501,11 @@ button:hover{
   padding:14px;
   border:1px solid #eef2f7;
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-
   height: fit-content;
-  max-height: 520px;
+  max-height: 580px;
   overflow: hidden;
+  width: 320px;      /* 👈 default mo probably ~240px */
+  min-width: 300px;  /* 👈 prevents shrinking */
 }
 .mini-calendar h4{
   font-size:14px;
@@ -515,8 +527,8 @@ button:hover{
   border:1px solid #eef2f7;
   transition:0.2s ease;
   font-weight:500;
-  padding:10px 0;   /* 🔥 bigger click area */
-  font-size:14px;   /* 🔥 clearer text */
+  padding:12px 0;   /* 👈 konting bigger click area */
+  font-size:14px;
   border-radius:12px;
 }
 .mini-day:hover {
@@ -612,9 +624,81 @@ button:hover{
   letter-spacing:0.5px;
 }
 #todayList, #pendingList{
-  overflow-y:auto;
-  max-height: 220px;
-  padding-right: 4px;
+  margin-top:6px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.legend-panel h3{
+  font-size:14px;
+  margin-top:10px;
+}
+
+
+.side-box{
+  margin-top:12px;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid #eef2f7;
+  background:#f9fafb;
+  box-shadow:0 4px 10px rgba(0,0,0,0.04);
+}
+
+.today-box{
+  border-left:4px solid #16a34a;
+}
+
+.pending-box{
+  border-left:4px solid #f59e0b;
+}
+
+.box-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:8px;
+}
+
+.box-header h4{
+  font-size:13px;
+  font-weight:700;
+  color:#111827;
+}
+
+.badge{
+  font-size:11px;
+  background:#16a34a;
+  color:white;
+  padding:2px 8px;
+  border-radius:999px;
+}
+
+.badge.pending{
+  background:#f59e0b;
+}
+
+.box-list{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+
+  max-height: none;   /* ❌ remove limit */
+  overflow: visible;  /* ❌ no scroll */
+}
+
+.box-list .item{
+  background:white;
+  border:1px solid #eee;
+  border-radius:10px;
+  padding:8px;
+  font-size:12px;
+  transition:0.2s;
+}
+
+.box-list .item:hover{
+  transform:translateX(3px);
+  border-color:#16a34a;
 }
 /******************************** CURRENT DAY LEFT SIDE ********************************/
 .left-today{
@@ -695,26 +779,24 @@ button:hover{
   border: 1px solid #eef2f7;
   box-shadow: 0 2px 6px rgba(0,0,0,0.04);
 }
-
-/* HOVER EFFECT */
 .time-slot:hover span{
-  background: #ecfdf5;
-  border-color: #16a34a;
-  color: #16a34a;
-  transform: translateX(-3px);
+  background: #f9fafb;
+  border-color: #d1d5db;
+  color: #111827;
+  transform: translateX(-2px);
 }
 
-/* CURRENT HOUR (HIGHLIGHT PREMIUM STYLE) */
 .current-hour{
-  background: linear-gradient(90deg, rgba(22,163,74,0.08), transparent);
-  position: relative;
+  background: transparent;
+  border-left: none;
+  font-weight: 600;
 }
 
 .current-hour span{
-  background: #16a34a;
-  color: white;
-  border: none;
-  box-shadow: 0 6px 15px rgba(22,163,74,0.35);
+  background: #f3f4f6;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  box-shadow: none;
 }
 
 /* glowing line indicator */
@@ -767,17 +849,6 @@ button:hover{
     opacity:1;
     transform:translateY(0);
   }
-}
-
-/******************************** COLORS ********************************/
-.green { 
-    background: linear-gradient(135deg, #16a34a, #22c55e);
-}
-.orange {
-    background: linear-gradient(135deg, #f59e0b, #fbbf24);
-}
-.red {
-    background: linear-gradient(135deg, #ef4444, #f87171);
 }
 
 /******************************** ITEM ********************************/
@@ -908,6 +979,43 @@ button:hover{
   border-radius:10px;
 }
 
+/******************************** LEGEND PANEL ********************************/
+.legend-panel{
+  background:white;
+  border-radius:16px;
+  padding:16px;
+  border:1px solid #eef2f7;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+
+  height: fit-content;
+  width: 220px;
+}
+
+.legend-panel h3{
+  font-size:15px;
+  margin-bottom:12px;
+  color:#111827;
+  font-weight:700;
+}
+
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+  font-size:13px;
+  color:#374151;
+}
+
+.dot{
+  width:10px;
+  height:10px;
+  border-radius:3px;
+}
+
+.yellow{ background:#facc15; }
+.green{ background:#22c55e; }
+.blue{ background:#3b82f6; }
 .panel{
   background:white;
   border-radius:20px;
@@ -1034,7 +1142,7 @@ button:hover{
   <!-- TOP NAV -->
   <div class="calendar-top">
     <button onclick="change(-1)">‹</button>
-    <button class="today-btn" onclick="today()">TODAY</button>
+    <button class="today-btn" onclick="today()">Today's Schedule</button>
     <button onclick="change(1)">›</button>
   </div>
 
@@ -1051,17 +1159,41 @@ button:hover{
     </div>
   </div>
 
-<!-- RIGHT PANEL -->
-    <div class="panel">
-      <h3>Today</h3>
-      <div id="todayList"></div>
+<div class="legend-panel">
+  <h3>Event Packages</h3>
 
-    <h3 style="margin-top:10px;">Pending</h3>
-    <div id="pendingList"></div>
+  <div class="legend-item">
+    <span class="dot yellow"></span>
+    Coffee Booth
   </div>
 
-</div>
+  <div class="legend-item">
+    <span class="dot green"></span>
+    Matcha Booth
+  </div>
 
+  <div class="legend-item">
+    <span class="dot blue"></span>
+    Tattoo Event
+  </div>
+
+  <!-- TODAY BOX -->
+  <div class="side-box today-box">
+    <div class="box-header">
+      <h4>Today</h4>
+      <span class="badge" id="todayCount">0</span>
+    </div>
+    <div id="todayList" class="box-list"></div>
+  </div>
+
+  <!-- PENDING BOX -->
+  <div class="side-box pending-box">
+    <div class="box-header">
+      <h4>Pending</h4>
+      <span class="badge pending" id="pendingCount">0</span>
+    </div>
+    <div id="pendingList" class="box-list"></div>
+  </div>
 </div>
 
 <!-- MODAL -->
@@ -1227,16 +1359,6 @@ function render(){
 
     let dayEvents = events.filter(e => e.date === dayStr);
 
-    if(dayEvents.length > 0){
-      let note = document.createElement("div");
-      note.className = "day-note";
-      note.innerText = dayEvents.length + " bookings";
-
-      note.onclick = () => openDayView(dayStr);
-
-      col.appendChild(note);
-    }
-
   for(let h = 10; h <= 23; h++){
     let line = document.createElement("div");
     line.className = "hour-line";
@@ -1315,33 +1437,33 @@ function renderSide(){
 
   let today = new Date().toISOString().split("T")[0];
 
+  let todayEvents = events.filter(e => e.date === today);
+  let pendingEvents = events.filter(e => e.status === "Pending");
+
+  // LIMIT DISPLAY (NO SCROLL FIX)
+  let limit = 4;
+
   document.getElementById("todayList").innerHTML =
-    events.filter(e=>e.date===today)
-    .map(e=>`<div class='item'>${e.time} - ${e.title}</div>`).join("");
+    (todayEvents.slice(0, limit).length
+      ? todayEvents.slice(0, limit).map(e=>`
+          <div class="item">${e.time} - ${e.title}</div>
+        `).join("")
+      : "<div class='item'>No events today</div>")
+    +
+    (todayEvents.length > limit ? `<div class="item">+ ${todayEvents.length - limit} more</div>` : "");
 
   document.getElementById("pendingList").innerHTML =
-    events.filter(e=>e.status==="Pending")
-    .map(e=>`<div class='item'>${e.time} - ${e.title}</div>`).join("");
+    (pendingEvents.slice(0, limit).length
+      ? pendingEvents.slice(0, limit).map(e=>`
+          <div class="item">${e.time} - ${e.title}</div>
+        `).join("")
+      : "<div class='item'>No pending events</div>")
+    +
+    (pendingEvents.length > limit ? `<div class="item">+ ${pendingEvents.length - limit} more</div>` : "");
+
+  document.getElementById("todayCount").innerText = todayEvents.length;
+  document.getElementById("pendingCount").innerText = pendingEvents.length;
 }
-
-/* POPUP */
-function openPopup(e){
-  let popup = document.getElementById("popup");
-
-  popup.innerHTML = `
-    <h3>${e.title}</h3>
-    <p>Time: ${e.time}</p>
-    <p>Status: ${e.status}</p>
-    <p>Date: ${e.date}</p>
-
-    <button class="edit" onclick="editEvent('${e.date}','${e.title}')">Edit</button>
-    <button class="delete" onclick="deleteEvent('${e.date}','${e.title}')">Delete</button>
-    <button onclick="popup.style.display='none'">Close</button>
-  `;
-
-  popup.style.display="block";
-}
-
 function openModal(){
   document.getElementById("modal").style.display="flex";
 }
@@ -1351,13 +1473,22 @@ function add(){
   let newDate = selected || new Date().toISOString().split("T")[0];
   let newTime = document.getElementById("time").value;
 
-  // ❌ BLOCK 10:00 AM
+  let title = document.getElementById("title").value;
+  let status = document.getElementById("status").value;
+
+  // ❌ BLOCK 10:00 AM RANGE
   if(newTime.startsWith("10:")){
     alert("10:00 AM is not allowed");
     return;
   }
 
-  // 🔥 CHECK IF TIME ALREADY EXISTS IN SAME DAY
+  // ❌ EMPTY INPUT CHECK (recommended)
+  if(!title || !newTime){
+    alert("Please complete all fields");
+    return;
+  }
+
+  // ❌ CHECK IF TIME ALREADY EXISTS IN SAME DAY
   let exists = events.find(e => 
     e.date === newDate && e.time === newTime
   );
@@ -1367,30 +1498,33 @@ function add(){
     return;
   }
 
+  // ✏️ EDIT MODE
   if(editMode && editTarget){
 
-    editTarget.title = document.getElementById("title").value;
+    editTarget.title = title;
     editTarget.time = newTime;
-    editTarget.status = document.getElementById("status").value;
+    editTarget.status = status;
 
     editMode = false;
     editTarget = null;
 
-  } else {
+  } 
+  // ➕ ADD NEW EVENT
+  else {
 
     events.push({
       date: newDate,
-      title: document.getElementById("title").value,
+      title: title,
       time: newTime,
-      status: document.getElementById("status").value
+      status: status
     });
   }
 
+  // 💾 SAVE + RELOAD UI
   save();
   closeModal();
   render();
 }
-
 
 function change(v){
   date.setDate(date.getDate() + (v * 7)); // ✅ 1 WEEK SHIFT
