@@ -366,12 +366,12 @@ body {
   border: 1px solid rgba(0,0,0,0.04);
   box-shadow: 0 10px 30px rgba(17,24,39,0.08);
   border-radius: 16px;
-  transition: all 0.25s ease;
+  transition: none;
 }
 
 .booking-table tbody tr:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 45px rgba(17,24,39,0.14);
+  transform: none;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 }
 
 /* CELLS */
@@ -426,7 +426,11 @@ body {
   color: #854d0e;
   box-shadow: 0 0 0 4px rgba(250,204,21,0.10);
 }
-
+.badge.declined {
+  background: linear-gradient(135deg, #fee2e2, #fecaca);
+  color: #991b1b;
+  box-shadow: 0 0 0 4px rgba(239,68,68,0.10);
+}
 /* ⚡ ACTION BUTTONS (glass premium buttons) */
 .actions {
   display: flex;
@@ -604,8 +608,8 @@ body {
       <tr>
         <td>
           <div class="user">
-            <strong>Michael Bersamina</strong>
-            <div class="muted">mb@example.com</div>
+            <strong>Test User 1</strong>
+            <div class="muted">tu@example.com</div>
           </div>
         </td>
 
@@ -619,38 +623,13 @@ body {
 
         <td>GCash</td>
 
-        <td><span class="badge paid">Fully Paid</span></td>
-
-        <td class="actions">
-          <button class="accept">Accept</button>
-          <button class="decline">Decline</button>
-        </td>
-      </tr>
-
-      <!-- ROW 2 -->
-      <tr>
         <td>
-          <div class="user">
-            <strong>Jeryll Boldadora</strong>
-            <span class="muted">jb@example.com</span>
-          </div>
+          <span class="badge pending">Pending</span>
         </td>
 
-        <td>Coffee Booth</td>
-
-        <td>11-20-2026 • 2:00 PM</td>
-
-        <td>09123456789</td>
-
-        <td>Imus, Cavite</td>
-
-        <td>GCash</td>
-
-        <td><span class="badge pending">Pending</span></td>
-
         <td class="actions">
-          <button class="accept">Accept</button>
-          <button class="decline">Decline</button>
+          <button class="accept" onclick="updateStatus(this, 'accepted')">Accept</button>
+          <button class="decline" onclick="updateStatus(this, 'declined')">Decline</button>
         </td>
       </tr>
 
@@ -747,4 +726,31 @@ function updateTodayDate() {
 
 updateTodayDate();
 
+/******************************** ACCEPT AND DECLINE ********************************/
+function updateStatus(btn, action) {
+  const row = btn.closest("tr");
+  const status = row.querySelector(".badge");
+
+  if (action === "accepted") {
+    status.textContent = "Approved";
+    status.className = "badge paid";
+
+    row.style.borderLeft = "4px solid #22c55e";
+  }
+
+  if (action === "declined") {
+    status.textContent = "Rejected";
+    status.className = "badge declined";
+
+    row.style.borderLeft = "4px solid #ef4444";
+  }
+
+  // disable buttons after action
+  const buttons = row.querySelectorAll("button");
+  buttons.forEach(b => {
+    b.disabled = true;
+    b.style.opacity = "0.5";
+    b.style.cursor = "not-allowed";
+  });
+}
 </script>
