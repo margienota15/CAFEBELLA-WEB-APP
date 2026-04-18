@@ -16,12 +16,12 @@
   -moz-osx-font-smoothing: grayscale;
   transition: all 0.2s ease-in-out;
 }
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f4f6f9;
-  }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f4f6f9;
+}
 
 /******************************** SIDEBAR (PRO UI) ********************************/
 .sidebar {
@@ -1113,12 +1113,6 @@ button.action:hover {
 </body>
 </html>
 <script>
-/******************************** Sidebar : BUTTON PAGE ********************************/
-function goToDashboard() { window.location.href = "Dashboard.html"; }
-function goToPOS() { window.location.href = "POS.html"; }
-function goToTransactionHistory() { window.location.href = "Transactionhistory.html"; }
-function goToBooking() { window.location.href = "Bookingrequest.html"; }
-function goToEventManagement() { window.location.href = "Eventmanagement.html"; }
 
 /******************************** MENU BUTTON ********************************/
     const sidebarButtons = document.querySelectorAll('.sidebar .menu button');
@@ -1143,7 +1137,7 @@ function highlightSidebar() {
 /******************************** BUTTON HIGHLIGHT ********************************/
     highlightSidebar();
 
-/******************************** NAVIGATE WHEN CLICKED ********************************/
+/******************************** SIDEBAR ********************************/
 sidebarButtons.forEach(btn => {
    btn.addEventListener('click', () => {
     const targetPage = btn.dataset.page;
