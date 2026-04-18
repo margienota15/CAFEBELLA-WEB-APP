@@ -16,12 +16,12 @@
   -moz-osx-font-smoothing: grayscale;
   transition: all 0.2s ease-in-out;
 }
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f4f6f9;
-  }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f4f6f9;
+}
 
 /******************************** SIDEBAR (PRO UI) ********************************/
 .sidebar {
@@ -119,12 +119,13 @@
 
 /*********************************** MAIN ********************************/
 .main {
-  flex: 1;
   margin-left: 270px;
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
+  padding: 0;
+  background: #f4f6f9;
 }
 .main.full {
   margin-left: 0;
@@ -283,16 +284,14 @@
   overflow: hidden;
   min-height: 0; /* 🔥 VERY IMPORTANT */
 }
-.content-wrapper {
+.content-wrapper{
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  padding: 20px 30px;
-
-  height: 100%;
   overflow: hidden;
 
-  min-height: 0; /* 🔥 IMPORTANT */
+  padding: 0; /* remove spacing conflict */
 }
 
 /******************************** DASHBOARD/STAT ********************************/
@@ -823,22 +822,6 @@
 <!-- ✅ CHART LIBRARY (IMPORTANT) -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-/******************************** Sidebar : BUTTON PAGE ********************************/
-function goToDashboard() {
-  window.location.href = "Dashboard.html";
-}
-function goToPOS() {
-  window.location.href = "POS.html";
-}
-function goToTransactionHistory() {
-  window.location.href = "Transactionhistory.html";
-}
-function goToBooking() {
-  window.location.href = "Bookingrequest.html";
-}
-function goToEventManagement() {
-  window.location.href = "Eventmanagement.html";
-}
 
 /******************************** MENU BUTTON ********************************/
     const sidebarButtons = document.querySelectorAll('.sidebar .menu button');
@@ -863,7 +846,7 @@ function highlightSidebar() {
 /******************************** BUTTON HIGHLIGHT ********************************/
     highlightSidebar();
 
-/******************************** NAVIGATE WHEN CLICKED ********************************/
+/******************************** SIDEBAR *******************************/
 sidebarButtons.forEach(btn => {
    btn.addEventListener('click', () => {
     const targetPage = btn.dataset.page;
@@ -943,6 +926,7 @@ new Chart(ctx, {
   }
 });
 
+/******************************** UPDATE DATE TODAY  ********************************/
 function updateTodayDate() {
   const today = new Date();
 
