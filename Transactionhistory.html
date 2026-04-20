@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Sale</title>
+<title>Transaction History</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
@@ -14,7 +14,6 @@
   font-family: 'Plus Jakarta Sans', 'Segoe UI', Roboto, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: all 0.2s ease-in-out;
 }
 body {
   font-family: Arial, sans-serif;
@@ -22,7 +21,16 @@ body {
   padding: 0;
   background: #f4f6f9;
 }
-
+:root {
+  --primary: #16a34a;
+  --primary-dark: #15803d;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #1e293b;
+  --subtext: #64748b;
+  --border: #e2e8f0;
+  --radius: 12px;
+}
 /******************************** SIDEBAR (PRO UI) ********************************/
 .sidebar {
   width: 270px;
@@ -40,13 +48,10 @@ body {
   position: fixed;
   left: 0;
   top: 0;
-
   box-shadow: 8px 0 25px rgba(0,0,0,0.15);
   z-index: 100;
-
   transition: all 0.3s ease;
 }
-
 .sidebar.hide {
   transform: translateX(-100%);
 }
@@ -96,18 +101,11 @@ body {
   transform: translateX(6px);
 }
 .menu button img.icon {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  filter: brightness(0) invert(1); /* 🔥 makes icons WHITE */
-  opacity: 0.95;
-  transition: 0.2s;
-}
-.menu button img.icon {
   width: 25px;
   height: 25px;
   object-fit: contain;
-  display: block; 
+  display: block;
+  filter: brightness(0) invert(1);
 }
 #menu-btn {
   font-size: 22px;
@@ -122,12 +120,11 @@ body {
 
 /*********************************** MAIN ********************************/
 .main {
-  flex: 1;
+  height: 100vh;
   margin-left: 270px;
   display: flex;
   flex-direction: column;
-  height: 100vh;   /* 🔥 CRITICAL */
-  overflow: hidden;
+  overflow: hidden; 
 }
 .main.full {
   margin-left: 0;
@@ -141,7 +138,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #e9e9e9;
   padding: 15px 25px;
   background: #ffffff;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
@@ -258,61 +254,48 @@ body {
   background: #2e7d32;
   color: white;
 }
-
-/******************************** NAVBAR ********************************/
-.title-container {
+/******************************** BOOKING HEADER (POS STYLE + PROPER SPACING) ********************************/
+.transaction-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 20px 24px; 
+  margin: 20px 25px;  
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+.transaction-header .header-left h1 {
+  font-size: 20px;
+  margin: 0;
+  color: #114500;
+  line-height: 1.2;
+}
+.transaction-header .header-left p {
+  font-size: 13px;
+  margin-top: 6px;
+  color: #6b7280;
+  line-height: 1.4;
+}
+.transaction-header .date-box {
+  background: #f4f6f9;
+  padding: 10px 14px; 
+  border-radius: 10px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-weight: 500;
+  color: #333;
+}
+.container {
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-left: 3px;
-  margin-left: 0;
-  padding-top: 9px;
-}
-
-.title-container h1 {
-  font-size: 28px;
-  margin-bottom: 10px;
-  color: #114500;
-}
-
-.title-container p {
-  font-size: 16px;  
-  color: #555;
-}
-.pos-header-card{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:#ffffff;
-  border:1px solid #e5e7eb;
-  border-radius:14px;
-  padding:15px 20px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.06);
-}
-
-.pos-header-left h1{
-  font-size:20px;
-  margin:0;
-  color:#114500;
-}
-
-.pos-header-left p{
-  font-size:13px;
-  margin-top:3px;
-  color:#6b7280;
-}
-
-.pos-header-right .date-box{
-  background:#f4f6f9;
-  padding:8px 12px;
-  border-radius:10px;
-  font-size:13px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  white-space:nowrap;
-  font-weight:500;
-  color:#333;
+  overflow: visible; /* ✅ FIX */
 }
 /******************************** CONTENT ********************************/
 .content {
@@ -320,578 +303,403 @@ body {
   flex: 1;
   gap: 20px;
   overflow: hidden;
-  min-height: 0;
+  min-height: 0; 
 }
 .content-wrapper {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 20px 30px;
-
-  height: 100%;
-  overflow: hidden;
-
-  min-height: 0; /* 🔥 IMPORTANT */
-}
-/******************************** CATEGORIES ********************************/
-.categories {
-  display: flex;
-  gap: 10px;
-  padding: 10px;
-  flex-wrap: wrap;
-  max-height: 90px;
-  overflow-y: auto;
-}
-.categories button {
-  padding: 8px 18px;
-  border: none;
-  background: #e0e0e0;
-  cursor: pointer;
-  border-radius: 20px;
-  transition: 0.2s;
-  white-space: nowrap;        /* keep 1 line */
-  overflow: hidden;           /* hide excess */
-  text-overflow: ellipsis;    /* show ... */
-  max-width: 120px;           /* limit width */
-}
-.categories button.active {
-  background: #2e7d32;
-  color: white;
-}
-/******************************** SCROLLBAR ********************************/
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #2e7d32;
-  border-radius: 10px;
-}
-/******************************** PRODUCTS ********************************/
-.products {
-  flex: 1;
-  overflow-y: auto;
   min-height: 0;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 15px;
-}
-.card {
-  background: #fff;
-  padding: 12px;
-  border-radius: 14px;
-  cursor: pointer;
-  text-align: center;
-  height: 210px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-  transition: all 0.25s ease;
-  border: 1px solid #f1f1f1;
-}
-
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
-  border-color: #2e7d32;
-}
-.card img {
-  width: 100%;
-  height: 90px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-.card h4 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-
   overflow: hidden;
-  line-clamp: 2; /* future standard */
-}
-.card p {
-  font-size: 16px;
-  color: #2e7d32;
-  font-weight: bold;
-  margin-top: auto; /* 🔥 push to bottom */
-}
-.card .delete-btn {
-  width: 100%;
-  justify-content: center;
 }
 
-/******************************** ORDER PANEL ********************************/
-.order {
-  flex: 1;
-  min-width: 360px;
-  max-width: none; /* IMPORTANT: alisin limit */
-  display: flex;
-  flex-direction: column;
+/******************************** KPI ********************************/
+.kpi-wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin: 0px 20px 5px;
+}
+
+.kpi-card {
   background: #ffffff;
-  border-radius: 18px;
-  padding: 16px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-  border: 1px solid #eef0f2;
-  align-self: stretch;
-  margin-top: 20px;
-  height: 100%;
-  transition: all 0.3s ease;
-}
-.order-items {
-  flex: 1;
-  overflow-y: auto;
-  min-height: 0;
-  padding-right: 6px;
-  position: relative;
-}
-/* ITEMS */
-.order-item {
-  display: grid;
-  grid-template-columns: 1fr 220px;
-  align-items: center;
-  position: relative;
-}
-/* TOP HEADER */
-.order-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  padding-bottom: 10px;
-  border-bottom: 1px solid #f1f1f1;
-}
-.order-item-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.order-items::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: calc(100% - 200px); /* 🔥 EXACT POSITION NG DIVIDER */
-  width: 2px;
-  background: #ddd;
-  display: none;
-}
-.order-item-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.order-price {
-  font-weight: 600;
-  font-size: 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  transition: 0.2s ease;
 }
 
-.order-top h2 {
-  font-size: 16px;
-  color: #1b5e20;
+.kpi-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
-.order-top p {
-  font-size: 12px;
-  color: #888;
-  margin-top: 2px;
+.kpi-label {
+  font-size: 13px;
+  color: #64748b;
 }
 
-.order-badge {
-  width: 38px;
-  height: 38px;
-  border-radius: 12px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background: #e8f5e9;
-  font-size: 18px;
-}
-.order-footer {
-  margin-top: auto;
-  padding-top: 12px;
-  border-top: 1px solid #f1f1f1;
-}
-/******************************** QUANTITY ********************************/
-.qty {
+.kpi-value {
+  font-size: 26px;
   font-weight: 700;
-  color: #2e7d32; 
+  margin-top: 6px;
+  color: #0f172a;
 }
-.qty-box {
+
+/******************************** FILTER BAR  ********************************/
+.filter-bar {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin: 15px 0;
+  padding: 15px 25px;
+  margin: 0 25px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 }
-.qty-btn {
-  width: 24px;
-  height: 24px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.qty-box button:hover {
-  background: #1b5e20;
-}
-.qty-minus {
-  background: #e0e0e0;
-}
-
-.qty-plus {
-  background: #2e7d32;
-  color: white;
-}
-.qty-controls {
+.filter-right button {
   display: flex;
   align-items: center;
   gap: 6px;
-  width: 110pX;
-  justify-content: center;
-}
-.qty-value {
-  min-width: 18px;
-  text-align: center;
-  font-weight: bold;
-}
-.modal .qty-box button {
-  width: 35px;
-  height: 35px;
-  border-radius: 10px;
-  border: none;
-  background: #2e7d32;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
-}
-#qtyInput {
-  width: 70px;
-  height: 42px;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  outline: none;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: textfield;
-}
-
-#qtyInput:focus {
-  border-color: #2e7d32;
-  box-shadow: 0 0 0 3px rgba(46,125,50,0.12);
-}
-/******************************** ITEM ********************************/
-.item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 12px;
-  margin-bottom: 8px;
-  border-radius: 12px;
-  background: #f9fafb;
-  border: 1px solid #f1f1f1;
-  transition: 0.2s;
-}
-.order-price {
-  font-size: 13px;
-  color: #555;
-}
-.item-name {
-  font-size: 14px;
-  font-weight: 500;
-
-  white-space: normal;   /* 🔥 allow wrap */
-  overflow: visible;
-  text-overflow: unset;
-
-  word-break: break-word; /* 🔥 important para mahahabang name */
-}
-.item-left {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 3px;
-  min-width: 0;
-  max-width: 100%;
-  padding-right: 10px;
-}
-.item-right {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 220px;   /* consistent column */
-  padding-left: 12px;
-  border-left: 2px solid #ddd; /* 🔥 REAL DIVIDER */
-  height: 100%;
-}
-.item button {
-  width: 26px;
-  height: 26px;
-  border: none;
+  padding: 8px 12px;
   border-radius: 8px;
-  background: #fff5f5;
-  color: #e53935;
-  font-size: 14px;
-  font-weight: bold;
+  border: 1px solid var(--border);
+  background: white;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  transition: all 0.2s ease;
-}
-.item button:hover {
-  background: #e53935;
-  color: white;
-  transform: scale(1.1);
-  box-shadow: 0 4px 10px rgba(229,57,53,0.3);
-}
-
-/******************************** EMPTY ********************************/
-.empty-cart {
-  text-align: center;
-  color: #aaa;
-  margin-top: 20px;
-  display: none;
-}
-.empty-cart p {
-  font-size: 14px;
-}
-.empty-cart span {
-  font-size: 12px;
-}
-
-
-.summary-box {
-  background: linear-gradient(135deg, #2e7d32, #66bb6a);
-  padding: 12px;
-  border-radius: 14px;
-  color: white;
-}
-
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-/* CHECKOUT BUTTON */
-.checkout-btn {
-  width: 100%;
-  margin-top: 10px;
-
-  padding: 14px;
-
-  border: none;
-  border-radius: 14px;
-
-  background: #1b5e20;
-  color: white;
-
-  font-weight: bold;
-
-  cursor: pointer;
-
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-
   transition: 0.2s;
 }
+.filter-right button:hover {
+  background: #f1f5f9;
+}
 
-.checkout-btn:hover {
-  background: #144d18;
+/******************************** SOURCE ********************************/
+.src {
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+
+  transition: all 0.25s ease;
+  position: relative;
+}
+.src:hover {
+  background: linear-gradient(135deg, #34d399, #16a34a);
+  color: white;
   transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(22, 163, 74, 0.25);
 }
-
-
-/******************************** TOTAL ********************************/
-.total {
-  font-weight: bold;
-  font-size: 18px;
-  margin-top: 10px;
-}
-.total-box {
-  margin-top: 10px;
-  padding: 12px;
-  background: linear-gradient(135deg, #2e7d32, #66bb6a);
+.src.active {
+  background: #16a34a;
   color: white;
-  border-radius: 14px;
+  box-shadow: 0 6px 15px rgba(22, 163, 74, 0.25);
+}
+.source-buttons {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: bold;
+  gap: 8px;
+  background: #f1f5f9;
+  padding: 6px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
 }
-button.action {
-  padding: 12px;
-  border: none;
+.src.active::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.15);
+}
+/******************************** HISTORY CONTAINER ********************************/
+#historyContainer {
+  margin: 0 25px 25px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+}
+
+/******************************** TABLE ********************************/
+.table-container {
+  margin: 0 25px 25px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  height: calc(100vh - 320px); 
+  overflow-y: auto;
+  overflow-x: auto;
+}
+/******************************** TRANSACTION TABLE ********************************/
+.transaction-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Inter', sans-serif;
+}
+.transaction-table thead {
+  background: linear-gradient(135deg, #16a34a, #15803d);
   color: white;
-  background: linear-gradient(135deg, #2e7d32, #66bb6a);
-  cursor: pointer;
-  border-radius: 10px;
-  font-weight: bold;
+}
+.transaction-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(135deg, #16a34a, #15803d);
+}
+.transaction-table th {
+  padding: 14px;
+  font-size: 13px;
+  text-align: left;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.transaction-table td {
+  padding: 14px;
+  font-size: 14px;
+  color: #0f172a;
+  border-bottom: 1px solid #f1f5f9;
+}
+.transaction-table tbody tr:hover {
+  background: #f8fafc;
   transition: 0.2s;
 }
-button.action:hover {
-  transform: scale(1.03);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+/******************************** ID / AMOUNT/  ********************************/
+.id {
+  font-weight: 600;
+  color: #1e293b;
 }
-.left-panel {
-  flex: 3;
-  min-width: 0;
-  transition: all 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  padding: 20px 30px;
-}
-/******************************** REMOVE BUTTON ********************************/
-.remove-btn {
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.2s ease;
-  border: none;
-  border-radius: 6px;
-  background: #fff5f5;
-  color: #e53935;
-  cursor: pointer;
-  width: 26px;
-  height: 26px;
-  margin-left: 6px;
+.amount {
+  font-weight: 600;
+  color: #0f172a;
 }
 
-.remove-btn:hover {
-  background: #e53935;
-  color: white;
-  transform: scale(1.1);
+/******************************** BADGE ********************************/
+.badge {
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
 }
-/******************************** MODAL ********************************/
+
+/* SOURCE BADGE */
+.badge.pos {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.badge.online {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+/* STATUS BADGE */
+.badge.paid {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.badge.pending {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+
+/******************************** VIEW TRANSACTION ********************************/
 .modal {
   display: none;
   position: fixed;
-  z-index: 999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(6px);
+  inset: 0;
+  background: rgba(0,0,0,0.5);
 
   justify-content: center;
   align-items: center;
+
+  z-index: 999;
 }
 
 .modal-content {
-  background: #ffffff;
-  padding: 25px;
-  width: 360px;
-  border-radius: 18px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-  transform: scale(0.9);
-  animation: popIn 0.2s ease forwards;
+  background: white;
+  width: 350px;
+  border-radius: 12px;
+  padding: 20px;
+
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  animation: pop 0.2s ease;
 }
 
-@keyframes popIn {
-  to {
-    transform: scale(1);
-  }
-}
-.modal-items {
-  max-height: 150px;
-  overflow-y: auto;
-  margin-bottom: 10px;
+@keyframes pop {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
-.section {
-  margin-top: 10px;
+.modal-content h3 {
+  margin-bottom: 15px;
+  color: #114500;
 }
 
-.modal-content select,
-.modal-content input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-}
-.modal-content .modal-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
+.modal-content p {
+  font-size: 14px;
+  margin: 6px 0;
+  color: #333;
 }
 
-.modal-content .modal-actions button {
-  flex: 1;              /* 🔥 equal width */
-  padding: 12px;
-  border-radius: 10px;
-  font-weight: 600;
-}
-.cancel-btn {
-  background: #e74c3c !important;
-}
-
-.cancel-btn:hover {
-  background: #c0392b !important;
-}
-/******************************** VOUCHER ********************************/
-.voucher-box {
-  margin-top: 10px;
-  padding: 10px;
-  border: 1px solid #eee;
-  border-radius: 6px;
-  background: #fafafa;
-}
-/******************************** DELETE BUTTON ********************************/
-.delete-btn {
-  margin-top: 8px;
-  padding: 6px 10px;
-  border: 1px solid #ffdddd;
-  background: #fff5f5;
-  color: #e74c3c;
-  font-size: 12px;
+.close-btn {
+  margin-top: 15px;
+  padding: 8px 12px;
+  border: none;
+  background: #16a34a;
+  color: white;
   border-radius: 8px;
   cursor: pointer;
+}
+.close-btn:hover {
+  background: #15803d;
+}
 
-  display: inline-flex;
+/******************************** UI MODAL ********************************/
+.txn-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.txn-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 6px;
-
-  transition: all 0.2s ease;
 }
 
-.delete-btn:hover {
-  background: #e74c3c;
+.txn-header h2 {
+  font-size: 18px;
+  color: #114500;
+}
+
+.txn-id {
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* STATUS */
+.txn-status {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.txn-status.paid {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.txn-status.pending {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+.txn-status.cancelled {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* GRID */
+.txn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.txn-item {
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.txn-item .label {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.txn-item .value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+/* TOTAL */
+.txn-total {
+  background: linear-gradient(135deg, #16a34a, #15803d);
   color: white;
-  border-color: #e74c3c;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 12px rgba(231, 76, 60, 0.2);
-}
-
-.delete-btn:active {
-  transform: scale(0.96);
-}
-/******************************** BUTTON iMPROVEMENT ********************************/
-.action {
-  padding: 12px;
-  border: none;
-  color: white;
-  background: linear-gradient(135deg, #2e7d32, #66bb6a);
-  cursor: pointer;
+  padding: 15px;
   border-radius: 12px;
-  font-weight: bold;
+  text-align: center;
+}
+
+.txn-total span {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.txn-total h1 {
+  margin-top: 5px;
+  font-size: 24px;
+}
+/******************************** VIEW BUTTON ********************************/
+.view-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #16a34a;
+  color: white;
+  font-size: 12px;
+  cursor: pointer;
   transition: 0.2s;
 }
 
-.action:hover {
-  transform: scale(1.04);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+.view-btn:hover {
+  background: #15803d;
+  transform: scale(1.05);
+}
+/******************************** MODAL ********************************/
+.date-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* 🔥 increase */
+}
+
+.date-content {
+  background: white;
+  padding: 25px;
+  border-radius: var(--radius);
+  width: 300px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.date-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.date-actions button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.date-actions button:first-child {
+  background: var(--primary);
+  color: white;
 }
 </style>
 </head>
@@ -945,223 +753,349 @@ button.action:hover {
   </div>
 
 <div class="content-wrapper">
+
 <!--------------------------------------- TITLE ---------------------------------------------> 
-<div class="pos-header-card">
-  <div class="pos-header-left">
-    <h1>Point of Sale</h1>
+<div class="transaction-header">
+  <div class="header-left">
+    <h1>Transaction History</h1>
     <p>Handle your daily transactions and payment</p>
   </div>
 
-  <div class="pos-header-right">
+  <div class="header-right">
     <div class="date-box">
-      <i class="fa-solid fa-cash-register"></i>
-      <span id="posDate"></span>
+      <i class="fa-solid fa-calendar"></i>
+      <span id="todayDate">Today: </span>
     </div>
   </div>
 </div>
 
-<div class="content">
+<!--------------------------------------- CONTAINER -------------------------------------------->
+<div class="container">
 
-  <!-- LEFT COLUMN -->
-  <div class="left-panel">
+    <!---------------------- KPI HEADER ----------------------------> 
+    <div class="kpi-wrapper">
 
-    <!-- CATEGORIES -->
-    <div class="categories" id="categories"></div>
-
-    <!-- EDIT BUTTON -->
-    <div style="margin: 10px 0;">
-      <button id="editMenuBtn" class="action">✏️ Edit Menu</button>
-    </div>
-
-    <!-- PRODUCTS -->
-    <div class="products" id="products"></div>
-
-  </div>
-
-  <!-- RIGHT COLUMN (ORDER PANEL FULL HEIGHT) -->
-  <div class="order">
-
-    <!-- TOP HEADER -->
-    <div class="order-top">
-      <div>
-        <h2>Order Summary</h2>
-        <p id="itemCount">0 items</p>
+      <div class="kpi-card">
+        <span class="kpi-label">Total Transactions</span>
+        <h2 class="kpi-value" id="totalTx">0</h2>
       </div>
 
-      <div class="order-badge">
-        🛒
+      <div class="kpi-card">
+        <span class="kpi-label">Total Sales</span>
+        <h2 class="kpi-value" id="totalSales">₱0.00</h2>
       </div>
+
+      <div class="kpi-card">
+        <span class="kpi-label">Today's Sales</span>
+        <h2 class="kpi-value" id="todaySales">₱0.00</h2>
+      </div>
+
     </div>
 
-    <!-- ITEMS -->
-    <div id="orderItems" class="order-items"></div>
+    <!-- DIVIDER -->
+    <div class="divider-line"></div>
 
-    <!-- EMPTY STATE -->
-    <div class="empty-cart" id="emptyCart">
-      <p>🛒 Your cart is empty</p>
-      <span>Add items to start order</span>
+<!--------------------------------------- FILTER ---------------------------------------------> 
+<div class="filter-bar">
+
+    <!-- LEFT SIDE -->
+    <div class="source-buttons">
+        <button class="src active" onclick="setSource('all', this)">ALL</button>
+        <button class="src" onclick="setSource('POS', this)">POS</button>
+        <button class="src" onclick="setSource('ONLINE_BOOKING', this)">ONLINE BOOKING</button>
     </div>
 
-    <!-- FOOTER -->
-    <div class="order-footer">
+</div> <!-- ✅ IMPORTANT CLOSING TAG -->
 
-      <div class="summary-box">
-        <div class="summary-row">
-          <span>Total</span>
-          <strong id="total">₱0.00</strong>
+<div class="table-container">
+
+  <table class="transaction-table">
+
+    <thead>
+      <tr>
+        <th>Transaction ID</th>
+        <th>Date & Time</th>
+        <th>Customer</th>
+        <th>Source</th>
+        <th>Payment</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <!-- ================= POS TRANSACTIONS ================= -->
+
+      <tr data-source="POS">
+        <td class="id">TXN-001</td>
+        <td>Apr 18, 2026 - 2:30 PM</td>
+        <td>Juan Dela Cruz</td>
+        <td><span class="badge pos">POS</span></td>
+        <td>GCash</td>
+        <td class="amount">₱180.00</td>
+        <td><span class="badge paid">Paid</span></td>
+        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
+      </tr>
+
+      <tr data-source="POS">
+        <td class="id">TXN-002</td>
+        <td>Apr 18, 2026 - 3:10 PM</td>
+        <td>Maria Santos</td>
+        <td><span class="badge pos">POS</span></td>
+        <td>Cash</td>
+        <td class="amount">₱250.00</td>
+        <td><span class="badge paid">Paid</span></td>
+        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
+      </tr>
+
+      <tr data-source="POS">
+        <td class="id">TXN-003</td>
+        <td>Apr 18, 2026 - 4:05 PM</td>
+        <td>Mark Reyes</td>
+        <td><span class="badge pos">POS</span></td>
+        <td>GCash</td>
+        <td class="amount">₱320.00</td>
+        <td><span class="badge pending">Pending</span></td>
+        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
+      </tr>
+
+      <!-- ================= ONLINE BOOKING: COFFEE ================= -->
+
+<tr data-source="ONLINE_BOOKING">
+        <td class="id">TXN-004</td>
+        <td>Apr 18, 2026 - 5:20 PM</td>
+        <td>Anna Lopez</td>
+        <td><span class="badge online">Coffee Booking</span></td>
+        <td>GCash</td>
+        <td class="amount">₱5,000</td>
+        <td><span class="badge paid">Paid</span></td>
+        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
+      </tr>
+
+<tr data-source="ONLINE_BOOKING">
+        <td class="id">TXN-005</td>
+        <td>Apr 18, 2026 - 6:00 PM</td>
+        <td>Kevin Cruz</td>
+        <td><span class="badge online">Coffee Booking</span></td>
+        <td>Cash</td>
+        <td class="amount">₱5,000</td>
+        <td><span class="badge pending">Pending</span></td>
+        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
+      </tr>
+
+<tr data-source="ONLINE_BOOKING">
+        <td class="id">TXN-006</td>
+        <td>Apr 18, 2026 - 6:45 PM</td>
+        <td>Sarah Lim</td>
+        <td><span class="badge online">Coffee Booking</span></td>
+        <td>GCash</td>
+        <td class="amount">₱5,000</td>
+        <td><span class="badge paid">Paid</span></td>
+        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
+      </tr>
+
+      <!-- ================= ONLINE BOOKING: MATCHA ================= -->
+
+<tr data-source="ONLINE_BOOKING">
+        <td class="id">TXN-007</td>
+        <td>Apr 18, 2026 - 7:10 PM</td>
+        <td>Yuki Tan</td>
+        <td><span class="badge online">Matcha Booking</span></td>
+        <td>GCash</td>
+        <td class="amount">₱9,000</td>
+        <td><span class="badge paid">Paid</span></td>
+        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
+      </tr>
+
+<tr data-source="ONLINE_BOOKING">
+        <td class="id">TXN-008</td>
+        <td>Apr 18, 2026 - 7:40 PM</td>
+        <td>Nicole Garcia</td>
+        <td><span class="badge online">Matcha Booking</span></td>
+        <td>Cash</td>
+        <td class="amount">₱9,000</td>
+        <td><span class="badge pending">Pending</span></td>
+        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
+      </tr>
+
+<tr data-source="ONLINE_BOOKING">
+        <td class="id">TXN-009</td>
+        <td>Apr 18, 2026 - 8:15 PM</td>
+        <td>James Park</td>
+        <td><span class="badge online">Matcha Booking</span></td>
+        <td>GCash</td>
+        <td class="amount">₱9,000</td>
+        <td><span class="badge paid">Paid</span></td>
+        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
+      </tr>
+
+      <!-- ================= ONLINE BOOKING: TATTOO ================= -->
+
+<tr data-source="ONLINE_BOOKING">
+        <td class="id">TXN-010</td>
+        <td>Apr 18, 2026 - 9:00 PM</td>
+        <td>Daniel Rivera</td>
+        <td><span class="badge online">Tattoo Booking</span></td>
+        <td>GCash</td>
+        <td class="amount">₱1,000</td>
+        <td><span class="badge pending">Pending</span></td>
+        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
+      </tr>
+
+<tr data-source="ONLINE_BOOKING">
+        <td class="id">TXN-011</td>
+        <td>Apr 18, 2026 - 9:30 PM</td>
+        <td>Michael Tan</td>
+        <td><span class="badge online">Tattoo Booking</span></td>
+        <td>Cash</td>
+        <td class="amount">₱1,000</td>
+        <td><span class="badge paid">Paid</span></td>
+        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
+      </tr>
+
+<tr data-source="ONLINE_BOOKING">
+        <td class="id">TXN-012</td>
+        <td>Apr 18, 2026 - 10:10 PM</td>
+        <td>Chris Gomez</td>
+        <td><span class="badge online">Tattoo Booking</span></td>
+        <td>GCash</td>
+        <td class="amount">₱1,000</td>
+        <td><span class="badge cancelled">Cancelled</span></td>
+        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>
+
+<!--------------------------------------- DATE MODAL ---------------------------------------------> 
+<div id="dateModal" class="date-modal">
+    <div class="date-content">
+        <h3>Filter by Date</h3>
+
+        <label><input type="radio" name="dateFilter" value="7"> Last 7 Days</label>
+        <label><input type="radio" name="dateFilter" value="30"> Last 30 Days</label>
+        <label><input type="radio" name="dateFilter" value="90"> Last 90 Days</label>
+
+        <div class="date-actions">
+        <button onclick="applyDateFilter()">Apply Filter</button>
+        <button onclick="closeDateModal()">Cancel</button>
         </div>
-      </div>
-
-      <button id="placeOrderBtn" class="checkout-btn">
-        <i class="fas fa-cash-register"></i>
-        Place Order
-      </button>
-
     </div>
-
-  </div>
 </div>
-</div>
-<!-- PAYMENT MODAL -->
-<div id="paymentModal" class="modal">
-  <div class="modal-content">
 
-    <h3>Payment</h3>
+<!--------------------------------------- TRANSACTION MODAL ---------------------------------------------> 
+<div id="transactionModal" class="date-modal">
+  <div class="date-content">
+    <h3>Filter by Transaction</h3>
 
-    <div id="modalOrderItems" class="modal-items"></div>
+    <label><input type="radio" name="transactionFilter" value="Cash"> Cash</label>
+    <label><input type="radio" name="transactionFilter" value="GCash"> GCash</label>
 
-    <p id="subtotalText">Subtotal: ₱0</p>
-    <p id="totalText">Total: ₱0</p>
-
-    <!-- DISCOUNT -->
-    <div class="section">
-      <label>Discount</label>
-      <select id="discountType">
-        <option value="0">None</option>
-        <option value="20">Senior (20%)</option>
-        <option value="10">PWD (10%)</option>
-      </select>
-
-      <input type="number" id="customDiscount" placeholder="Custom %" />
+    <div class="date-actions">
+      <button onclick="applyTransactionFilter()">Apply Filter</button>
+      <button onclick="closeTransactionModal()">Cancel</button>
     </div>
-
-    <!-- PAYMENT METHOD -->
-    <div class="section">
-      <label>Payment Method</label>
-      <select id="paymentMethod" onchange="handlePaymentMethod()">
-        <option value="">Select</option>
-        <option value="Cash">Cash</option>
-        <option value="GCash">GCash</option>
-      </select>
-    </div>
-
-    <!-- CASH -->
-    <div id="cashBox" class="section" style="display:none;">
-      <input type="number" id="amountInput" placeholder="Enter amount" />
-      <p id="changeText">Change: ₱0</p>
-    </div>
-
-    <!-- GCASH -->
-    <div id="gcashBox" class="section" style="display:none;">
-      <p>Scan QR to pay</p>
-    </div>
-
-    <!-- BUTTONS -->
-    <div class="modal-actions">
-      <button onclick="confirmPayment()" class="action">Confirm</button>
-      <button onclick="closeModal()" class="action cancel-btn">Cancel</button>
-    </div>
-
   </div>
 </div>
 
-<!-- 🔥 DITO MO ILALAGAY -->
-<!-- PRODUCT MODAL -->
-<div id="productModal" class="modal">
-  <div class="modal-content" style="width:300px; text-align:center;">
+<!--------------------------------------- AMOUNT MODAL ---------------------------------------------> 
+<div id="amountModal" class="date-modal">
+  <div class="date-content">
+    <h3>Filter by Amount</h3>
 
-    <h3 id="modalProductName"></h3>
-    <p id="modalProductPrice" style="color:#2e7d32; font-weight:bold;"></p>
+    <label><input type="radio" name="amountFilter" value="low"> Low → High</label>
+    <label><input type="radio" name="amountFilter" value="high"> High → Low</label>
 
-    <div class="qty-box">
-      <button onclick="changeQty(-1)">−</button>
-
-    <input
-      type="text"
-      id="qtyInput"
-      value="1"
-      inputmode="numeric"
-      oninput="manualQtyInput()"
-      onblur="fixQtyInput()"
-    >
-
-      <button onclick="changeQty(1)">+</button>
-    </div>
-
-    <div class="modal-actions">
-      <button onclick="addToCartFromModal()" class="action">
-        Add
-      </button>
-
-      <button onclick="closeProductModal()" class="action cancel-btn">
-        Cancel
-      </button>
+    <div class="date-actions">
+      <button onclick="applyAmountFilter()">Apply Filter</button>
+      <button onclick="closeAmountModal()">Cancel</button>
     </div>
   </div>
 </div>
+
+<!--------------------------------------- STATUS MODAL ---------------------------------------------> 
+<div id="statusModal" class="date-modal">
+  <div class="date-content">
+    <h3>Filter by Status</h3>
+
+    <label><input type="radio" name="statusFilter" value="Paid"> Paid</label>
+    <label><input type="radio" name="statusFilter" value="Pending"> Pending</label>
+    <label><input type="radio" name="statusFilter" value="Cancelled"> Cancelled</label>
+
+    <div class="date-actions">
+      <button onclick="applyStatusFilter()">Apply Filter</button>
+      <button onclick="closeStatusModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+<!-- VIEW TRANSACTION MODAL -->
+<div id="viewModal" class="date-modal">
+  <div class="date-content">
+
+    <div id="modalBody"></div>
+
+    <div class="date-actions">
+      <button onclick="closeModal()">Close</button>
+    </div>
+
+  </div>
 </div>
 </body>
 </html>
 <script>
 
 /******************************** MENU BUTTON ********************************/
-    const sidebarButtons = document.querySelectorAll('.sidebar .menu button');
+  const sidebarButtons = document.querySelectorAll('.sidebar .menu button');
 
 /******************************** GET THE CURRENT PAGE ********************************/
-function getCurrentPage() {
-  return window.location.pathname.split("/").pop(); 
-}
+  function getCurrentPage() {
+    return window.location.pathname.split("/").pop(); 
+  }
 
 /******************************** HIGHLIGHT THE BUTTON OF THE CURRENT PAGE ********************************/
-function highlightSidebar() {
-  const currentPage = getCurrentPage().toLowerCase();
+  function highlightSidebar() {
+    const currentPage = getCurrentPage().toLowerCase();
     sidebarButtons.forEach(btn => {
       btn.classList.remove('active');
-      
       if (btn.dataset.page.toLowerCase() === currentPage) {
-          btn.classList.add('active');
+        btn.classList.add('active');
       }
-  });
-}
+    });
+  }
 
 /******************************** BUTTON HIGHLIGHT ********************************/
-    highlightSidebar();
+  highlightSidebar();
 
-/******************************** SIDEBAR ********************************/
-sidebarButtons.forEach(btn => {
-   btn.addEventListener('click', () => {
-    const targetPage = btn.dataset.page;
+/******************************** NAVIGATE WHEN CLICKED ********************************/
+  sidebarButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetPage = btn.dataset.page;
 
-    sidebarButtons.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+      sidebarButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
 
-    window.location.href = targetPage;
+/******************************** NAVIGATE THE TARGET PAGE ********************************/
+      window.location.href = targetPage;
     });
   });
 
 /******************************** UPDATE THE HIGHLIGHT ON THE BROWSER ********************************/
-    window.addEventListener('popstate', () => {
-     highlightSidebar();
+  window.addEventListener('popstate', () => {
+    highlightSidebar();
   });
 
 /******************************** ADMIN DROPDOWN ********************************/
 function toggleDropdown() {
   const dropdown = document.getElementById("adminDropdown");
-      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
 }
-
 function logout() {
-    window.location.href = "login.html";
+  window.location.href = "login.html";
 }
 
 window.onclick = function(e) {
@@ -1170,581 +1104,115 @@ window.onclick = function(e) {
   }
 }
 
-/******************************** ORDER ITEMS ********************************/
-function renderCart(){
-  const container = document.getElementById("orderItems");
-  container.innerHTML = "";
-
-  const empty = document.getElementById("emptyCart");
-
-  if(cart.length === 0){
-    empty.style.display = "block";
-  } else {
-    empty.style.display = "none";
-  }
-
-  if(cart.length === 0){
-    document.getElementById("total").innerText = "₱0.00";
-    return;
-  }
-
-  let total = 0;
-
-  cart.forEach((item, index) => {
-    total += item.price * item.qty;
-
-    const div = document.createElement("div");
-    div.className = "item";
-
-div.innerHTML = `
-  <div class="order-item">
-
-    <!-- LEFT COLUMN -->
-    <div class="item-left">
-      <span class="item-name">
-        ${item.name}
-      </span>
-
-      <span class="order-price">
-        ₱${(item.price * item.qty).toFixed(2)}
-      </span>
-    </div>
-
-    <!-- RIGHT COLUMN -->
-    <div class="item-right">
-
-      <!-- QTY FIRST -->
-      <div class="qty-controls">
-        <button onclick="decreaseQty(${index})" class="qty-btn qty-minus">−</button>
-
-        <span class="qty-value">
-          ${item.qty}
-        </span>
-
-        <button onclick="increaseQty(${index})" class="qty-btn qty-plus">+</button>
-      </div>
-
-      <!-- DELETE LAST -->
-      <button onclick="removeItem(${index})" class="remove-btn">
-        ✕
-      </button>
-
-    </div>
-
-  </div>
-`;
-    container.appendChild(div);
-  });
-
-  document.getElementById("total").innerText = "₱" + total.toFixed(2);
-}
-/******************************** CHANGE QUANTITY IN ORDER SUMMARY ********************************/
-
-function increaseQty(index){
-  cart[index].qty += 1;
-  renderCart();
-}
-
-function decreaseQty(index){
-  cart[index].qty -= 1;
-
-  if(cart[index].qty <= 0){
-    cart.splice(index, 1);
-  }
-
-  renderCart();
-}
-/******************************** EDIT MENU : REMOVE ITEM ********************************/
-function removeItem(index){
-  cart.splice(index, 1);
-  renderCart();
-}
-
-/******************************** PRODUCT MODAL FUNCTIONS : OPEN AND CLOSE ********************************/
-let selectedProduct = null;
-let selectedQty = 1;
-
-function openProductModal(item){
-  selectedProduct = item;
-  selectedQty = 1;
-
-  document.getElementById("modalProductName").innerText = item.name;
-  document.getElementById("modalProductPrice").innerText = "₱" + item.price;
-
-  document.getElementById("qtyInput").value = selectedQty;
-
-  const modal = document.getElementById("productModal");
-  modal.style.display = "flex";
-}
-
-function closeProductModal(){
-  document.getElementById("productModal").style.display = "none";
-}
-  document.getElementById("productModal").addEventListener("click", function(e){
-    if(e.target === this){
-      closeProductModal();
-    }
-  });
-
-/******************************** CHANGE QUANTITY ( - / + ) ********************************/
-function changeQty(val){
-  selectedQty = Math.max(1, selectedQty + val);
-  document.getElementById("qtyInput").value = selectedQty;
-}
-
-/******************************** CHANGE QUANTITY ( manual ) ********************************/
-function manualQtyInput(){
-  let input = document.getElementById("qtyInput").value;
-
-  // allow empty habang nagta-type
-  input = input.replace(/[^0-9]/g, "");
-
-  document.getElementById("qtyInput").value = input;
-
-  if(input !== "" && parseInt(input) >= 1){
-    selectedQty = parseInt(input);
-  }
-}
-
-/******************************** QUANTITY INPUT ( manual ) ********************************/
-function fixQtyInput(){
-  const inputField = document.getElementById("qtyInput");
-
-  if(
-    inputField.value === "" ||
-    parseInt(inputField.value) < 1
-  ){
-    inputField.value = 1;
-    selectedQty = 1;
-  }
-}
-/******************************** ADD TO CART ********************************/
-function addToCartFromModal(){
-  let existing = cart.find(i => i.name === selectedProduct.name);
-
-  if(existing){
-    existing.qty += selectedQty;
-  } else {
-    cart.push({
-      ...selectedProduct,
-      qty: selectedQty
-    });
-  }
-
-  renderCart();
-  closeProductModal();
-}
-
-/******************************** MENU LIST ********************************/
-
-const menu = {
-  rice: [
-    {name:"Kimchi Fried Rice (Solo)", price:95},
-    {name:"Kimchi Fried Rice (Double)", price:130},
-    {name:"Shitake Fried Rice", price:95},
-    {name:"Spam Fried Rice", price:95},
-    {name:"Seafood Fried Rice", price:95},
-    {name:"Adobo Fried Rice", price:95},
-    {name:"Delimondo Fried Rice", price:95},
-    {name:"Sisig Fried Rice", price:95}
-  ],
-  sizzling: [
-    {name:"Hungarian Sausage", price:99},
-    {name:"Spam", price:99},
-    {name:"Fried Chicken", price:149},
-    {name:"Porkchop", price:149},
-    {name:"Sisig", price:139}
-  ],
-  noodles: [
-    {name:"CSN w/ Nori", price:129},
-    {name:"CSN w/ Egg + Nori", price:139},
-    {name:"CSN w/ Spam", price:159},
-    {name:"CSN w/ Sausage", price:169},
-    {name:"CSN w/ Chicken Katsu", price:179}
-  ],
-  snacks: [
-    {name:"Hungarian Sandwich", price:75},
-    {name:"Extreme Hungarian Sandwich", price:99},
-    {name:"Regular Fries", price:55},
-    {name:"Overload Nachos", price:110},
-    {name:"Cheesy Bacon Fries", price:110},
-    {name:"Muffins", price:75}
-  ],
-  coffee: [
-    {name:"Americano", price:99},
-    {name:"Cafe Latte", price:115},
-    {name:"Caramel Latte", price:115},
-    {name:"Vanilla Latte", price:115},
-    {name:"Hazelnut Latte", price:115},
-    {name:"White Mocha", price:115}
-  ],
-  noncoffee: [
-    {name:"Milky Chocolate", price:115},
-    {name:"Milky Oreo", price:115},
-    {name:"Strawberry Milk", price:115}
-  ],
-  matcha: [
-    {name:"Matcha Latte", price:145},
-    {name:"Oreo Matcha", price:145},
-    {name:"Strawberry Matcha", price:145},
-    {name:"Biscoff Matcha", price:145},
-    {name:"Classic Matcha Latte", price:170},
-    {name:"Agave Oat Matcha", price:180},
-    {name:"Berry Matcha", price:180}
-  ]
-};
-
-let cart = [];
-let editMode = false;
-let currentCategory = "rice";
-
-/******************************** EDIT MENU BUTTON ********************************/
-document.getElementById("editMenuBtn").onclick = function(){
-  editMode = !editMode;
-
-  this.innerText = editMode ? "💾 Save Changes" : "✏️ Edit Menu";
-  this.classList.toggle("save-mode", editMode);
-
-  renderCategories();        // 🔥 IMPORTANT
-  renderCurrentCategory();
-};
-
-/******************************** CATEGORY RENDER ********************************/
-function renderCategories(){
-  const container = document.getElementById("categories");
-  container.innerHTML = "";
-
-  Object.keys(menu).forEach(cat => {
-    const btn = document.createElement("button");
-
-    btn.innerText = formatCategoryName(cat);
-    btn.classList.toggle("active", cat === currentCategory);
-
-    btn.onclick = () => {
-      currentCategory = cat;
-      renderCategories();
-      renderCurrentCategory();
-    };
-
-    // 🔥 DELETE BUTTON (EDIT MODE ONLY)
-    if(editMode){
-      const del = document.createElement("span");
-      del.innerText = " ❌";
-      del.style.color = "red";
-      del.style.marginLeft = "5px";
-      del.style.cursor = "pointer";
-
-      del.onclick = (e) => {
-        e.stopPropagation(); // para di mag select
-        deleteCategory(cat);
-      };
-
-      btn.appendChild(del);
-    }
-
-    container.appendChild(btn);
-  });
-
-  // ➕ ADD CATEGORY BUTTON
-  if(editMode){
-    const addBtn = document.createElement("button");
-    addBtn.innerText = "+ Add Category";
-    addBtn.className = "action";
-    addBtn.onclick = addCategory;
-
-    container.appendChild(addBtn);
-  }
-}
-
-/******************************** DELETE CATEGORIES ********************************/
-function deleteCategory(cat){
-  if(!confirm(`Delete "${cat}" category?`)) return;
-
-  delete menu[cat];
-
-  const keys = Object.keys(menu);
-
-  // 🔥 ADD THIS CHECK
-  if(keys.length === 0){
-    currentCategory = null;
-    document.getElementById("products").innerHTML = "<p>No categories available</p>";
-    renderCategories();
-    return;
-  }
-
-  // auto switch kung nabura current
-  if(cat === currentCategory){
-    currentCategory = keys[0];
-  }
-
-  renderCategories();
-  renderCurrentCategory();
-}
-
-/******************************** FORMAT CATEGORY NAME ********************************/
-function formatCategoryName(cat){
-  return cat.charAt(0).toUpperCase() + cat.slice(1);
-}
-
-/******************************** ADD CATEGORY ********************************/
-function addCategory(){
-  const name = prompt("Enter category name (no spaces):");
-
-  if(!name) return;
-
-  if(menu[name]){
-    alert("Category already exists!");
-    return;
-  }
-
-  menu[name] = [];
-  currentCategory = name;
-
-  renderCategories();
-  renderCurrentCategory();
-}
-
-/******************************** MAIN RENDER ********************************/
-function renderCurrentCategory(){
-  const container = document.getElementById("products");
-  container.innerHTML = "";
-
-  if(!currentCategory || !menu[currentCategory]){
-    container.innerHTML = "<p>No category selected</p>";
-    return;
-  }
-
-  menu[currentCategory].forEach((item, index) => {
-    const div = document.createElement("div");
-    div.className = "card";
-
-    div.innerHTML = `
-      <img src="IMAGES/foodpic.jpg" alt="food">
-      <h4>${item.name}</h4>
-      <p>₱${item.price}</p>
-
-      ${editMode ? `<button class="delete-btn">🗑 Delete</button>` : ""}
-    `;
-
-    // NORMAL MODE (add to cart)
-    if(!editMode){
-      div.onclick = () => openProductModal(item);
-    }
-
-    // ✏️ EDIT MODE (CLICK CARD TO EDIT)
-    if(editMode){
-      div.onclick = () => {
-        const newName = prompt("Edit product name:", item.name);
-        const newPrice = parseFloat(prompt("Edit price:", item.price));
-
-        if(newName && !isNaN(newPrice)){
-          menu[currentCategory][index].name = newName;
-          menu[currentCategory][index].price = newPrice;
-          renderCurrentCategory();
-        }
-      };
-
-      // DELETE BUTTON
-      div.querySelector(".delete-btn").onclick = (e) => {
-        e.stopPropagation();
-        menu[currentCategory].splice(index, 1);
-        renderCurrentCategory();
-      };
-    }
-
-    container.appendChild(div);
-  });
-
-  // ➕ ADD PRODUCT BUTTON
-  if(editMode){
-    const addBtn = document.createElement("button");
-    addBtn.innerText = "+ Add Product";
-    addBtn.className = "action";
-    addBtn.style.marginTop = "10px";
-
-    addBtn.onclick = addProduct;
-
-    container.appendChild(addBtn);
-  }
-}
-
-/******************************** ADD PRODUCT ********************************/
-function addProduct(){
-  const name = prompt("Enter product name:");
-  const price = parseFloat(prompt("Enter price:"));
-
-  if(!name || isNaN(price)) return;
-
-  menu[currentCategory].push({
-    name: name,
-    price: price
-  });
-
-  renderCurrentCategory();
-}
-
-/******************************** DEFAULT LOAD ********************************/
-currentCategory = "rice";
-renderCategories();      // 🔥 ADD THIS
-renderCurrentCategory();
-
-/******************************** PAYMENT MODAL ********************************/
-const modal = document.getElementById("paymentModal");
-
-document.getElementById("placeOrderBtn").addEventListener("click", () => {
-
-  if(cart.length === 0){
-    alert("No items in cart!");
-    return;
-  }
-
-  openModal();
-});
-
-function openModal(){
-  modal.style.display = "flex";
-
-  const container = document.getElementById("modalOrderItems");
-  container.innerHTML = "";
-
-  let subtotal = 0;
-
-      cart.forEach(item => {
-      subtotal += item.price * item.qty;
-
-    container.innerHTML += `
-      <div style="display:flex; justify-content:space-between;">
-      <span>${item.name} (x${item.qty})</span>
-      <span>₱${item.price * item.qty}</span>
-      </div>
-    `;
-  });
-
-  document.getElementById("subtotalText").innerText = "Subtotal: ₱" + subtotal;
-  document.getElementById("totalText").innerText = "Total: ₱" + subtotal;
-
-  updateTotals();
-}
-
-function closeModal(){
-  modal.style.display = "none";
-}
-
-/******************************** DISCOUNT / TOTAL LOGIC **************************/
-document.getElementById("discountType").addEventListener("change", updateTotals);
-document.getElementById("customDiscount").addEventListener("input", updateTotals);
-
-function updateTotals(){
-  let subtotal = 0;
-  cart.forEach(item => subtotal += item.price * item.qty);
-
-  let discount = parseFloat(document.getElementById("discountType").value);
-  let custom = parseFloat(document.getElementById("customDiscount").value) || 0;
-
-  let finalDiscount = discount > 0 ? discount : custom;
-
-  let total = subtotal - (subtotal * finalDiscount / 100);
-
-  document.getElementById("totalText").innerText = "Total: ₱" + total.toFixed(2);
-
-}
-
-/******************************** AMOUNT INPUT ********************************/
-document.getElementById("amountInput").addEventListener("input", () => {
-  computeChange();
-});
-
-function computeChange(){
-  let totalText = document.getElementById("totalText").innerText;
-  let total = parseFloat(totalText.replace("Total: ₱", "")) || 0;
-
-  let amount = parseFloat(document.getElementById("amountInput").value);
-
-  // 👉 HINDI mag show agad kung empty
-  if(!amount || amount <= 0){
-    document.getElementById("changeText").innerText = "Change: ₱0";
-    return;
-  }
-
-  let change = amount - total;
-
-  document.getElementById("changeText").innerText =
-    "Change: ₱" + change.toFixed(2);
-}
-
-/******************************** CONFIRM PAYMENT ********************************/
-function confirmPayment(){
-  const method = document.getElementById("paymentMethod").value;
-  const amount = parseFloat(document.getElementById("amountInput").value);
-  const totalText = document.getElementById("totalText").innerText;
-  const total = parseFloat(totalText.replace("Total: ₱", "")) || 0;
-
-  if(method === ""){
-    alert("Select payment method!");
-    return;
-  }
-
-  // ✅ CASH VALIDATION (IMPORTANT PART)
-  if(method === "Cash"){
-    if(isNaN(amount) || amount <= 0){
-      alert("Please enter a valid cash amount!");
-      return;
-    }
-
-    if(amount < total){
-      alert("The entered amount is insufficient to complete the transaction.");
-      return;
-    }
-  }
-
-  if(method === "GCash"){
-    alert("Redirect to GCash QR / Payment (Simulation only)");
-  }
-
-  alert("Payment Successful!");
-
-  cart = [];
-  renderCart();
-  closeModal();
-}
-
-/******************************** PAYMENT METHOD : CASH OR GCASH ********************************/
-function handlePaymentMethod(){
-  const method = document.getElementById("paymentMethod").value;
-
-  document.getElementById("gcashBox").style.display = "none";
-  document.getElementById("cashBox").style.display = "none";
-
-  if(method === "GCash"){
-    document.getElementById("gcashBox").style.display = "block";
-  }
-
-  if(method === "Cash"){
-    document.getElementById("cashBox").style.display = "block";
-  }
-}
-
 /******************************** SIDEBAR TOGGLE ********************************/
-    const menuBtn = document.getElementById("menu-btn");
-    const sidebar = document.querySelector(".sidebar");
-    const main = document.querySelector(".main");
+const menuBtn = document.getElementById("menu-btn");
+const sidebar = document.querySelector(".sidebar");
+const main = document.querySelector(".main");
 
 menuBtn.onclick = function() {
   sidebar.classList.toggle("hide");
   main.classList.toggle("full");
 };
 
-/******************************** POS DATE DISPLAY ********************************/
-function updatePOSDate(){
-  const el = document.getElementById("posDate");
-  const now = new Date();
+/******************************** UPDATE DATE TODAY  ********************************/
+function updateTodayDate() {
+  const today = new Date();
 
-  el.textContent = "Today: " + now.toLocaleDateString('en-US', {
+  const options = {
+    year: 'numeric',
     month: 'long',
-    day: 'numeric',
-    year: 'numeric'
+    day: 'numeric'
+  };
+
+  const formattedDate = today.toLocaleDateString('en-US', options);
+
+  document.getElementById("todayDate").textContent = "Today: " + formattedDate;
+}
+
+updateTodayDate();
+
+/******************************** SET SOURCE (ALL/POS/ONLINE BOOKING)  ********************************/
+function setSource(type, btn) {
+
+  // active button UI
+  document.querySelectorAll('.src').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const rows = document.querySelectorAll('.transaction-table tbody tr');
+
+  rows.forEach(row => {
+    const source = row.getAttribute('data-source');
+
+    if (type === 'all') {
+      row.style.display = '';
+    }
+    else if (type === 'POS') {
+      row.style.display = (source === 'POS') ? '' : 'none';
+    }
+    else if (type === 'ONLINE_BOOKING') {
+      row.style.display = (source === 'ONLINE_BOOKING') ? '' : 'none';
+    }
   });
 }
 
-document.addEventListener("DOMContentLoaded", updatePOSDate);
+/******************************** VIEW TRANSACTION ********************************/
+function viewTransaction(btn) {
+  const row = btn.closest("tr");
+  const cells = row.querySelectorAll("td");
+
+const status = cells[6].innerText.toLowerCase();
+
+const html = `
+  <div class="txn-card">
+
+    <div class="txn-header">
+      <div>
+        <h2>Transaction Details</h2>
+        <span class="txn-id">${cells[0].innerText}</span>
+      </div>
+      <div class="txn-status ${status}">
+        ${cells[6].innerText}
+      </div>
+    </div>
+
+    <div class="txn-grid">
+
+      <div class="txn-item">
+        <span class="label">Date</span>
+        <span class="value">${cells[1].innerText}</span>
+      </div>
+
+      <div class="txn-item">
+        <span class="label">Customer</span>
+        <span class="value">${cells[2].innerText}</span>
+      </div>
+
+      <div class="txn-item">
+        <span class="label">Source</span>
+        <span class="value">${cells[3].innerText}</span>
+      </div>
+
+      <div class="txn-item">
+        <span class="label">Payment</span>
+        <span class="value">${cells[4].innerText}</span>
+      </div>
+
+    </div>
+
+    <div class="txn-total">
+      <span>Total</span>
+      <h1>${cells[5].innerText}</h1>
+    </div>
+
+  </div>
+`;
+
+  document.getElementById("modalBody").innerHTML = html;
+  document.getElementById("viewModal").style.display = "flex";
+}
+
+/******************************* CLOSE MODAL ********************************/
+function closeModal() {
+  document.getElementById("viewModal").style.display = "none";
+}
 </script>
