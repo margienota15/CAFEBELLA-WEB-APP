@@ -1,0 +1,1337 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Inventory</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', 'Segoe UI', Roboto, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: all 0.2s ease-in-out;
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f4f6f9;
+}
+
+/******************************** SIDEBAR (PRO UI) ********************************/
+.sidebar {
+  width: 270px;
+  height: 100vh;
+  background: 
+    linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+    url('IMAGES/webapppic.jpg'); 
+  background-size: cover;      
+  background-position: center;   
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  color: white;
+  padding: 20px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  box-shadow: 8px 0 25px rgba(0,0,0,0.15);
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+.sidebar.hide {
+  transform: translateX(-100%);
+}
+
+/******************************** MENU BUTTON ********************************/
+.menu {
+  position: relative;
+  margin-top: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid white;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.menu button {
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 12px;
+  background: transparent;
+  color: #e8f5e9;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.menu button.active {
+  background: linear-gradient(135deg, #66bb6a, #43a047);
+  color: white;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+.menu button.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 20px;
+  width: 4px;
+  background: #c8facc;
+  border-radius: 0 4px 4px 0;
+}
+.menu button:hover {
+  background: rgba(255,255,255,0.08);
+  transform: translateX(6px);
+}
+.menu button img.icon {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  display: block;
+  filter: brightness(0) invert(1);
+}
+#menu-btn {
+  font-size: 22px;
+  background: #114500;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+/*********************************** MAIN ********************************/
+.main {
+  margin-left: 270px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+.main.full {
+  margin-left: 0;
+}
+
+/******************************** TOP BAR ********************************/
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #e9e9e9;
+  padding: 15px 25px;
+  background: #ffffff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  border-bottom: 1px solid #eee;
+}
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/******************************** SEARCH BAR ********************************/
+.search-container {
+  display: flex;
+  align-items: center;
+  background: #f1f3f6;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+  padding: 8px 15px;
+  border-radius: 25px;
+  width: 350px;
+}
+
+.search-container span {
+  margin-right: 10px;
+  font-size: 16px;
+}
+.search-container input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+}
+
+/******************************** ADMIN ********************************/
+.admin {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  position: relative;
+  background: white;
+  padding: 8px 15px;
+  border-radius: 50px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+.admin:hover {
+  background: #f1f1f1;
+}
+.admin img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #2e7d32;
+  object-fit: cover;
+}
+.admin-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+.admin-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1b5e20;
+}
+.admin-role {
+  font-size: 11px;
+  color: gray;
+}
+.admin-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 18px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.admin-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+}
+.admin-header img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 2px solid #66bb6a;
+}
+.arrow {
+  font-size: 12px;
+  color: #555;
+}
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 55px;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  overflow: hidden;
+  z-index: 100;
+}
+.dropdown button {
+  width: 160px;
+  padding: 12px;
+  border: none;
+  background: white;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+}
+.dropdown button:hover {
+  background: #2e7d32;
+  color: white;
+}
+
+/******************************** TRANSACTION ********************************/
+.inventory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 20px 24px; 
+  margin: 10px 25px 10px 25px; /* ⬅️ bawasan bottom margin */
+  margin: 15px 25px 8px 25px; /* top | right | bottom | left */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+.inventory-header .header-left h1 {
+  font-size: 20px;
+  margin: 0;
+  color: #114500;
+  line-height: 1.2;
+}
+.inventory-header .header-left p {
+  font-size: 13px;
+  margin-top: 6px;
+  color: #6b7280;
+  line-height: 1.4;
+}
+.inventory-header .date-box {
+  background: #f4f6f9;
+  padding: 10px 14px; 
+  border-radius: 10px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-weight: 500;
+  color: #333;
+}
+.inventory-toolbar{
+  margin: 15px 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.container {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+.header-box select {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  font-weight: 700;
+  font-size: 13px;
+  color: #475569;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+}
+/******************************** CONTENT ********************************/
+.content {
+  display: flex;
+  flex: 1;
+  gap: 20px;
+  overflow: hidden;
+  min-height: 0; 
+}
+.content-wrapper {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.inventory-module {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+.form-box {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.form-title h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #114500;
+}
+.form-title p {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: #777;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+.form-box input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.form-box button {
+  background: #114500;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+}
+
+.input-group label {
+  font-size: 12px;
+  margin-bottom: 5px;
+  color: #555;
+  font-weight: 600;
+}
+
+.input-group input {
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  outline: none;
+  transition: 0.2s;
+  background: #fafafa;
+}
+
+.input-group input:focus {
+  border-color: #114500;
+  background: white;
+}
+.table-head{
+  display:grid;
+  grid-template-columns: 2fr 1.4fr 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr;
+  background: linear-gradient(135deg, #114500, #1b5e20);
+  color:white;
+  padding:14px;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  margin-bottom:10px;
+}
+.table-body {
+  max-height: 400px;   /* 👈 scroll height */
+  overflow-y: auto;
+}
+.table-box {
+  background: white;
+  border-radius: 14px;
+  padding: 0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  position: relative;
+  flex: 1;
+  min-height: 0;     /* IMPORTANT */
+  overflow-y: auto;
+  max-height: none;  /* REMOVE limit */
+}
+.table-header {
+  display: grid;
+  grid-template-columns: 2fr 1.6fr 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #114500, #1b5e20);
+  color: white;
+  box-shadow: 0 6px 18px rgba(17,69,0,0.25);
+}
+.table-header > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #e8f5e9;
+  transition: 0.2s;
+}
+
+.table-header > div:hover {
+  background: rgba(255,255,255,0.2);
+}
+.table-header select {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  padding-right: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.table-header select:hover {
+  color: #c8facc;
+}
+.table-row {
+  display: grid;
+  grid-template-columns: 2fr 1.6fr 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr;
+  gap: 10px;
+  padding: 12px;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  transition: 0.2s;
+}
+
+.table-row:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 18px rgba(17,69,0,0.15);
+}
+.table-row > div {
+  min-height: 52px;
+  background: #ffffff;
+  border: 1px solid #edf0f2;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  font-size: 13px;
+}
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+tbody tr {
+  background: white;
+}
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  background: #ffffff;
+  border-bottom: 2px solid #e5e7eb;
+
+  padding: 14px 10px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6b7280;
+
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.actions button {
+  margin: 0 3px;
+  padding: 5px 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.actions button:nth-child(1) {
+  background: #4caf50;
+  color: white;
+}
+
+.actions button:nth-child(2) {
+  background: #ff9800;
+  color: white;
+}
+
+.actions button:nth-child(3) {
+  background: #f44336;
+  color: white;
+}
+.action-btn {
+  padding: 5px 8px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  margin: 0 2px;
+}
+
+.action-btn.add {
+  background: #16a34a;
+  color: white;
+}
+
+.action-btn.minus {
+  background: #f59e0b;
+  color: white;
+}
+
+.action-btn.delete {
+  background: #ef4444;
+  color: white;
+}
+.low-stock {
+  color: #d97706;
+  font-weight: 700;
+}
+
+.out-stock {
+  color: #dc2626;
+  font-weight: 800;
+}
+
+.ok-stock {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+/* BUTTON */
+.add-btn {
+  align-self: flex-end;
+  background: linear-gradient(135deg, #114500, #2e7d32);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* MODAL BACKGROUND */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+}
+
+/* MODAL BOX */
+.modal-content {
+  background: white;
+  margin: 5% auto;
+  padding: 25px;
+  width: 600px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s ease;
+  position: relative;
+  z-index: 10000;
+}
+
+/* HEADER */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-sub {
+  font-size: 13px;
+  color: gray;
+  margin-bottom: 15px;
+}
+
+/* CLOSE BUTTON */
+.close-btn {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modern-table {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 14px;
+  margin: 15px 25px;   
+  padding: 15px;
+  overflow: hidden;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.badge.ok {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge.low {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.badge.out {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+#category {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fafafa;
+  outline: none;
+}
+select {
+  appearance: none;
+
+  background: #114500;
+  color: #e8f5e9;
+
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+
+  padding: 8px 28px 8px 10px;
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.2s;
+
+  background-image: url("data:image/svg+xml,%3Csvg fill='%23e8f5e9' viewBox='0 0 20 20'%3E%3Cpath d='M5 7l5 5 5-5H5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 14px;
+}
+
+select:hover {
+  background: #1b5e20;
+}
+
+select:focus {
+  border-color: #66bb6a;
+  box-shadow: 0 0 0 2px rgba(102,187,106,0.4);
+}
+
+.filter-group{
+  display:flex;
+  gap:12px;
+}
+.filter {
+  background: #ffffff;
+  padding: 12px 14px;
+  border-radius: 14px;
+
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+
+  transition: 0.2s;
+}
+
+.filter:hover {
+  transform: translateY(-2px);
+}
+
+.filter label{
+  font-size:11px;
+  color:#6b7280;
+  font-weight:600;
+}
+
+.filter select{
+  border:none;
+  outline:none;
+  font-size:13px;
+  font-weight:600;
+  background:transparent;
+}
+</style>
+</head>
+<body>
+
+<!--------------------------------------- SIDEBAR ---------------------------------------------> 
+    <div class="sidebar">
+      <div class="admin-header">
+        <img src="IMAGES/cafebella.jpg" alt="Logo">
+        <h2>Hello, Admin!</h2>
+      </div>
+
+<!--------------------------------------- MENU SIDEBAR ---------------------------------------------> 
+    <div class="menu">
+      <button data-page="Dashboard.html"><img src="IMAGES/dashboardpic.png" class="icon">Dashboard</button>
+      <button data-page="Calendar.html"><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
+      <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">Point of Sale</button>
+      <button data-page="Transactionhistory.html"><img src="IMAGES/transactionhistoryicon.png" class="icon">Transaction History</button>
+      <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Booking Request</button>
+      <button data-page="Eventmanagement.html"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
+      <button data-page="Inventory.html"><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
+      <button data-page="Feedback.html"><img src="IMAGES/feedbackicon.png" class="icon">Customer Feedback</button>
+      <button data-page="Settings.html"><img src="IMAGES/settingsicon.png" class="icon">Settings</button>
+    </div>
+    </div> 
+
+<!--------------------------------------- MAIN ---------------------------------------------> 
+    <div class="main">
+
+<!--------------------------------------- TOPBAR ---------------------------------------------> 
+    <div class="topbar">
+      <div class="left-section">
+        <button id="menu-btn">☰</button>
+        <div class="search-container">
+          <span>🔍</span>
+          <input type="text" placeholder="Search ...">
+        </div>
+      </div>
+
+    <div class="admin" onclick="toggleDropdown()">
+      <img src="IMAGES/cafebella.jpg" alt="Admin">
+      <div class="admin-info">
+        <span class="admin-name">Admin</span>
+        <span class="admin-role">Administrator</span>
+      </div>
+      <span class="arrow">▼</span>
+      <div id="adminDropdown" class="dropdown">
+        <button onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+
+<div class="content-wrapper">
+
+<!--------------------------------------- TITLE ---------------------------------------------> 
+<div class="inventory-header">
+  <div class="header-left">
+    <h1>Inventory</h1>
+    <p>Manage and monitor your stock of products and ingredients</p>
+  </div>
+
+  <div class="header-right">
+    <div class="date-box">
+      <i class="fa-solid fa-calendar"></i>
+      <span id="todayDate">Today: </span>
+    </div>
+  </div>
+</div>
+
+<!--------------------------------------- CONTAINER -------------------------------------------->
+<div class="container">
+
+  <div class="inventory-module">
+
+  <button class="add-btn" onclick="openModal()">+ Add Item</button>
+
+<div class="table-box modern-table">
+
+  <!-- HEADER (HINDI MA-SSCROLL) -->
+<div class="table-header">
+
+  <div>
+    <select id="filterItem" onchange="renderTable()">
+      <option value="">All Items</option>
+    </select>
+  </div>
+
+  <div>
+    <select id="filterCategory" onchange="renderTable()">
+      <option value="">All Categories</option>
+      <option value="Beans">Beans</option>
+      <option value="Dairy">Dairy</option>
+      <option value="Dairy Alternative">Dairy Alternative</option>
+      <option value="Sweetener">Sweetener</option>
+      <option value="Syrup">Syrup</option>
+    </select>
+  </div>
+
+  <div class="header-box">
+    <select>
+      <option>Stock</option>
+      <option>High to Low</option>
+      <option>Low to High</option>
+    </select>
+  </div>
+
+  <div class="header-box">
+    <select>
+      <option>Cost</option>
+      <option>High to Low</option>
+      <option>Low to High</option>
+    </select>
+  </div>
+
+  <div class="header-box">
+    <select>
+      <option>Selling</option>
+      <option>High to Low</option>
+      <option>Low to High</option>
+    </select>
+  </div>
+
+  <div class="header-box">
+    <select>
+      <option>Total</option>
+      <option>High to Low</option>
+      <option>Low to High</option>
+    </select>
+  </div>
+
+  <div class="header-box">
+    <select>
+      <option>Status</option>
+      <option>OK</option>
+      <option>LOW</option>
+      <option>OUT</option>
+    </select>
+  </div>
+
+  <div class="header-box">
+    <select>
+      <option>Reorder</option>
+      <option>Highest</option>
+      <option>Lowest</option>
+    </select>
+  </div>
+
+  <div class="header-box">
+    <select>
+      <option>Actions</option>
+      <option>Bulk Delete</option>
+      <option>Export</option>
+    </select>
+  </div>
+
+</div>
+
+  <!-- SCROLL AREA (ROWS LANG) -->
+  <div class="table-body" id="inventoryTable"></div>
+
+</div>
+
+<div id="inventoryModal" class="modal">
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h3>➕ Add Inventory Item</h3>
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+    </div>
+
+    <p class="modal-sub">Fill in product details below</p>
+
+    <div class="form-grid">
+
+      <div class="input-group">
+        <label>Item Name</label>
+        <input type="text" id="name">
+      </div>
+
+      <div class="input-group">
+        <label>Category</label>
+
+<select id="category">
+
+  <option value="" selected hidden>Select Category</option>
+
+  <!-- MAIN PRODUCTS -->
+  <optgroup label="Main Products">
+    <option value="Food">Food</option>
+    <option value="Drinks">Drinks</option>
+    <option value="Non-Food">Non-Food</option>
+  </optgroup>
+
+  <!-- INGREDIENTS -->
+  <optgroup label="Ingredients">
+    <option value="Beans">Beans</option>
+    <option value="Dairy">Dairy</option>
+    <option value="Dairy Alternative">Dairy Alternative</option>
+    <option value="Sweetener">Sweetener</option>
+    <option value="Syrup">Syrup</option>
+    <option value="Powder">Powder</option>
+    <option value="Tea Base">Tea Base</option>
+    <option value="Chocolate">Chocolate</option>
+    <option value="Toppings">Toppings</option>
+    <option value="Ice">Ice</option>
+    <option value="Water">Water</option>
+  </optgroup>
+
+  <!-- SUPPLIES -->
+  <optgroup label="Supplies">
+    <option value="Cups">Cups</option>
+    <option value="Lids">Lids</option>
+    <option value="Straws">Straws</option>
+    <option value="Napkins">Napkins</option>
+    <option value="Tissue">Tissue</option>
+    <option value="Takeout Packaging">Takeout Packaging</option>
+  </optgroup>
+
+  <!-- CLEANING -->
+  <optgroup label="Cleaning">
+    <option value="Detergent">Detergent</option>
+    <option value="Sanitizer">Sanitizer</option>
+    <option value="Cleaning Tools">Cleaning Tools</option>
+  </optgroup>
+
+  <!-- EQUIPMENT -->
+  <optgroup label="Equipment">
+    <option value="Machine Parts">Machine Parts</option>
+    <option value="Utensils">Utensils</option>
+    <option value="Tools">Tools</option>
+  </optgroup>
+
+</select>
+</div>
+
+      <div class="input-group">
+        <label>Initial Stock</label>
+        <input type="number" id="stock">
+      </div>
+
+      <div class="input-group">
+        <label>Cost per Unit</label>
+        <input type="number" id="cost">
+      </div>
+
+      <div class="input-group">
+        <label>Selling Price</label>
+        <input type="number" id="selling">
+      </div>
+
+      <div class="input-group">
+        <label>Reorder Level</label>
+        <input type="number" id="reorder">
+      </div>
+
+    </div>
+
+    <button class="add-btn" onclick="addItem(); closeModal();">+ Add Item</button>
+
+  </div>
+</div>
+
+</div>
+</body>
+</html>
+<script>
+
+/******************************** MENU BUTTON ********************************/
+  const sidebarButtons = document.querySelectorAll('.sidebar .menu button');
+
+/******************************** GET THE CURRENT PAGE ********************************/
+  function getCurrentPage() {
+    return window.location.pathname.split("/").pop(); 
+  }
+
+/******************************** HIGHLIGHT THE BUTTON OF THE CURRENT PAGE ********************************/
+  function highlightSidebar() {
+    const currentPage = getCurrentPage().toLowerCase();
+    sidebarButtons.forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.dataset.page.toLowerCase() === currentPage) {
+        btn.classList.add('active');
+      }
+    });
+  }
+
+/******************************** BUTTON HIGHLIGHT ********************************/
+  highlightSidebar();
+
+/******************************** NAVIGATE WHEN CLICKED ********************************/
+  sidebarButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetPage = btn.dataset.page;
+
+      sidebarButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+/******************************** NAVIGATE THE TARGET PAGE ********************************/
+      window.location.href = targetPage;
+    });
+  });
+
+/******************************** UPDATE THE HIGHLIGHT ON THE BROWSER ********************************/
+  window.addEventListener('popstate', () => {
+    highlightSidebar();
+  });
+
+/******************************** ADMIN DROPDOWN ********************************/
+function toggleDropdown() {
+  const dropdown = document.getElementById("adminDropdown");
+  dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+}
+function logout() {
+  window.location.href = "login.html";
+}
+
+/******************************** SIDEBAR TOGGLE ********************************/
+const menuBtn = document.getElementById("menu-btn");
+const sidebar = document.querySelector(".sidebar");
+const main = document.querySelector(".main");
+
+menuBtn.onclick = function() {
+  sidebar.classList.toggle("hide");
+  main.classList.toggle("full");
+};
+
+/******************************** UPDATE DATE TODAY  ********************************/
+function updateTodayDate() {
+  const today = new Date();
+
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  };
+
+  const formattedDate = today.toLocaleDateString('en-US', options);
+
+  document.getElementById("todayDate").textContent = "Today: " + formattedDate;
+}
+
+updateTodayDate();
+
+let inventory = [
+  { id: 1, name: "Espresso Beans", category: "Beans", stock: 25, cost: 850, selling: 0, reorder: 10 },
+  { id: 2, name: "Arabica Coffee Beans", category: "Beans", stock: 18, cost: 920, selling: 0, reorder: 10 },
+  { id: 3, name: "Robusta Beans", category: "Beans", stock: 20, cost: 780, selling: 0, reorder: 10 },
+  { id: 4, name: "Whole Milk", category: "Dairy", stock: 30, cost: 95, selling: 0, reorder: 10 },
+  { id: 5, name: "Fresh Milk", category: "Dairy", stock: 25, cost: 105, selling: 0, reorder: 10 },
+  { id: 6, name: "Oat Milk", category: "Dairy Alternative", stock: 15, cost: 160, selling: 0, reorder: 8 },
+  { id: 7, name: "Almond Milk", category: "Dairy Alternative", stock: 12, cost: 175, selling: 0, reorder: 8 },
+  { id: 8, name: "White Sugar", category: "Sweetener", stock: 40, cost: 60, selling: 0, reorder: 10 },
+  { id: 9, name: "Brown Sugar", category: "Sweetener", stock: 35, cost: 70, selling: 0, reorder: 10 },
+  { id: 10, name: "Vanilla Syrup", category: "Syrup", stock: 10, cost: 320, selling: 0, reorder: 5 }
+];
+
+/* ADD ITEM */
+function addItem() {
+
+
+  let name = document.getElementById("name").value;
+  let category = document.getElementById("category").value;
+
+  console.log("CATEGORY SELECTED:", category); // 👈 CHECK MO TO
+
+  let stock = parseFloat(document.getElementById("stock").value);
+  let cost = parseFloat(document.getElementById("cost").value);
+  let selling = parseFloat(document.getElementById("selling").value);
+  let reorder = parseFloat(document.getElementById("reorder").value);
+
+  console.log({
+    name,
+    category,
+    stock,
+    cost,
+    selling,
+    reorder
+  });
+
+    if (
+    !name.trim() ||
+    !category ||
+    category === "" ||
+    !stock && stock !== 0 ||
+    !cost && cost !== 0 ||
+    !selling && selling !== 0 ||
+    !reorder && reorder !== 0
+  ) {
+    alert("Please complete all fields including category");
+    return;
+  }
+
+  inventory.push({
+    id: Date.now(),
+    name,
+    category,
+    stock,
+    cost,
+    selling,
+    reorder
+  });
+
+  clearForm();
+  renderTable();
+}
+/* RENDER TABLE */
+function renderTable() {
+  let table = document.getElementById("inventoryTable");
+  table.innerHTML = "";
+
+  // GET SELECTED FILTER
+  const selectedCategory =
+    document.getElementById("filterCategory")?.value || "";
+
+  const selectedItem =
+    document.getElementById("filterItem")?.value || "";
+
+  // FILTER INVENTORY
+  let filteredInventory = inventory.filter(item => {
+    const matchCategory =
+      !selectedCategory || item.category === selectedCategory;
+
+    const matchItem =
+      !selectedItem || item.name === selectedItem;
+
+    return matchCategory && matchItem;
+  });
+
+  filteredInventory.forEach(item => {
+    let totalValue = item.stock * item.cost;
+
+    let statusClass = "ok";
+    let statusText = "OK";
+
+    if (item.stock <= 0) {
+      statusClass = "out";
+      statusText = "OUT";
+    } else if (item.stock <= item.reorder) {
+      statusClass = "low";
+      statusText = "LOW";
+    }
+
+    table.innerHTML += `
+      <div class="table-row" style="
+        display:grid;
+        grid-template-columns: 2fr 1.6fr 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr;
+        align-items:center;
+      ">
+
+        <div>${item.name}</div>
+        <div>${item.category}</div>
+        <div>${item.stock}</div>
+        <div>₱${item.cost.toFixed(2)}</div>
+        <div>₱${item.selling.toFixed(2)}</div>
+        <div>₱${totalValue.toFixed(2)}</div>
+
+        <div><span class="badge ${statusClass}">${statusText}</span></div>
+
+        <div>${item.reorder}</div>
+
+        <div>
+          <button class="action-btn add" onclick="stockIn(${item.id})">+</button>
+          <button class="action-btn minus" onclick="stockOut(${item.id})">-</button>
+          <button class="action-btn delete" onclick="deleteItem(${item.id})">Delete</button>
+        </div>
+
+      </div>
+    `;
+  });
+
+  updateItemDropdown();
+}
+
+window.addEventListener("DOMContentLoaded", initInventory);
+/* STOCK IN */
+function stockIn(id) {
+  let qty = parseFloat(prompt("Add stock quantity:"));
+
+  if (isNaN(qty)) return;
+
+  inventory = inventory.map(item => {
+    if (item.id === id) {
+      item.stock += qty;
+    }
+    return item;
+  });
+
+  renderTable();
+}
+function stockOut(id) {
+  let qty = parseFloat(prompt("Deduct stock quantity:"));
+
+  if (isNaN(qty)) return;
+
+  inventory = inventory.map(item => {
+    if (item.id === id) {
+      item.stock -= qty;
+      if (item.stock < 0) item.stock = 0;
+    }
+    return item;
+  });
+
+  renderTable();
+}
+
+/* DELETE */
+function deleteItem(id) {
+  inventory = inventory.filter(item => item.id !== id);
+  renderTable();
+}
+
+/* CLEAR FORM */
+function clearForm() {
+  document.getElementById("name").value = "";
+
+  const categorySelect = document.getElementById("category");
+  categorySelect.selectedIndex = 0;
+
+  document.getElementById("stock").value = "";
+  document.getElementById("cost").value = "";
+}
+window.onload = function () {
+  renderTable();
+};
+
+function openModal() {
+  document.getElementById("inventoryModal").style.display = "block";
+}
+
+function closeModal() {
+  document.getElementById("inventoryModal").style.display = "none";
+}
+
+/* close kapag nag click sa labas */
+window.onclick = function (e) {
+
+  // ADMIN DROPDOWN CLOSE
+  if (!e.target.closest('.admin')) {
+    const dropdown = document.getElementById("adminDropdown");
+    if (dropdown) dropdown.style.display = "none";
+  }
+
+  // MODAL CLOSE
+  const modal = document.getElementById("inventoryModal");
+  if (e.target === modal) {
+    modal.style.display = "none";
+  }
+};
+
+function updateItemDropdown() {
+  const itemSelect = document.getElementById("filterItem");
+  const selectedCategory =
+    document.getElementById("filterCategory")?.value || "";
+
+  if (!itemSelect) return;
+
+  itemSelect.innerHTML = `<option value="">All Items</option>`;
+
+  let filteredItems = inventory.filter(item => {
+    return !selectedCategory || item.category === selectedCategory;
+  });
+
+  filteredItems.forEach(item => {
+    itemSelect.innerHTML += `
+      <option value="${item.name}">
+        ${item.name}
+      </option>
+    `;
+  });
+}
+</script>
