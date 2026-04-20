@@ -382,6 +382,7 @@ body {
   margin-bottom: 16px;
   letter-spacing: 0.2px;
 }
+
 /******************************** CONTENT ********************************/
 .content {
   display: flex;
@@ -397,6 +398,7 @@ body {
   flex-direction: column;
   overflow: hidden;
 }
+
 /******************************** STATS (MODERN CARDS) ********************************/
 .stats{
   display:grid;
@@ -429,6 +431,7 @@ body {
   color:#114500;
   font-weight:700;
 }
+
 /******************************** MINI TABLE ********************************/
 .mini-table{
   background:#ffffff;
@@ -453,7 +456,6 @@ body {
   color:#114500;
   margin-bottom:6px;
 }
-
 .mini-card p{
   font-size:13px;
   color:#4b5563;
@@ -495,7 +497,6 @@ body {
   align-items: center;
   gap: 12px;
 }
-
 .table-row strong{
   color: #111827;
   font-weight: 700;
@@ -512,15 +513,23 @@ body {
   flex-direction: column;
   flex: 1;
   min-height: 0;
+  overflow: hidden;
 }
 .table-body::-webkit-scrollbar{
   width:6px;
 }
-
 .table-body::-webkit-scrollbar-thumb{
   background:#bbb;
   border-radius:10px;
 }
+.table-body::-webkit-scrollbar{
+  width:6px;
+}
+.table-body::-webkit-scrollbar-thumb{
+  background:#ccc;
+  border-radius:10px;
+}
+
 /******************************** STATUS ********************************/
 .status-badge{
   padding: 6px 12px;
@@ -528,12 +537,10 @@ body {
   font-size: 12px;
   font-weight: 600;
 }
-
 .status-badge.upcoming{
   background: #e0f2fe;
   color: #0369a1;
 }
-
 .status-badge.completed{
   background: #dcfce7;
   color: #166534;
@@ -583,6 +590,7 @@ body {
 .status-legend span:nth-child(1)::before{ color:#16a34a; }
 .status-legend span:nth-child(2)::before{ color:#2563eb; }
 .status-legend span:nth-child(3)::before{ color:#dc2626; }
+
 /******************************** ACTION BUTTON ********************************/
 .actions {
   display: flex;
@@ -590,7 +598,6 @@ body {
   align-items: center;
   width: 100%;
 }
-
 .actions button{
   border:none;
   background:#fdecea;
@@ -600,20 +607,12 @@ body {
   cursor:pointer;
   transition:0.2s;
 }
-
 .actions button:hover{
   background:#c62828;
   color:white;
 }
 
-/******************************** SCROLLBAR ********************************/
-.table-body::-webkit-scrollbar{
-  width:6px;
-}
-.table-body::-webkit-scrollbar-thumb{
-  background:#ccc;
-  border-radius:10px;
-}
+/******************************** SECTIONS ********************************/
 .section{
   background: #ffffff;
   border: 1px solid #e5e7eb;
@@ -645,12 +644,12 @@ body {
   border-radius: 12px;
   padding: 12px;
 }
-
 .section-box h3{
   font-size: 13px;
   color: #114500;
   margin-bottom: 8px;
 }
+
 /******************************** ADD BUTTONS ********************************/
 .add-btn {
   background: linear-gradient(135deg, #66bb6a, #43a047);
@@ -664,6 +663,19 @@ body {
 }
 .add-btn:hover {
   opacity: 0.9;
+}
+.add-staff-btn {
+  margin-top: 10px;
+  font-size: 12px;
+  background: transparent;
+  border: 1px dashed #66bb6a;
+  color: #2e7d32;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.add-staff-btn:hover {
+  background: #e8f5e9;
 }
 
 /******************************** BOX ********************************/
@@ -691,7 +703,6 @@ body {
   align-items: center;
   gap: 8px;
 }
-
 .box p{
   font-size: 13px;
   color: #4b5563;
@@ -706,6 +717,7 @@ body {
     transform: translateY(0) scale(1);
   }
 }
+
 /******************************** MODAL ********************************/
 .modal{
   position:fixed;
@@ -718,7 +730,6 @@ body {
   justify-content:center;
   z-index:999;
 }
-
 .modal-box{
   background: #ffffff;
   border-radius: 20px;
@@ -750,6 +761,7 @@ body {
   transform: rotate(90deg);
   color: #b91c1c;
 }
+
 /******************************** EVENT CARD ********************************/
 .modern-event-card{
   background: linear-gradient(180deg, #ffffff, #f9fafb);
@@ -764,13 +776,6 @@ body {
   height: 100%;
   min-height: 0;
 }
-.table-wrap{
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
-}
 
 /******************************** STAFF ********************************/
 .staff-group {
@@ -781,12 +786,10 @@ body {
   margin-bottom: 14px;
   transition: 0.25s;
 }
-
 .staff-group:hover {
   border-color: #66bb6a;
   box-shadow: 0 8px 18px rgba(0,0,0,0.06);
 }
-
 .staff-header {
   display: flex;
   align-items: center;
@@ -795,7 +798,6 @@ body {
   color: #114500;
   margin-bottom: 10px;
 }
-
 .staff-header i {
   background: #e8f5e9;
   color: #2e7d32;
@@ -803,13 +805,11 @@ body {
   border-radius: 8px;
   font-size: 12px;
 }
-
 .staff-list {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
-
 .staff-chip {
   background: #ffffff;
   border: 1px solid #e5e7eb;
@@ -820,15 +820,12 @@ body {
   align-items: center;
   gap: 6px;
 }
-
 .staff-chip input {
   border: none;
   outline: none;
   font-size: 12px;
   width: 90px;
 }
-
-/* remove button */
 .staff-chip button {
   background: #fee2e2;
   border: none;
@@ -846,7 +843,6 @@ body {
 .staff-chip{
   overflow: visible;
 }
-
 .staff-group{
   overflow: visible;
 }
@@ -856,6 +852,7 @@ body {
   color: #374151;
 }
 
+/******************************** ASSIGN ********************************/
 .assign-dropdown{
   border: 1px solid #e5e7eb;
   border-radius: 8px;
@@ -866,34 +863,12 @@ body {
   position: relative;
   z-index: 999;
 }
-
 .assign-dropdown:hover{
   border-color: #66bb6a;
 }
 
-.locked{
-  font-size: 11px;
-  background: #f3f4f6;
-  padding: 4px 8px;
-  border-radius: 999px;
-  color: #6b7280;
-  font-weight: 500;
-}
-.add-staff-btn {
-  margin-top: 10px;
-  font-size: 12px;
-  background: transparent;
-  border: 1px dashed #66bb6a;
-  color: #2e7d32;
-  padding: 6px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-}
 
-.add-staff-btn:hover {
-  background: #e8f5e9;
-}
-
+/******************************** VIEW ********************************/
 .view-btn{
   background: #e8f5e9;
   color: #1b5e20;
@@ -909,11 +884,12 @@ body {
   max-width: 130px;
   white-space: nowrap;
 }
-
 .view-btn:hover{
   background: #1b5e20;
   color: white;
 }
+
+/******************************** DETAILS ********************************/
 .detail-header{
   display: flex;
   justify-content: space-between;
@@ -930,31 +906,29 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 10px;
 }
-
 .detail-item{
   background: #f9fafb;
   padding: 10px;
   border-radius: 10px;
   border: 1px solid #eee;
 }
-
 .detail-item label{
   font-size: 11px;
   color: #6b7280;
 }
-
 .detail-item p{
   font-size: 13px;
   font-weight: 600;
   color: #111827;
   margin-top: 2px;
 }
+
+/******************************** TAG ********************************/
 .tag-group{
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
 }
-
 .tag{
   background: #e8f5e9;
   color: #1b5e20;
@@ -962,24 +936,23 @@ body {
   border-radius: 999px;
   font-size: 11px;
 }
+
+/******************************** PAYMENT ********************************/
 .payment-grid{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
-
 .payment-grid div{
   background: #f9fafb;
   padding: 10px;
   border-radius: 10px;
   text-align: center;
 }
-
 .payment-grid span{
   font-size: 11px;
   color: #6b7280;
 }
-
 .payment-grid strong{
   display: block;
   margin-top: 4px;
@@ -989,7 +962,6 @@ body {
   margin-top: 10px;
   text-align: center;
 }
-
 .payment-status .badge{
   background: #fef3c7;
   color: #92400e;
@@ -998,6 +970,9 @@ body {
   font-size: 12px;
   font-weight: 600;
 }
+
+
+
 .danger{
   color: #dc2626;
 }
@@ -1005,6 +980,14 @@ body {
   font-size: 13px;
   color: #4b5563;
   line-height: 1.4;
+}
+.locked{
+  font-size: 11px;
+  background: #f3f4f6;
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: #6b7280;
+  font-weight: 500;
 }
 </style>
 </head>
@@ -1074,7 +1057,7 @@ body {
   </div>
 </div>
 
-<!-- ===================== TOP STATUS ===================== -->
+<!--------------------------------------- STATUS BOX ---------------------------------------------> 
 <div class="stats">
   <div class="stat-box">
     <p>Total Events</p>
@@ -1097,11 +1080,9 @@ body {
   </div>
 </div>
 
-<!-- ===================== MAIN DASHBOARD LAYOUT ===================== -->
+<!--------------------------------------- EVENT ---------------------------------------------> 
 <div class="event-layout">
 
-  <!-- LEFT CARD: EVENT SETUP DETAILS -->
-<!-- LEFT CARD: EVENT SETUP DETAILS (MODERN UI) -->
   <div class="event-card modern-event-card">
 
     <div class="event-title">
@@ -1125,7 +1106,7 @@ body {
 
   </div>
 
-  <!-- RIGHT CARD: EVENTS TABLE -->
+<!--------------------------------------- EVENT CARD ---------------------------------------------> 
 <div class="event-card">
 
   <div class="all-events-scroll">
@@ -1144,7 +1125,7 @@ body {
         <span>Action</span>
       </div>
 
-      <!-- TABLE BODY -->
+<!--------------------------------------- TABLE BODY ---------------------------------------------> 
       <div class="table-body" id="eventTable">
 
         <div class="table-row">
@@ -1168,7 +1149,7 @@ body {
 
 </div>
 
-
+<!--------------------------------------- MODAL / BOOTH ---------------------------------------------> 
 <div class="modal" id="boothModal">
   <div class="modal-box">
     <span class="close" onclick="closeBoothModal()">✕</span>
@@ -1193,6 +1174,7 @@ body {
   </div>
 </div>
 
+<!--------------------------------------- MODAL / STAFF ---------------------------------------------> 
 <div class="modal" id="staffModal">
   <div class="modal-box">
     <span class="close" onclick="closeStaffModal()">✕</span>
@@ -1201,7 +1183,6 @@ body {
 
     <div id="staffContainer"></div>
 
-    <!-- BUTTONS -->
     <button id="editBtn" class="add-btn" onclick="enableEdit()">
       ✏️ Edit
     </button>
@@ -1213,6 +1194,7 @@ body {
   </div>
 </div>
 
+<!--------------------------------------- MODAL / EVENT ---------------------------------------------> 
 <div class="modal" id="eventModal">
   <div class="modal-box">
     <span class="close" onclick="closeModal()">✕</span>
@@ -1220,7 +1202,8 @@ body {
     <div id="eventDetails"></div>
   </div>
 </div>
-<!-- ===================== STATUS LEGEND ===================== -->
+
+<!--------------------------------------- STATUS LEGEND ---------------------------------------------> 
 <div class="status-legend">
   <span>Completed</span>
   <span>Upcoming</span>
@@ -1329,10 +1312,10 @@ let assignments = {
     Cashier: []
   },
   Tattoo: {
-    Artist: [] // fixed
+    Artist: [] 
   }
 };
-// ✅ AFTER declaration saka mo tawagin
+
 loadStaff();
 updateTodayDate();
 
@@ -1360,6 +1343,7 @@ notes:"Outdoor setup"
 }
 ];
 
+/******************************** RENDER EVENTS ********************************/
 function renderEvents(){
   const container = document.getElementById("eventTable");
   container.innerHTML="";
@@ -1391,7 +1375,6 @@ function renderEvents(){
     `;
   });
 
-  // UPDATE DASHBOARD
   document.querySelectorAll(".stat-box h2")[0].innerText = total;
   document.querySelectorAll(".stat-box h2")[1].innerText = upcoming;
   document.querySelectorAll(".stat-box h2")[2].innerText = completed;
@@ -1441,14 +1424,11 @@ function viewEvent(i){
       </div>
     </div>
 
-    <!-- 🔥 UPDATED PART STARTS HERE -->
-    <!-- SERVICE -->
     <div class="section-box">
       <h3>Service</h3>
       <span class="tag">${e.services[0]}</span>
     </div>
 
-<!-- PAYMENT SUMMARY -->
 <div class="section-box">
   <h3>Payment Summary</h3>
 
@@ -1503,8 +1483,6 @@ function viewEvent(i){
   </div>
 
 </div>
-
-    <!-- 🔥 UPDATED PART ENDS HERE -->
 
     <div class="section-box">
       <h3>Assigned Staff</h3>
@@ -1573,6 +1551,7 @@ window.addEventListener("click", function(e){
 
 console.log("Editing Mode:", isEditing);
 
+/******************************** RENDER STAFF ********************************/
 function renderStaff(){
   const container = document.getElementById("staffContainer");
   container.innerHTML = "";
@@ -1599,7 +1578,6 @@ ${staffList[role].map((name,i)=>`
 
   <div class="staff-chip">
 
-    <!-- NAME -->
     ${
       isEditing
       ? `<input value="${name}" 
@@ -1607,7 +1585,6 @@ ${staffList[role].map((name,i)=>`
       : `<span class="staff-name">${name}</span>`
     }
 
-    <!-- ASSIGNMENT -->
     ${
       !isEditing
       ? (
@@ -1626,7 +1603,6 @@ ${staffList[role].map((name,i)=>`
       : ""
     }
 
-    <!-- REMOVE BUTTON -->
     ${
       isEditing
       ? `<button onclick="removeStaff('${role}', ${i})">×</button>`
@@ -1652,6 +1628,7 @@ ${staffList[role].map((name,i)=>`
   }
 }
 
+/******************************** MENU BUTTON ********************************/
 function assignStaff(role, name, booth){
 
   if(!booth) return;
