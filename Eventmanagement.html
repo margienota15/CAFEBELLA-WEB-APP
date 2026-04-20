@@ -364,6 +364,24 @@ body {
   background: #ccc;
   border-radius: 10px;
 }
+.event-detail-card{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: 'Inter', sans-serif;
+}
+#eventDetails{
+  overflow-y: auto;
+  flex: 1;
+  padding-right: 8px;
+}
+.all-events-title{
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 16px;
+  letter-spacing: 0.2px;
+}
 /******************************** CONTENT ********************************/
 .content {
   display: flex;
@@ -411,8 +429,6 @@ body {
   color:#114500;
   font-weight:700;
 }
-
-
 /******************************** MINI TABLE ********************************/
 .mini-table{
   background:#ffffff;
@@ -431,12 +447,6 @@ body {
   padding:14px;
   transition:0.2s;
 }
-
-.mini-card:hover{
-  transform: translateY(-3px);
-  box-shadow:0 8px 18px rgba(0,0,0,0.06);
-}
-
 .mini-card h4{
   font-size:13px;
   font-weight:700;
@@ -447,13 +457,6 @@ body {
 .mini-card p{
   font-size:13px;
   color:#4b5563;
-}
-.all-events-title{
-  font-size: 16px;
-  font-weight: 700;
-  color: #111827;
-  margin-bottom: 16px;
-  letter-spacing: 0.2px;
 }
 
 /******************************** TABLE ********************************/
@@ -488,9 +491,9 @@ body {
   font-size: 13px;
   transition: 0.2s ease;
   display: grid;
-  grid-template-columns: 2fr 2fr 1.5fr 1fr 1.5fr 1.5fr 1.2fr 1.3fr;
+  grid-template-columns: 2.2fr 2.2fr 1.6fr 1fr 1.6fr 1.4fr 1.6fr;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .table-row strong{
@@ -519,6 +522,22 @@ body {
   border-radius:10px;
 }
 /******************************** STATUS ********************************/
+.status-badge{
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.upcoming{
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.status-badge.completed{
+  background: #dcfce7;
+  color: #166534;
+}
 .status-select{
   border: 1px solid #e5e7eb;
   border-radius: 999px;
@@ -620,7 +639,18 @@ body {
   color: #4b5563;
   margin: 6px 0;
 }
+.section-box{
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 12px;
+}
 
+.section-box h3{
+  font-size: 13px;
+  color: #114500;
+  margin-bottom: 8px;
+}
 /******************************** ADD BUTTONS ********************************/
 .add-btn {
   background: linear-gradient(135deg, #66bb6a, #43a047);
@@ -692,10 +722,14 @@ body {
 .modal-box{
   background: #ffffff;
   border-radius: 20px;
-  width: 420px;
+  width: 450px;
+  max-height: 80vh;   
   padding: 25px;
   box-shadow: 0 20px 50px rgba(0,0,0,0.15);
   animation: fadeIn 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; 
 }
 .modal-box h3{
   font-size: 18px;
@@ -738,7 +772,7 @@ body {
   overflow: hidden;
 }
 
-/* STAFF MODAL UPGRADE */
+/******************************** STAFF ********************************/
 .staff-group {
   background: #f9fafb;
   border: 1px solid #e5e7eb;
@@ -805,8 +839,46 @@ body {
   cursor: pointer;
   font-size: 10px;
 }
+.staff-name{
+  font-weight: 500;
+  color: #1f2937;
+}
+.staff-chip{
+  overflow: visible;
+}
 
-/* add button */
+.staff-group{
+  overflow: visible;
+}
+.staff-grid p{
+  font-size: 13px;
+  margin: 4px 0;
+  color: #374151;
+}
+
+.assign-dropdown{
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 4px 6px;
+  font-size: 11px;
+  background: #f9fafb;
+  cursor: pointer;
+  position: relative;
+  z-index: 999;
+}
+
+.assign-dropdown:hover{
+  border-color: #66bb6a;
+}
+
+.locked{
+  font-size: 11px;
+  background: #f3f4f6;
+  padding: 4px 8px;
+  border-radius: 999px;
+  color: #6b7280;
+  font-weight: 500;
+}
 .add-staff-btn {
   margin-top: 10px;
   font-size: 12px;
@@ -841,6 +913,98 @@ body {
 .view-btn:hover{
   background: #1b5e20;
   color: white;
+}
+.detail-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+.detail-header h2{
+  font-size: 18px;
+  color: #114500;
+}
+.detail-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.detail-item{
+  background: #f9fafb;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
+
+.detail-item label{
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.detail-item p{
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+  margin-top: 2px;
+}
+.tag-group{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tag{
+  background: #e8f5e9;
+  color: #1b5e20;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+}
+.payment-grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.payment-grid div{
+  background: #f9fafb;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.payment-grid span{
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.payment-grid strong{
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+}
+.payment-status{
+  margin-top: 10px;
+  text-align: center;
+}
+
+.payment-status .badge{
+  background: #fef3c7;
+  color: #92400e;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+.danger{
+  color: #dc2626;
+}
+.notes{
+  font-size: 13px;
+  color: #4b5563;
+  line-height: 1.4;
 }
 </style>
 </head>
@@ -1155,6 +1319,19 @@ let staffList = {
   Cashier: ["Cashier 1", "Cashier 2"]
 };
 
+let assignments = {
+  Coffee: {
+    Barista: [],
+    Cashier: []
+  },
+  Matcha: {
+    Barista: [],
+    Cashier: []
+  },
+  Tattoo: {
+    Artist: [] // fixed
+  }
+};
 // ✅ AFTER declaration saka mo tawagin
 loadStaff();
 updateTodayDate();
@@ -1224,42 +1401,122 @@ function renderEvents(){
 function viewEvent(i){
   const e = events[i];
 
-  document.getElementById("eventDetails").innerHTML = `
-  <p><b>Client:</b> ${e.client}</p>
-  <p><b>Email:</b> ${e.email}</p>
-  <p><b>Contact:</b> ${e.contact}</p>
-  <p><b>Date:</b> ${e.date}</p>
-  <p><b>Guests:</b> ${e.guests}</p>
-  <p><b>Location:</b> ${e.location}</p>
+document.getElementById("eventDetails").innerHTML = `
+<div class="event-detail-card">
 
-  <hr>
+  <div class="detail-header">
+    <h2>Event Details</h2>
+    <span class="status-badge ${e.status.toLowerCase()}">${e.status}</span>
+  </div>
 
-  <p><b>Services:</b> ${e.services.join(", ")}</p>
+  <div class="detail-grid">
 
-  <p><b>Payment:</b><br>
-  Total: ₱${e.total}<br>
-  Paid: ₱${e.paid}<br>
-  Balance: ₱${e.total - e.paid}</p>
+    <div class="detail-item">
+      <label>Client</label>
+      <p>${e.client}</p>
+    </div>
 
-  <p><b>Status:</b> ${e.status}</p>
-  <p><b>Payment Status:</b> ${e.paymentStatus}</p>
+    <div class="detail-item">
+      <label>Email</label>
+      <p>${e.email}</p>
+    </div>
 
-  <hr>
+    <div class="detail-item">
+      <label>Contact</label>
+      <p>${e.contact}</p>
+    </div>
 
-  <p><b>Staff:</b><br>
-  ${e.staff.map(s=>`${s.name} (${s.role})`).join("<br>")}
-  </p>
+    <div class="detail-item">
+      <label>Date</label>
+      <p>${e.date}</p>
+    </div>
 
-  <p><b>Notes:</b> ${e.notes}</p>
-  `;
+    <div class="detail-item">
+      <label>Guests</label>
+      <p>${e.guests}</p>
+    </div>
+
+    <div class="detail-item">
+      <label>Location</label>
+      <p>${e.location}</p>
+    </div>
+
+  </div>
+
+  <div class="section-box">
+    <h3>Services</h3>
+    <div class="tag-group">
+      ${e.services.map(s => `<span class="tag">${s}</span>`).join("")}
+    </div>
+  </div>
+
+  <div class="section-box">
+    <h3>Payment Summary</h3>
+
+    <div class="payment-grid">
+      <div>
+        <span>Total</span>
+        <strong>₱${e.total}</strong>
+      </div>
+
+      <div>
+        <span>Paid</span>
+        <strong>₱${e.paid}</strong>
+      </div>
+
+      <div>
+        <span>Balance</span>
+        <strong class="danger">₱${e.total - e.paid}</strong>
+      </div>
+    </div>
+
+    <div class="payment-status">
+      <span class="badge">${e.paymentStatus}</span>
+    </div>
+  </div>
+
+  <div class="section-box">
+    <h3>Assigned Staff</h3>
+
+    <div class="staff-grid">
+      <p><b>Barista:</b> ${e.staff.Barista || "-"}</p>
+      <p><b>Artist:</b> ${e.staff.Artist || "-"}</p>
+      <p><b>Cashier:</b> ${e.staff.Cashier || "-"}</p>
+    </div>
+  </div>
+
+  <div class="section-box">
+    <h3>Notes</h3>
+    <p class="notes">${e.notes || "No notes provided."}</p>
+  </div>
+
+</div>
+`;
 
   document.getElementById("eventModal").style.display="flex";
 }
 
 function closeModal(){
-  document.getElementById("eventModal").style.display="none";
+  document.getElementById("eventModal").style.display = "none";
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+
+  const eventModal = document.getElementById("eventModal");
+
+  eventModal.addEventListener("click", function(e){
+    if (e.target === eventModal) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape"){
+      closeModal();
+    }
+  });
+
+});
 renderEvents();
 
 function openBoothModal(){
@@ -1310,26 +1567,47 @@ function renderStaff(){
 
         <div class="staff-list">
 
-          ${staffList[role].map((name,i)=>`
+${staffList[role].map((name,i)=>`
 
-            <div class="staff-chip">
+  <div class="staff-chip">
 
-              ${
-                isEditing
-                ? `<input value="${name}" 
-                     onchange="updateStaff('${role}', ${i}, this.value)">`
-                  : `<span style="font-weight:500;">${name}</span>`
-              }
+    <!-- NAME -->
+    ${
+      isEditing
+      ? `<input value="${name}" 
+           onchange="updateStaff('${role}', ${i}, this.value)">`
+      : `<span class="staff-name">${name}</span>`
+    }
 
-              ${
-                isEditing
-                ? `<button onclick="removeStaff('${role}', ${i})">×</button>`
-                : ""
-              }
+    <!-- ASSIGNMENT -->
+    ${
+      !isEditing
+      ? (
+        role !== "Artist"
+        ? `
+        <select class="assign-dropdown"
+          onchange="assignStaff('${role}', '${name}', this.value)">
+          
+          <option value="">Assign</option>
+          <option value="Coffee">Coffee Booth</option>
+          <option value="Matcha">Matcha Booth</option>
+        </select>
+        `
+        : `<span class="locked">Tattoo Event</span>`
+      )
+      : ""
+    }
 
-            </div>
+    <!-- REMOVE BUTTON -->
+    ${
+      isEditing
+      ? `<button onclick="removeStaff('${role}', ${i})">×</button>`
+      : ""
+    }
 
-          `).join("")}
+  </div>
+
+`).join("")}
 
         </div>
 
@@ -1344,6 +1622,37 @@ function renderStaff(){
       </div>
     `;
   }
+}
+
+function assignStaff(role, name, booth){
+
+  if(!booth) return;
+
+  const limits = {
+    Barista: 2,
+    Cashier: 1
+  };
+
+  if(role === "Artist") return;
+
+  let current = assignments[booth][role];
+
+  if(current.length >= limits[role]){
+    alert(`${booth} Booth needs only ${limits[role]} ${role}`);
+    return;
+  }
+
+  // remove from other booth
+  for(let b in assignments){
+    if(assignments[b][role]){
+      assignments[b][role] =
+        assignments[b][role].filter(s => s !== name);
+    }
+  }
+
+  assignments[booth][role].push(name);
+
+  console.log(assignments); // debug muna
 }
 
 function enableEdit(){
