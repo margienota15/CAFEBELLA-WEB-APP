@@ -399,14 +399,7 @@ body {
   overflow:hidden;
 }
 .stat-box::after{
-  content:"";
-  position:absolute;
-  right:-20px;
-  top:-20px;
-  width:80px;
-  height:80px;
-  background:rgba(76,175,80,0.08);
-  border-radius:50%;
+  display: none;
 }
 .stat-box p{
   font-size:13px;
@@ -418,9 +411,7 @@ body {
   color:#114500;
   font-weight:700;
 }
-.stat-box:nth-child(2)::after{ background:rgba(33,150,243,0.08); }
-.stat-box:nth-child(3)::after{ background:rgba(255,193,7,0.08); }
-.stat-box:nth-child(4)::after{ background:rgba(156,39,176,0.08); }
+
 
 /******************************** MINI TABLE ********************************/
 .mini-table{
@@ -467,22 +458,26 @@ body {
 
 /******************************** TABLE ********************************/
 .table-header{
-  border: 1px solid #eee;
+  display: grid;
+  grid-template-columns: 2.2fr 2.2fr 1.6fr 1fr 1.6fr 1.4fr 1.6fr;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
   border-radius: 12px;
-  padding: 12px;
+  background: linear-gradient(135deg, #1b5e20, #43a047);
+  color: white;
   font-size: 12px;
   font-weight: 700;
-  color: #6b7280;
-  display: grid;
-  gap: 10px;
+  letter-spacing: 0.5px;
   position: sticky;
   top: 0;
-  z-index: 5;
-  background: #f9fafb;
+  z-index: 10;
 }
 .table-body{
   flex: 1;
   min-height: 0;
+  overflow-y: auto;
+  padding-right: 5px;
 }
 .table-row{
   background: #ffffff;
@@ -493,19 +488,21 @@ body {
   font-size: 13px;
   transition: 0.2s ease;
   display: grid;
+  grid-template-columns: 2fr 2fr 1.5fr 1fr 1.5fr 1.5fr 1.2fr 1.3fr;
+  align-items: center;
   gap: 10px;
 }
-.table-row:hover{
-  background: #f9fafb;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
-}
+
 .table-row strong{
   color: #111827;
   font-weight: 700;
 }
-.table-row span strong{
-  color: #16a34a;
+.table-row span{
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
 }
 .table-wrap{
   display: flex;
@@ -531,6 +528,9 @@ body {
   outline: none;
   cursor: pointer;
   transition: 0.2s;
+  width: 100%;
+  max-width: 130px;
+  white-space: nowrap;
 }
 .status-select.completed{
   background: #dcfce7;
@@ -565,9 +565,11 @@ body {
 .status-legend span:nth-child(2)::before{ color:#2563eb; }
 .status-legend span:nth-child(3)::before{ color:#dc2626; }
 /******************************** ACTION BUTTON ********************************/
-.actions{
-  display:flex;
-  justify-content:center;
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .actions button{
@@ -636,36 +638,51 @@ body {
 
 /******************************** BOX ********************************/
 .box{
-  background: linear-gradient(180deg, #f9fafb, #ffffff);
-  border: 1px solid #eee;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
   border-radius: 14px;
-  padding: 14px 16px;
-  transition: 0.2s ease;
+  padding: 16px;
+  margin-top: 12px;
+  transition: 0.25s ease;
 }
 .box:hover{
-  transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.05);
-  border-color: #d1d5db;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+  border-color: #c7e8ca;
 }
 .box h4{
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   color: #114500;
-  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .box p{
   font-size: 13px;
   color: #4b5563;
-  margin: 4px 0;
 }
-
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform: translateY(10px) scale(0.98);
+  }
+  to{
+    opacity:1;
+    transform: translateY(0) scale(1);
+  }
+}
 /******************************** MODAL ********************************/
 .modal{
   position:fixed;
   top:0;left:0;
   width:100%;height:100%;
-  background:rgba(0,0,0,0.4);
+  background:rgba(0,0,0,0.5);
+  backdrop-filter: blur(6px); /* 🔥 glass effect */
   display:none;
   align-items:center;
   justify-content:center;
@@ -673,18 +690,32 @@ body {
 }
 
 .modal-box{
-  background:#fff;
-  padding:20px;
-  border-radius:14px;
-  width:400px;
+  background: #ffffff;
+  border-radius: 20px;
+  width: 420px;
+  padding: 25px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  animation: fadeIn 0.25s ease;
 }
-
+.modal-box h3{
+  font-size: 18px;
+  font-weight: 700;
+  color: #114500;
+  margin-bottom: 15px;
+}
 .close{
-  float:right;
-  cursor:pointer;
-  color:red;
+  position: absolute;
+  right: 20px;
+  top: 18px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #ef4444;
+  transition: 0.2s;
 }
-
+.close:hover{
+  transform: rotate(90deg);
+  color: #b91c1c;
+}
 /******************************** EVENT CARD ********************************/
 .modern-event-card{
   background: linear-gradient(180deg, #ffffff, #f9fafb);
@@ -693,30 +724,123 @@ body {
   position: relative;
   overflow: hidden;
 }
-
-.modern-event-card::before{
-  content:"";
-  position:absolute;
-  top:-50px;
-  right:-50px;
-  width:140px;
-  height:140px;
-  background: rgba(102,187,106,0.15);
-  border-radius:50%;
-}
 .all-events-scroll{
   display: flex;
   flex-direction: column;
   height: 100%;
-  overflow-y: auto;
-  padding-right: 5px;
+  min-height: 0;
 }
-
 .table-wrap{
   display: flex;
   flex-direction: column;
   flex: 1;
   min-height: 0;
+  overflow: hidden;
+}
+
+/* STAFF MODAL UPGRADE */
+.staff-group {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 14px;
+  transition: 0.25s;
+}
+
+.staff-group:hover {
+  border-color: #66bb6a;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+}
+
+.staff-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: #114500;
+  margin-bottom: 10px;
+}
+
+.staff-header i {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 6px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.staff-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.staff-chip {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.staff-chip input {
+  border: none;
+  outline: none;
+  font-size: 12px;
+  width: 90px;
+}
+
+/* remove button */
+.staff-chip button {
+  background: #fee2e2;
+  border: none;
+  color: #b91c1c;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+/* add button */
+.add-staff-btn {
+  margin-top: 10px;
+  font-size: 12px;
+  background: transparent;
+  border: 1px dashed #66bb6a;
+  color: #2e7d32;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.add-staff-btn:hover {
+  background: #e8f5e9;
+}
+
+.view-btn{
+  background: #e8f5e9;
+  color: #1b5e20;
+  border: 1px solid #c8e6c9;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+  padding: 6px 10px;
+  font-size: 12px;
+  display: inline-block;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 130px;
+  white-space: nowrap;
+}
+
+.view-btn:hover{
+  background: #1b5e20;
+  color: white;
 }
 </style>
 </head>
@@ -804,7 +928,7 @@ body {
   </div>
 
   <div class="stat-box">
-    <p>Total Revenue</p>
+    <p>Total Sales</p>
     <h2>0</h2>
   </div>
 </div>
@@ -817,33 +941,20 @@ body {
   <div class="event-card modern-event-card">
 
     <div class="event-title">
-      ☕ Lifestyle Pop-Up
-      <span>Booth Event</span>
-    </div>
-
-    <div class="event-badge">
-      📅 May 10 • 10:00 AM - 10:00 PM
-    </div>
-
-    <div class="event-location">
-      📍 Imus City Plaza
+      <h4>Cafe BELLA Events</h4>
+      <span>Overview</span>
     </div>
 
     <div class="event-grid-modern">
 
-      <div class="mini-card">
-        <h4>🏷️ Booths</h4>
+      <div class="mini-card" onclick="openBoothModal()" style="cursor:pointer;">
+        <h4>Booths</h4>
         <p>Coffee • Matcha • Tattoo</p>
       </div>
 
-      <div class="mini-card">
-        <h4>💰 Pricing</h4>
-        <p>₱120 – ₱2,500</p>
-      </div>
-
-      <div class="mini-card">
-        <h4>👥 Staff</h4>
-        <p>Barista • Artist • Cashier</p>
+      <div class="mini-card" onclick="openStaffModal()" style="cursor:pointer;">
+        <h4>Staff</h4>
+        <p id="staffPreview">Barista • Artist • Cashier</p>
       </div>
 
     </div>
@@ -859,15 +970,13 @@ body {
 
     <div class="table-wrap">
 
-      <!-- TABLE HEADER -->
       <div class="table-header">
         <span>Name</span>
         <span>Email</span>
         <span>Contact</span>
         <span>Guests</span>
         <span>Location</span>
-        <span>Revenue</span>
-        <span>Status</span>
+        <span>Sales</span>
         <span>Action</span>
       </div>
 
@@ -882,14 +991,6 @@ body {
           <span>Imus</span>
           <span><strong>₱8,500</strong></span>
 
-          <span>
-            <select class="status-select upcoming">
-              <option>Upcoming</option>
-              <option>Completed</option>
-              <option>Cancelled</option>
-            </select>
-          </span>
-
           <div class="actions">
             <button><i class="fa-solid fa-trash"></i></button>
           </div>
@@ -901,6 +1002,51 @@ body {
 
   </div>
 
+</div>
+
+
+<div class="modal" id="boothModal">
+  <div class="modal-box">
+    <span class="close" onclick="closeBoothModal()">✕</span>
+
+    <h3>Booth Details</h3>
+
+    <div class="box">
+      <h4>Coffee Booth</h4>
+      <p>₱5,000 • Up to 50 Cups</p>
+    </div>
+
+    <div class="box">
+      <h4>Matcha Booth</h4>
+      <p>₱9,000 • Up to 50 Cups</p>
+    </div>
+
+    <div class="box">
+      <h4>Tattoo Event</h4>
+      <p>2 minimalist tattoos for ₱1,000 (In Store)</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal" id="staffModal">
+  <div class="modal-box">
+    <span class="close" onclick="closeStaffModal()">✕</span>
+
+    <h3 id="staffTitle">Staff List</h3>
+
+    <div id="staffContainer"></div>
+
+    <!-- BUTTONS -->
+    <button id="editBtn" class="add-btn" onclick="enableEdit()">
+      ✏️ Edit
+    </button>
+
+    <button id="saveBtn" class="add-btn" onclick="manualSave()" style="display:none; margin-top:10px;">
+      💾 Save Changes
+    </button>
+
+  </div>
 </div>
 
 <div class="modal" id="eventModal">
@@ -1001,6 +1147,16 @@ function updateTodayDate() {
   document.getElementById("todayDate").textContent = "Today: " + formattedDate;
 }
 
+let isEditing = false;
+
+let staffList = {
+  Barista: ["Barista 1", "Barista 2"],
+  Artist: ["Artist 1", "Artist 2"],
+  Cashier: ["Cashier 1", "Cashier 2"]
+};
+
+// ✅ AFTER declaration saka mo tawagin
+loadStaff();
 updateTodayDate();
 
 /******************************** RENDER EVENTS  ********************************/
@@ -1018,10 +1174,11 @@ paymentStatus:"Partial",
 total:8500,
 paid:3000,
 services:["Coffee Booth","Matcha Booth"],
-staff:[
-  {name:"Mark",role:"Barista"},
-  {name:"Ana",role:"Cashier"}
-],
+staff:{
+  Barista: "",
+  Artist: "",
+  Cashier: ""
+},
 notes:"Outdoor setup"
 }
 ];
@@ -1048,17 +1205,11 @@ function renderEvents(){
       <span>${e.location}</span>
       <span><strong>₱${e.total}</strong></span>
 
-      <span>
-        <select class="status-select ${e.status.toLowerCase()}">
-          <option ${e.status==="Upcoming"?"selected":""}>Upcoming</option>
-          <option ${e.status==="Completed"?"selected":""}>Completed</option>
-          <option ${e.status==="Cancelled"?"selected":""}>Cancelled</option>
-        </select>
+      <span class="actions">
+        <button onclick="viewEvent(${i})" class="view-btn">
+          View Details
+        </button>
       </span>
-
-      <div class="actions">
-        <button onclick="viewEvent(${i})"><i class="fa-solid fa-eye"></i></button>
-      </div>
     </div>
     `;
   });
@@ -1110,4 +1261,174 @@ function closeModal(){
 }
 
 renderEvents();
+
+function openBoothModal(){
+  document.getElementById("boothModal").style.display = "flex";
+}
+
+function closeBoothModal(){
+  document.getElementById("boothModal").style.display = "none";
+}
+window.addEventListener("click", function(e){
+  const modal = document.getElementById("boothModal");
+  if(e.target === modal){
+    modal.style.display = "none";
+  }
+});
+function closeStaffModal(){
+  document.getElementById("staffModal").style.display = "none";
+}
+window.addEventListener("click", function(e){
+  const staffModal = document.getElementById("staffModal");
+
+  if(e.target === staffModal){
+    staffModal.style.display = "none";
+  }
+});
+
+console.log("Editing Mode:", isEditing);
+
+function renderStaff(){
+  const container = document.getElementById("staffContainer");
+  container.innerHTML = "";
+
+  const icons = {
+    Barista: "fa-mug-hot",
+    Artist: "fa-paintbrush",
+    Cashier: "fa-cash-register"
+  };
+
+  for(let role in staffList){
+
+    container.innerHTML += `
+      <div class="staff-group">
+
+        <div class="staff-header">
+          <i class="fa-solid ${icons[role] || "fa-user"}"></i>
+          ${role}
+        </div>
+
+        <div class="staff-list">
+
+          ${staffList[role].map((name,i)=>`
+
+            <div class="staff-chip">
+
+              ${
+                isEditing
+                ? `<input value="${name}" 
+                     onchange="updateStaff('${role}', ${i}, this.value)">`
+                  : `<span style="font-weight:500;">${name}</span>`
+              }
+
+              ${
+                isEditing
+                ? `<button onclick="removeStaff('${role}', ${i})">×</button>`
+                : ""
+              }
+
+            </div>
+
+          `).join("")}
+
+        </div>
+
+        ${
+          isEditing
+          ? `<button onclick="addStaff('${role}')" class="add-staff-btn">
+              + Add ${role}
+            </button>`
+          : ""
+        }
+
+      </div>
+    `;
+  }
+}
+
+function enableEdit(){
+  isEditing = true;
+
+  document.getElementById("editBtn").style.display = "none";
+  document.getElementById("saveBtn").style.display = "block";
+
+  document.getElementById("staffTitle").innerText = "Staff List (Editable)";
+
+  renderStaff();
+}
+
+function manualSave(){
+  saveStaff();
+  isEditing = false;
+
+  document.getElementById("editBtn").style.display = "block";
+  document.getElementById("saveBtn").style.display = "none";
+
+  document.getElementById("staffTitle").innerText = "Staff List";
+
+  renderStaff();
+
+  updateStaffPreview(); // ✅ ADD THIS
+
+  alert("Saved successfully ✅");
+}
+
+function updateStaff(role, index, value){
+  staffList[role][index] = value;
+}
+
+function addStaff(role){
+  staffList[role].push("New Staff");
+  renderStaff();
+}
+
+function removeStaff(role, index){
+  staffList[role].splice(index,1);
+  renderStaff();
+}
+
+function loadStaff(){
+  const saved = localStorage.getItem("staffList");
+
+  if(saved){
+    staffList = JSON.parse(saved);
+  }
+
+  updateStaffPreview(); // ✅ ADD THIS
+}
+
+
+function saveStaff(){
+  localStorage.setItem("staffList", JSON.stringify(staffList));
+}
+function openStaffModal(){
+  document.getElementById("staffModal").style.display = "flex";
+
+  isEditing = false;
+
+  document.getElementById("editBtn").style.display = "block";
+  document.getElementById("saveBtn").style.display = "none";
+
+  document.getElementById("staffTitle").innerText = "Staff List";
+
+  renderStaff(); // ✅ CRITICAL
+}
+
+function updateStaffPreview(){
+  const preview = document.getElementById("staffPreview");
+
+  let result = [];
+
+  for(let role in staffList){
+    if(staffList[role].length > 0){
+      result.push(role);
+    }
+  }
+
+  preview.textContent = result.join(" • ");
+}
+
+function closeStaffModal(){
+  document.getElementById("staffModal").style.display = "none";
+}
 </script>
