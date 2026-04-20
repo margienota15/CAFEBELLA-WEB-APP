@@ -1401,99 +1401,127 @@ function renderEvents(){
 function viewEvent(i){
   const e = events[i];
 
-document.getElementById("eventDetails").innerHTML = `
-<div class="event-detail-card">
+  document.getElementById("eventDetails").innerHTML = `
+  <div class="event-detail-card">
 
-  <div class="detail-header">
-    <h2>Event Details</h2>
-    <span class="status-badge ${e.status.toLowerCase()}">${e.status}</span>
-  </div>
-
-  <div class="detail-grid">
-
-    <div class="detail-item">
-      <label>Client</label>
-      <p>${e.client}</p>
+    <div class="detail-header">
+      <h2>Event Details</h2>
+      <span class="status-badge">${e.status}</span>
     </div>
 
-    <div class="detail-item">
-      <label>Email</label>
-      <p>${e.email}</p>
-    </div>
-
-    <div class="detail-item">
-      <label>Contact</label>
-      <p>${e.contact}</p>
-    </div>
-
-    <div class="detail-item">
-      <label>Date</label>
-      <p>${e.date}</p>
-    </div>
-
-    <div class="detail-item">
-      <label>Guests</label>
-      <p>${e.guests}</p>
-    </div>
-
-    <div class="detail-item">
-      <label>Location</label>
-      <p>${e.location}</p>
-    </div>
-
-  </div>
-
-  <div class="section-box">
-    <h3>Services</h3>
-    <div class="tag-group">
-      ${e.services.map(s => `<span class="tag">${s}</span>`).join("")}
-    </div>
-  </div>
-
-  <div class="section-box">
-    <h3>Payment Summary</h3>
-
-    <div class="payment-grid">
-      <div>
-        <span>Total</span>
-        <strong>₱${e.total}</strong>
+    <div class="detail-grid">
+      <div class="detail-item">
+        <label>Client</label>
+        <p>${e.client}</p>
       </div>
 
-      <div>
-        <span>Paid</span>
-        <strong>₱${e.paid}</strong>
+      <div class="detail-item">
+        <label>Email</label>
+        <p>${e.email}</p>
       </div>
 
-      <div>
-        <span>Balance</span>
-        <strong class="danger">₱${e.total - e.paid}</strong>
+      <div class="detail-item">
+        <label>Contact</label>
+        <p>${e.contact}</p>
+      </div>
+
+      <div class="detail-item">
+        <label>Date</label>
+        <p>${e.date}</p>
+      </div>
+
+      <div class="detail-item">
+        <label>Guests</label>
+        <p>${e.guests}</p>
+      </div>
+
+      <div class="detail-item">
+        <label>Location</label>
+        <p>${e.location}</p>
       </div>
     </div>
 
-    <div class="payment-status">
-      <span class="badge">${e.paymentStatus}</span>
+    <!-- 🔥 UPDATED PART STARTS HERE -->
+    <!-- SERVICE -->
+    <div class="section-box">
+      <h3>Service</h3>
+      <span class="tag">${e.services[0]}</span>
     </div>
+
+<!-- PAYMENT SUMMARY -->
+<div class="section-box">
+  <h3>Payment Summary</h3>
+
+  <div class="payment-grid">
+
+    <div>
+      <span>Package Price</span>
+      <strong>
+        ₱${(() => {
+          const service = e.services[0];
+
+          const packages = {
+            "Coffee Booth": 5000,
+            "Matcha Booth": 9000,
+            "Tattoo Event": 1000
+          };
+
+          return packages[service] || 0;
+        })()}
+      </strong>
+    </div>
+
+    <div>
+      <span>Reservation Fee</span>
+      <strong>₱2000</strong>
+    </div>
+
+    <div>
+      <span>Balance</span>
+      <strong class="danger">
+        ₱${(() => {
+          const service = e.services[0];
+
+          const packages = {
+            "Coffee Booth": 5000,
+            "Matcha Booth": 9000,
+            "Tattoo Event": 1000
+          };
+
+          const packagePrice = packages[service] || 0;
+          const reservationFee = 2000;
+
+          return packagePrice - reservationFee;
+        })()}
+      </strong>
+    </div>
+
   </div>
 
-  <div class="section-box">
-    <h3>Assigned Staff</h3>
-
-    <div class="staff-grid">
-      <p><b>Barista:</b> ${e.staff.Barista || "-"}</p>
-      <p><b>Artist:</b> ${e.staff.Artist || "-"}</p>
-      <p><b>Cashier:</b> ${e.staff.Cashier || "-"}</p>
-    </div>
-  </div>
-
-  <div class="section-box">
-    <h3>Notes</h3>
-    <p class="notes">${e.notes || "No notes provided."}</p>
+  <div class="payment-status">
+    <span class="badge">${e.paymentStatus}</span>
   </div>
 
 </div>
-`;
 
-  document.getElementById("eventModal").style.display="flex";
+    <!-- 🔥 UPDATED PART ENDS HERE -->
+
+    <div class="section-box">
+      <h3>Assigned Staff</h3>
+      <p>Barista: ${e.staff.Barista || "-"}</p>
+      <p>Artist: ${e.staff.Artist || "-"}</p>
+      <p>Cashier: ${e.staff.Cashier || "-"}</p>
+    </div>
+
+    <div class="section-box">
+      <h3>Notes</h3>
+      <p>${e.notes}</p>
+    </div>
+
+  </div>
+  `;
+
+  document.getElementById("eventModal").style.display = "flex";
 }
 
 function closeModal(){
