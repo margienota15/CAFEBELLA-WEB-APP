@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Calendar</title>
+<title>Sale</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
@@ -21,25 +21,11 @@ body {
   margin: 0;
   padding: 0;
   background: #f4f6f9;
-  overflow:hidden;
-}
-
-:root{
-  --primary:#16a34a;
-  --primary2:#22c55e;
-  --bg:#f3f6fb;
-  --card:#ffffff;
-  --text:#111827;
-  --muted:#6b7280;
-  --border:#e5e7eb;
-  --shadow:0 10px 25px rgba(0,0,0,0.08);
-  --cell-height: 70px;   /* 👈 from 52px → 70px (bigger rows) */
-  --visible-hours: 14;
 }
 
 /******************************** SIDEBAR (PRO UI) ********************************/
 .sidebar {
-  width: 260px;
+  width: 270px;
   height: 100vh;
   background: 
     linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
@@ -54,10 +40,13 @@ body {
   position: fixed;
   left: 0;
   top: 0;
+
   box-shadow: 8px 0 25px rgba(0,0,0,0.15);
   z-index: 100;
+
   transition: all 0.3s ease;
 }
+
 .sidebar.hide {
   transform: translateX(-100%);
 }
@@ -110,7 +99,7 @@ body {
   width: 24px;
   height: 24px;
   object-fit: contain;
-  filter: brightness(0) invert(1); 
+  filter: brightness(0) invert(1); /* 🔥 makes icons WHITE */
   opacity: 0.95;
   transition: 0.2s;
 }
@@ -133,15 +122,18 @@ body {
 
 /*********************************** MAIN ********************************/
 .main {
+  flex: 1;
   margin-left: 270px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100vh;   /* 🔥 CRITICAL */
   overflow: hidden;
-  padding: 0;
 }
 .main.full {
   margin-left: 0;
+  gap: 20px;
+  flex: 1.2;
+  min-width: 0;
 }
 
 /******************************** TOP BAR ********************************/
@@ -149,53 +141,16 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: #e9e9e9;
+  padding: 15px 25px;
   background: #ffffff;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
   border-bottom: 1px solid #eee;
-  padding: 15px 0;
-  width: 100%;
 }
 .left-section {
   display: flex;
   align-items: center;
   gap: 15px;
-  padding-left: 20px;   
-}
-
-/******************************** CALENDAR ********************************/
-.calendar-header-card{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 16px 20px; 
-  margin: 16px 10px 14px; 
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-}
-.calendar-header-left h1{
-  font-size: 20px;
-  margin: 0;
-  color: #114500;
-}
-.calendar-header-left p{
-  font-size: 13px;
-  margin-top: 3px;
-  color: #6b7280;
-}
-.calendar-header-right .date-box{
-  background:#ecfdf5;
-  padding:10px 14px;
-  border-radius:12px;
-  font-size:13px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  white-space:nowrap;
-  border: 1px solid #bbf7d0;
-  font-weight: 500;
-  color: #166534;
 }
 
 /******************************** SEARCH BAR ********************************/
@@ -208,6 +163,7 @@ body {
   border-radius: 25px;
   width: 350px;
 }
+
 .search-container span {
   margin-right: 10px;
   font-size: 16px;
@@ -231,7 +187,6 @@ body {
   border-radius: 50px;
   box-shadow: 0 3px 10px rgba(0,0,0,0.1);
   transition: 0.3s;
-  margin-right: 20px;   
 }
 .admin:hover {
   background: #f1f1f1;
@@ -313,576 +268,631 @@ body {
   margin-left: 0;
   padding-top: 9px;
 }
+
 .title-container h1 {
   font-size: 28px;
   margin-bottom: 10px;
   color: #114500;
 }
+
 .title-container p {
   font-size: 16px;  
   color: #555;
 }
+.pos-header-card{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:#ffffff;
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  padding:15px 20px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.06);
+}
 
+.pos-header-left h1{
+  font-size:20px;
+  margin:0;
+  color:#114500;
+}
+
+.pos-header-left p{
+  font-size:13px;
+  margin-top:3px;
+  color:#6b7280;
+}
+
+.pos-header-right .date-box{
+  background:#f4f6f9;
+  padding:8px 12px;
+  border-radius:10px;
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  white-space:nowrap;
+  font-weight:500;
+  color:#333;
+}
 /******************************** CONTENT ********************************/
 .content {
   display: flex;
   flex: 1;
   gap: 20px;
-  overflow: auto;
-  min-height: 0; 
-}
-.content-wrapper{
-  flex: 1;
+  overflow: hidden;
   min-height: 0;
+}
+.content-wrapper {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
-}
+  padding: 20px 30px;
 
-/******************************** LAYOUT ********************************/
-.layout{
-  display: grid;
-  grid-template-columns: 320px 1fr 240px;
-  gap: 18px;
-  flex: 1;
-  min-height: 0;
-  height: calc(100vh - 120px); /* 👈 mas mataas area */
-  padding: 0 10px 10px;
-}
-
-/******************************** CALENDAR ********************************/
-.calendar,
-.mini-calendar,
-.panel{
-  background:white;
-  border-radius:16px;
-  padding:16px;
-  border:1px solid #eef2f7;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  display:flex;
-  flex-direction:column;
-  height: auto;            
-  max-height: none;   
-}
-.calendar{
-  background:white;
-  border-radius:20px;
-  padding:16px;
-  border:1px solid #eef2f7;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  display:flex;
-  flex-direction:column;
-  height: auto;
-  min-height: 100%;
+  height: 100%;
   overflow: hidden;
-}
-.calendar .header{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:20px;
-}
-.calendar-top{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:16px;
-  margin-bottom:10px;
-}
-.calendar-top button{
-  background:#f1f5f9;
-  border:none;
-  padding:8px 14px;
-  border-radius:10px;
-  font-weight:600;
-  cursor:pointer;
-}
 
-/******************************** MINI CALENDAR ********************************/
-.mini-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:10px;
+  min-height: 0; /* 🔥 IMPORTANT */
 }
-.mini-header button{
-  background:#f1f5f9;
-  border:none;
-  border-radius:10px;
-  padding:6px 10px;
-  cursor:pointer;
-  font-size:16px;
-  transition:0.2s;
+/******************************** CATEGORIES ********************************/
+.categories {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  flex-wrap: wrap;
+  max-height: 90px;
+  overflow-y: auto;
 }
-.mini-header button:hover{
-  background:#16a34a;
-  color:white;
+.categories button {
+  padding: 8px 18px;
+  border: none;
+  background: #e0e0e0;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: 0.2s;
+  white-space: nowrap;        /* keep 1 line */
+  overflow: hidden;           /* hide excess */
+  text-overflow: ellipsis;    /* show ... */
+  max-width: 120px;           /* limit width */
 }
-.mini-calendar{
-  background:white;
-  border-radius:20px;
-  padding:14px;
-  border:1px solid #eef2f7;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  height: fit-content;
-  max-height: 580px;
-  overflow: hidden;
-  width: 320px;     
-  min-width: 300px;  
-}
-.mini-calendar h4{
-  font-size:14px;
-  font-weight:600;
-  margin-bottom:10px;
-  color:#111827;
-}
-.mini-grid{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:6px;
-  flex:1;
-  overflow:hidden;
-}
-.mini-day {
-  text-align:center;      
-  cursor:pointer;
-  background:white;
-  border:1px solid #eef2f7;
-  transition:0.2s ease;
-  font-weight:500;
-  padding:12px 0;   
-  font-size:14px;
-  border-radius:12px;
-}
-.mini-day:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  border-color: #16a34a;
-  background:#ecfdf5;
-}
-.mini-today {
-  background: #16a34a;
+.categories button.active {
+  background: #2e7d32;
   color: white;
-  font-weight: 600;
 }
-.mini-selected {
-  outline: 2px solid #3b82f6;
-}
-
-/******************************** CURRENT DAY LEFT SIDE (inside Hours Calendar ) ********************************/
-.left-today{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  font-size:12px;
-  border-right:1px solid #e5e7eb;
+/******************************** SCROLLBAR ********************************/
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-#leftDay{
-  font-weight:700;
-  color:#16a34a; /* BLUE */
-  font-size:18px;
-  letter-spacing:1px;
+::-webkit-scrollbar-thumb {
+  background: #2e7d32;
+  border-radius: 10px;
 }
-
-#leftDate{
-  font-size:42px;
-  font-weight:800;
-  color:#16a34a; 
-  line-height:1;
-}
-
-/******************************** WEEK ( inside Hours Calendar ) ********************************/
-.week{
-  display: grid;
-  grid-template-columns: 100px repeat(7,1fr);
-  height: fit-content;  
-  min-height: 0;
-  max-height: calc(var(--visible-hours) * var(--cell-height));
+/******************************** PRODUCTS ********************************/
+.products {
+  flex: 1;
   overflow-y: auto;
-}
-.week-days{
-  display:grid;
-  grid-template-columns:100px repeat(7,1fr);
-  align-items:center;
-  text-align:center;
-  border-bottom:1px solid #e5e7eb;
-  margin-bottom:5px;
-}
-.week-days > div{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-}
-.week-grid{
-  display: contents;
-  height: fit-content;
-}
-
-/******************************** TIMELINE ( inside Hour Calendar ) ********************************/
-.hour-line{
-  height: var(--cell-height);
-  min-height: var(--cell-height);
-  border-bottom:1px solid #f1f5f9;
-}
-.time-col{
-  width:100px;
-  background:#fafafa;
-  border-right:1px solid #e5e7eb;
-  height: 100%;
-}
-.time-slot{
-  height: var(--cell-height);
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  padding-right:10px;
-  font-size:12px;
-  color:#6b7280;
-}
-.time-slot span{
-  background: #ffffff;
-  padding: 4px 8px;
-  border-radius: 8px;
-  border: 1px solid #eef2f7;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-}
-.time-slot:hover span{
-  background: #f9fafb;
-  border-color: #d1d5db;
-  color: #111827;
-  transform: translateX(-2px);
-}
-.current-hour{
-  background: transparent;
-  border-left: none;
-  font-weight: 600;
-}
-.current-hour span{
-  background: #025a24;
-  color: #ffffff;
-  border: 1px solid #e5e7eb;
-  box-shadow: none;
-}
-.current-hour::before{
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 3px;
-  background: #16a34a;
-  box-shadow: 0 0 12px #22c55e;
-  border-radius: 4px;
-}
-
-/******************************** HEADER ********************************/
-.header{
-  display:flex;
-  justify-content: center;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 15px;
-  align-items:center;
-  margin-bottom:15px;
 }
-.header-right{
-  display:flex;
-  align-items:center;
-}
-.header-left p{
-  font-size:14px;
-  color:#6b7280;
-  margin-top: 4px;
-}
-.header-left h1{
-  font-size:24px;
-  font-weight:700;
-  color:#114500;
-  margin-bottom:4px;
-  margin: 0;
-}
-
-/******************************** NOTES INSIDE HOUR / EVENTS ********************************/
-.day-note{
-  position:absolute;
-  top:8px;
-  left:8px;
-  right:8px;
-  background:#16a34a;
-  color:white;
-  font-size:12px;
-  padding:6px 8px;
-  border-radius:8px;
-  text-align:center;
-  cursor:pointer;
-  box-shadow:0 4px 10px rgba(0,0,0,0.15);
-  z-index:10;
-}
-.day-col{
-  position: relative;
+.card {
+  background: #fff;
+  padding: 12px;
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: center;
+  height: 210px;
   display: flex;
   flex-direction: column;
-  height: fit-content;  
-}
-.day-col .hour-line{
-  height:60px;
-  border-bottom:1px solid #f8fafc;
-}
-.day-col:nth-child(6){
-  background: rgba(22,163,74,0.06);
-  border-radius:12px;
-}
-#dayEvents{
-  max-height: 300px;
-  overflow-y: auto;
-  margin-top: 10px;
-  padding-right: 5px;
-}
-.today-btn{
-  background:#16a34a !important;
-  color:white;
-  font-weight:700;
-  letter-spacing:0.5px;
-}
-#todayList, #pendingList{
-  margin-top:6px;
-  display:flex;
-  flex-direction:column;
-  gap:6px;
+  justify-content: space-between;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  transition: all 0.25s ease;
+  border: 1px solid #f1f1f1;
 }
 
-/******************************** LEGEND / Coffee Booth Matcha Booth Tattoo Event ********************************/
-.legend-panel{
-  background:white;
-  border-radius:16px;
-  padding:16px;
-  border:1px solid #eef2f7;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  height: fit-content;
-  width: 220px;
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+  border-color: #2e7d32;
 }
-.legend-panel h3{
-  font-size:15px;
-  margin-bottom:12px;
-  color:#111827;
-  font-weight:700;
+.card img {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 10px;
 }
-.legend-item{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:10px;
-  font-size:13px;
-  color:#374151;
-}
-.dot{
-  width:10px;
-  height:10px;
-  border-radius:3px;
-}
-.yellow{ background:#facc15; }
-.green{ background:#22c55e; }
-.blue{ background:#3b82f6; }
-.panel{
-  background:white;
-  border-radius:20px;
-  padding:16px;
-  border:1px solid #eef2f7;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  height: 100%;
+.card h4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+
   overflow: hidden;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+  line-clamp: 2; /* future standard */
 }
-.panel h3{
-  margin-bottom: 10px;
-  color: #111827;
-  font-size:15px;
-  font-weight:700;
+.card p {
+  font-size: 16px;
+  color: #2e7d32;
+  font-weight: bold;
+  margin-top: auto; /* 🔥 push to bottom */
 }
-
-/******************************** TODAY SCHEDULE ********************************/
-.side-box{
-  margin-top:12px;
-  padding:12px;
-  border-radius:14px;
-  border:1px solid #eef2f7;
-  background:#f9fafb;
-  box-shadow:0 4px 10px rgba(0,0,0,0.04);
-}
-.today-box{
-  border-left:4px solid #16a34a;
-}
-.pending-box{
-  border-left:4px solid #f59e0b;
-}
-.box-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:8px;
-}
-.box-header h4{
-  font-size:13px;
-  font-weight:700;
-  color:#111827;
-}
-.badge{
-  font-size:11px;
-  background:#16a34a;
-  color:white;
-  padding:2px 8px;
-  border-radius:999px;
-}
-.badge.pending{
-  background:#f59e0b;
-}
-.box-list{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  max-height: none;   
-  overflow: visible;  
-}
-.box-list .item{
-  background:white;
-  border:1px solid #eee;
-  border-radius:10px;
-  padding:8px;
-  font-size:12px;
-  transition:0.2s;
-}
-.box-list .item:hover{
-  transform:translateX(3px);
-  border-color:#16a34a;
+.card .delete-btn {
+  width: 100%;
+  justify-content: center;
 }
 
-/******************************** EVENT BLOCK ********************************/
-.event-block {
-  position:absolute;
-  left:8px;
-  right:8px;
-  padding:8px 10px;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-  transition:0.2s ease;
-  border-radius:12px;
-  font-size:12px;
-  font-weight:600;
-  padding-left:10px;
-}
-
-.event-block:hover{
-  transform:scale(1.02);
-}
-.event-block::before {
-  content: "";
-  width: 4px;
+/******************************** ORDER PANEL ********************************/
+.order {
+  flex: 1;
+  min-width: 360px;
+  max-width: none; /* IMPORTANT: alisin limit */
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+  border: 1px solid #eef0f2;
+  align-self: stretch;
+  margin-top: 20px;
   height: 100%;
+  transition: all 0.3s ease;
+}
+.order-items {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+  padding-right: 6px;
+  position: relative;
+}
+/* ITEMS */
+.order-item {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  align-items: center;
+  position: relative;
+}
+/* TOP HEADER */
+.order-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f1f1f1;
+}
+.order-item-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.order-items::after {
+  content: "";
   position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(100% - 200px); /* 🔥 EXACT POSITION NG DIVIDER */
+  width: 2px;
+  background: #ddd;
+  display: none;
+}
+.order-item-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.order-price {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.order-top h2 {
+  font-size: 16px;
+  color: #1b5e20;
+}
+
+.order-top p {
+  font-size: 12px;
+  color: #888;
+  margin-top: 2px;
+}
+
+.order-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #e8f5e9;
+  font-size: 18px;
+}
+.order-footer {
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid #f1f1f1;
+}
+/******************************** QUANTITY ********************************/
+.qty {
+  font-weight: 700;
+  color: #2e7d32; 
+}
+.qty-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 15px 0;
+}
+.qty-btn {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.qty-box button:hover {
+  background: #1b5e20;
+}
+.qty-minus {
+  background: #e0e0e0;
+}
+
+.qty-plus {
+  background: #2e7d32;
+  color: white;
+}
+.qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 110pX;
+  justify-content: center;
+}
+.qty-value {
+  min-width: 18px;
+  text-align: center;
+  font-weight: bold;
+}
+.modal .qty-box button {
+  width: 35px;
+  height: 35px;
+  border-radius: 10px;
+  border: none;
+  background: #2e7d32;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+#qtyInput {
+  width: 70px;
+  height: 42px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+#qtyInput:focus {
+  border-color: #2e7d32;
+  box-shadow: 0 0 0 3px rgba(46,125,50,0.12);
+}
+/******************************** ITEM ********************************/
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  background: #f9fafb;
+  border: 1px solid #f1f1f1;
+  transition: 0.2s;
+}
+.order-price {
+  font-size: 13px;
+  color: #555;
+}
+.item-name {
+  font-size: 14px;
+  font-weight: 500;
+
+  white-space: normal;   /* 🔥 allow wrap */
+  overflow: visible;
+  text-overflow: unset;
+
+  word-break: break-word; /* 🔥 important para mahahabang name */
+}
+.item-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  min-width: 0;
+  max-width: 100%;
+  padding-right: 10px;
+}
+.item-right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 220px;   /* consistent column */
+  padding-left: 12px;
+  border-left: 2px solid #ddd; /* 🔥 REAL DIVIDER */
+  height: 100%;
+}
+.item button {
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 8px;
+  background: #fff5f5;
+  color: #e53935;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.2s ease;
+}
+.item button:hover {
+  background: #e53935;
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(229,57,53,0.3);
+}
+
+/******************************** EMPTY ********************************/
+.empty-cart {
+  text-align: center;
+  color: #aaa;
+  margin-top: 20px;
+  display: none;
+}
+.empty-cart p {
+  font-size: 14px;
+}
+.empty-cart span {
+  font-size: 12px;
+}
+
+
+.summary-box {
+  background: linear-gradient(135deg, #2e7d32, #66bb6a);
+  padding: 12px;
+  border-radius: 14px;
+  color: white;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* CHECKOUT BUTTON */
+.checkout-btn {
+  width: 100%;
+  margin-top: 10px;
+
+  padding: 14px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: #1b5e20;
+  color: white;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+
+  transition: 0.2s;
+}
+
+.checkout-btn:hover {
+  background: #144d18;
+  transform: translateY(-2px);
+}
+
+
+/******************************** TOTAL ********************************/
+.total {
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 10px;
+}
+.total-box {
+  margin-top: 10px;
+  padding: 12px;
+  background: linear-gradient(135deg, #2e7d32, #66bb6a);
+  color: white;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+button.action {
+  padding: 12px;
+  border: none;
+  color: white;
+  background: linear-gradient(135deg, #2e7d32, #66bb6a);
+  cursor: pointer;
+  border-radius: 10px;
+  font-weight: bold;
+  transition: 0.2s;
+}
+button.action:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+.left-panel {
+  flex: 3;
+  min-width: 0;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 30px;
+}
+/******************************** REMOVE BUTTON ********************************/
+.remove-btn {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease;
+  border: none;
+  border-radius: 6px;
+  background: #fff5f5;
+  color: #e53935;
+  cursor: pointer;
+  width: 26px;
+  height: 26px;
+  margin-left: 6px;
+}
+
+.remove-btn:hover {
+  background: #e53935;
+  color: white;
+  transform: scale(1.1);
+}
+/******************************** MODAL ********************************/
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
   left: 0;
   top: 0;
-  background: rgba(255,255,255,0.4);
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px);
+
+  justify-content: center;
+  align-items: center;
 }
-@keyframes fadeUp{
-  from{
-    opacity:0;
-    transform:translateY(5px);
+
+.modal-content {
+  background: #ffffff;
+  padding: 25px;
+  width: 360px;
+  border-radius: 18px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  transform: scale(0.9);
+  animation: popIn 0.2s ease forwards;
+}
+
+@keyframes popIn {
+  to {
+    transform: scale(1);
   }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+}
+.modal-items {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-bottom: 10px;
 }
 
-/******************************** ITEM ********************************/
-.item{
-  display:flex;
-  justify-content:space-between;
-  padding:12px 10px;
-  margin-top:8px;
-  transition:0.2s;
-  border-radius:12px;
-  font-size:13px;
-  background:#f9fafb;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.item:hover{
-  background:var(--primary-light);
+.section {
+  margin-top: 10px;
 }
 
-/******************************** MODAL ********************************/
-.modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.5);
-  justify-content:center;
-  align-items:center;
-  opacity:0;
-  transform:scale(0.95);
-  transition:0.2s ease;
+.modal-content select,
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
 }
-.modal[style*="flex"]{
-  opacity:1;
-  transform:scale(1);
-}
-.modal-content{
-  background:white;
-  padding:25px;
-  border-radius:16px;
-  width:320px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+.modal-content .modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.modal-content h3{
-  margin-bottom:10px;
+.modal-content .modal-actions button {
+  flex: 1;              /* 🔥 equal width */
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
 }
-.modal-content input,
-.modal-content select{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  border-radius:8px;
-  border:1px solid var(--border);
+.cancel-btn {
+  background: #e74c3c !important;
 }
 
-/******************************** POP UP ********************************/
-.popup{
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  background:white;
-  padding:20px;
-  border-radius:14px;
-  display:none;
-  width:280px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+.cancel-btn:hover {
+  background: #c0392b !important;
+}
+/******************************** VOUCHER ********************************/
+.voucher-box {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  background: #fafafa;
+}
+/******************************** DELETE BUTTON ********************************/
+.delete-btn {
+  margin-top: 8px;
+  padding: 6px 10px;
+  border: 1px solid #ffdddd;
+  background: #fff5f5;
+  color: #e74c3c;
+  font-size: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  transition: all 0.2s ease;
 }
 
-.popup button{
-  margin-top:10px;
-  margin-right:5px;
-  padding:8px 10px;
-  border-radius:8px;
+.delete-btn:hover {
+  background: #e74c3c;
+  color: white;
+  border-color: #e74c3c;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(231, 76, 60, 0.2);
 }
 
-.popup .delete{
-    background:#ef4444;
-    color:white;
+.delete-btn:active {
+  transform: scale(0.96);
 }
-.popup .edit{
-    background:#3b82f6;
-    color:white;
+/******************************** BUTTON iMPROVEMENT ********************************/
+.action {
+  padding: 12px;
+  border: none;
+  color: white;
+  background: linear-gradient(135deg, #2e7d32, #66bb6a);
+  cursor: pointer;
+  border-radius: 12px;
+  font-weight: bold;
+  transition: 0.2s;
 }
 
+.action:hover {
+  transform: scale(1.04);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+}
 </style>
 </head>
 <body>
@@ -901,12 +911,12 @@ body {
       <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">Point of Sale</button>
       <button data-page="Transactionhistory.html"><img src="IMAGES/transactionhistoryicon.png" class="icon">Transaction History</button>
       <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Booking Request</button>
-      <button data-page="Eventmanagement.php"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
+      <button data-page="Eventmanagement.html"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
       <button data-page="Inventory.html"><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
       <button data-page="Feedback.html"><img src="IMAGES/feedbackicon.png" class="icon">Customer Feedback</button>
       <button data-page="Settings.html"><img src="IMAGES/settingsicon.png" class="icon">Settings</button>
     </div>
-    </div>      
+    </div> 
 
 <!--------------------------------------- MAIN ---------------------------------------------> 
     <div class="main">
@@ -935,133 +945,173 @@ body {
   </div>
 
 <div class="content-wrapper">
-
 <!--------------------------------------- TITLE ---------------------------------------------> 
-<div class="calendar-header-card">
-  <div class="calendar-header-left">
-    <h1>Calendar</h1>
-    <p>Manage schedules, bookings, and daily events in real time</p>
+<div class="pos-header-card">
+  <div class="pos-header-left">
+    <h1>Point of Sale</h1>
+    <p>Handle your daily transactions and payment</p>
   </div>
 
-  <div class="calendar-header-right">
+  <div class="pos-header-right">
     <div class="date-box">
-      <i class="fa-solid fa-calendar"></i>
-      <span id="calendarDate"></span>
+      <i class="fa-solid fa-cash-register"></i>
+      <span id="posDate"></span>
     </div>
   </div>
 </div>
 
-<!--------------------------------------- TOOLBAR ---------------------------------------------> 
+<div class="content">
 
+  <!-- LEFT COLUMN -->
+  <div class="left-panel">
 
-<div class="layout">
+    <!-- CATEGORIES -->
+    <div class="categories" id="categories"></div>
 
-<!--------------------------------------- MINI CALENDAR ---------------------------------------------> 
-<div class="mini-calendar">
-
-  <div class="mini-header">
-    <button onclick="miniChange(-1)">‹</button>
-    <h4 id="miniMonth"></h4>
-    <button onclick="miniChange(1)">›</button>
-  </div>
-
-    <div class="mini-grid" id="miniGrid"></div>
-</div>
-<!--------------------------------------- HOUR CALENDAR ---------------------------------------------> 
-<div class="calendar">
-
-  <!-- TOP NAV -->
-  <div class="calendar-top">
-    <button onclick="change(-1)">‹</button>
-    <button class="today-btn" onclick="today()">Today's Schedule</button>
-    <button onclick="change(1)">›</button>
-  </div>
-
-  <!-- DAYS + DATES -->
-  <div class="week-days" id="weekDays"></div>
-
-  <!-- GRID -->
-  <div class="week">
-
-      <div class="time-col" id="timeCol"></div>
-
-      <!-- GRID -->
-      <div class="week-grid" id="weekGrid"></div>
+    <!-- EDIT BUTTON -->
+    <div style="margin: 10px 0;">
+      <button id="editMenuBtn" class="action">✏️ Edit Menu</button>
     </div>
+
+    <!-- PRODUCTS -->
+    <div class="products" id="products"></div>
+
   </div>
 
-<!--------------------------------------- LEGEND / Event Package --------------------------------------------->
-<div class="legend-panel">
-  <h3>Event Packages</h3>
+  <!-- RIGHT COLUMN (ORDER PANEL FULL HEIGHT) -->
+  <div class="order">
 
-  <div class="legend-item">
-    <span class="dot yellow"></span>
-    Coffee Booth
-  </div>
+    <!-- TOP HEADER -->
+    <div class="order-top">
+      <div>
+        <h2>Order Summary</h2>
+        <p id="itemCount">0 items</p>
+      </div>
 
-  <div class="legend-item">
-    <span class="dot green"></span>
-    Matcha Booth
-  </div>
-
-  <div class="legend-item">
-    <span class="dot blue"></span>
-    Tattoo Event
-  </div>
-
-  <!-- TODAY BOX -->
-  <div class="side-box today-box">
-    <div class="box-header">
-      <h4>Today</h4>
-      <span class="badge" id="todayCount">0</span>
+      <div class="order-badge">
+        🛒
+      </div>
     </div>
-    <div id="todayList" class="box-list"></div>
-  </div>
 
-  <!-- PENDING BOX -->
-  <div class="side-box pending-box">
-    <div class="box-header">
-      <h4>Pending</h4>
-      <span class="badge pending" id="pendingCount">0</span>
+    <!-- ITEMS -->
+    <div id="orderItems" class="order-items"></div>
+
+    <!-- EMPTY STATE -->
+    <div class="empty-cart" id="emptyCart">
+      <p>🛒 Your cart is empty</p>
+      <span>Add items to start order</span>
     </div>
-    <div id="pendingList" class="box-list"></div>
+
+    <!-- FOOTER -->
+    <div class="order-footer">
+
+      <div class="summary-box">
+        <div class="summary-row">
+          <span>Total</span>
+          <strong id="total">₱0.00</strong>
+        </div>
+      </div>
+
+      <button id="placeOrderBtn" class="checkout-btn">
+        <i class="fas fa-cash-register"></i>
+        Place Order
+      </button>
+
+    </div>
+
   </div>
 </div>
-
-<!--------------------------------------- MODAL --------------------------------------------->
-<div class="modal" id="modal">
+</div>
+<!-- PAYMENT MODAL -->
+<div id="paymentModal" class="modal">
   <div class="modal-content">
-    <h3>Add Event</h3>
-    <input id="title" placeholder="Event">
-    <input id="time" type="time">
-    <select id="status">
-      <option>Pending</option>
-      <option>Accepted</option>
-      <option>Declined</option>
-    </select>
-    <button class="btn-green" onclick="add()">Save</button>
+
+    <h3>Payment</h3>
+
+    <div id="modalOrderItems" class="modal-items"></div>
+
+    <p id="subtotalText">Subtotal: ₱0</p>
+    <p id="totalText">Total: ₱0</p>
+
+    <!-- DISCOUNT -->
+    <div class="section">
+      <label>Discount</label>
+      <select id="discountType">
+        <option value="0">None</option>
+        <option value="20">Senior (20%)</option>
+        <option value="10">PWD (10%)</option>
+      </select>
+
+      <input type="number" id="customDiscount" placeholder="Custom %" />
+    </div>
+
+    <!-- PAYMENT METHOD -->
+    <div class="section">
+      <label>Payment Method</label>
+      <select id="paymentMethod" onchange="handlePaymentMethod()">
+        <option value="">Select</option>
+        <option value="Cash">Cash</option>
+        <option value="GCash">GCash</option>
+      </select>
+    </div>
+
+    <!-- CASH -->
+    <div id="cashBox" class="section" style="display:none;">
+      <input type="number" id="amountInput" placeholder="Enter amount" />
+      <p id="changeText">Change: ₱0</p>
+    </div>
+
+    <!-- GCASH -->
+    <div id="gcashBox" class="section" style="display:none;">
+      <p>Scan QR to pay</p>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="modal-actions">
+      <button onclick="confirmPayment()" class="action">Confirm</button>
+      <button onclick="closeModal()" class="action cancel-btn">Cancel</button>
+    </div>
+
   </div>
 </div>
-<div class="modal" id="confirmModal">
-  <div class="modal-content">
-    <h3>Delete Event?</h3>
-    <p>This action cannot be undone.</p>
 
-    <button style="background:#ef4444;color:white;" onclick="confirmDelete()">Delete</button>
-    <button onclick="closeConfirm()">Cancel</button>
+<!-- 🔥 DITO MO ILALAGAY -->
+<!-- PRODUCT MODAL -->
+<div id="productModal" class="modal">
+  <div class="modal-content" style="width:300px; text-align:center;">
+
+    <h3 id="modalProductName"></h3>
+    <p id="modalProductPrice" style="color:#2e7d32; font-weight:bold;"></p>
+
+    <div class="qty-box">
+      <button onclick="changeQty(-1)">−</button>
+
+    <input
+      type="text"
+      id="qtyInput"
+      value="1"
+      inputmode="numeric"
+      oninput="manualQtyInput()"
+      onblur="fixQtyInput()"
+    >
+
+      <button onclick="changeQty(1)">+</button>
+    </div>
+
+    <div class="modal-actions">
+      <button onclick="addToCartFromModal()" class="action">
+        Add
+      </button>
+
+      <button onclick="closeProductModal()" class="action cancel-btn">
+        Cancel
+      </button>
+    </div>
   </div>
 </div>
-
-<!--------------------------------------- POP UP --------------------------------------------->
-<div class="popup" id="popup"></div>
-
-<div class="modal" id="dayModal">
-  <div class="modal-content" style="width:400px;">
-    <h3 id="dayTitle"></h3>
-    <div id="dayEvents"></div>
-  </div>
 </div>
-
+</body>
+</html>
 <script>
 
 /******************************** MENU BUTTON ********************************/
@@ -1107,10 +1157,11 @@ sidebarButtons.forEach(btn => {
 /******************************** ADMIN DROPDOWN ********************************/
 function toggleDropdown() {
   const dropdown = document.getElementById("adminDropdown");
-  dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+      dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
 }
+
 function logout() {
-  window.location.href = "login.html";
+    window.location.href = "login.html";
 }
 
 window.onclick = function(e) {
@@ -1119,475 +1170,581 @@ window.onclick = function(e) {
   }
 }
 
+/******************************** ORDER ITEMS ********************************/
+function renderCart(){
+  const container = document.getElementById("orderItems");
+  container.innerHTML = "";
+
+  const empty = document.getElementById("emptyCart");
+
+  if(cart.length === 0){
+    empty.style.display = "block";
+  } else {
+    empty.style.display = "none";
+  }
+
+  if(cart.length === 0){
+    document.getElementById("total").innerText = "₱0.00";
+    return;
+  }
+
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    total += item.price * item.qty;
+
+    const div = document.createElement("div");
+    div.className = "item";
+
+div.innerHTML = `
+  <div class="order-item">
+
+    <!-- LEFT COLUMN -->
+    <div class="item-left">
+      <span class="item-name">
+        ${item.name}
+      </span>
+
+      <span class="order-price">
+        ₱${(item.price * item.qty).toFixed(2)}
+      </span>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="item-right">
+
+      <!-- QTY FIRST -->
+      <div class="qty-controls">
+        <button onclick="decreaseQty(${index})" class="qty-btn qty-minus">−</button>
+
+        <span class="qty-value">
+          ${item.qty}
+        </span>
+
+        <button onclick="increaseQty(${index})" class="qty-btn qty-plus">+</button>
+      </div>
+
+      <!-- DELETE LAST -->
+      <button onclick="removeItem(${index})" class="remove-btn">
+        ✕
+      </button>
+
+    </div>
+
+  </div>
+`;
+    container.appendChild(div);
+  });
+
+  document.getElementById("total").innerText = "₱" + total.toFixed(2);
+}
+/******************************** CHANGE QUANTITY IN ORDER SUMMARY ********************************/
+
+function increaseQty(index){
+  cart[index].qty += 1;
+  renderCart();
+}
+
+function decreaseQty(index){
+  cart[index].qty -= 1;
+
+  if(cart[index].qty <= 0){
+    cart.splice(index, 1);
+  }
+
+  renderCart();
+}
+/******************************** EDIT MENU : REMOVE ITEM ********************************/
+function removeItem(index){
+  cart.splice(index, 1);
+  renderCart();
+}
+
+/******************************** PRODUCT MODAL FUNCTIONS : OPEN AND CLOSE ********************************/
+let selectedProduct = null;
+let selectedQty = 1;
+
+function openProductModal(item){
+  selectedProduct = item;
+  selectedQty = 1;
+
+  document.getElementById("modalProductName").innerText = item.name;
+  document.getElementById("modalProductPrice").innerText = "₱" + item.price;
+
+  document.getElementById("qtyInput").value = selectedQty;
+
+  const modal = document.getElementById("productModal");
+  modal.style.display = "flex";
+}
+
+function closeProductModal(){
+  document.getElementById("productModal").style.display = "none";
+}
+  document.getElementById("productModal").addEventListener("click", function(e){
+    if(e.target === this){
+      closeProductModal();
+    }
+  });
+
+/******************************** CHANGE QUANTITY ( - / + ) ********************************/
+function changeQty(val){
+  selectedQty = Math.max(1, selectedQty + val);
+  document.getElementById("qtyInput").value = selectedQty;
+}
+
+/******************************** CHANGE QUANTITY ( manual ) ********************************/
+function manualQtyInput(){
+  let input = document.getElementById("qtyInput").value;
+
+  // allow empty habang nagta-type
+  input = input.replace(/[^0-9]/g, "");
+
+  document.getElementById("qtyInput").value = input;
+
+  if(input !== "" && parseInt(input) >= 1){
+    selectedQty = parseInt(input);
+  }
+}
+
+/******************************** QUANTITY INPUT ( manual ) ********************************/
+function fixQtyInput(){
+  const inputField = document.getElementById("qtyInput");
+
+  if(
+    inputField.value === "" ||
+    parseInt(inputField.value) < 1
+  ){
+    inputField.value = 1;
+    selectedQty = 1;
+  }
+}
+/******************************** ADD TO CART ********************************/
+function addToCartFromModal(){
+  let existing = cart.find(i => i.name === selectedProduct.name);
+
+  if(existing){
+    existing.qty += selectedQty;
+  } else {
+    cart.push({
+      ...selectedProduct,
+      qty: selectedQty
+    });
+  }
+
+  renderCart();
+  closeProductModal();
+}
+
+/******************************** MENU LIST ********************************/
+
+const menu = {
+  rice: [
+    {name:"Kimchi Fried Rice (Solo)", price:95},
+    {name:"Kimchi Fried Rice (Double)", price:130},
+    {name:"Shitake Fried Rice", price:95},
+    {name:"Spam Fried Rice", price:95},
+    {name:"Seafood Fried Rice", price:95},
+    {name:"Adobo Fried Rice", price:95},
+    {name:"Delimondo Fried Rice", price:95},
+    {name:"Sisig Fried Rice", price:95}
+  ],
+  sizzling: [
+    {name:"Hungarian Sausage", price:99},
+    {name:"Spam", price:99},
+    {name:"Fried Chicken", price:149},
+    {name:"Porkchop", price:149},
+    {name:"Sisig", price:139}
+  ],
+  noodles: [
+    {name:"CSN w/ Nori", price:129},
+    {name:"CSN w/ Egg + Nori", price:139},
+    {name:"CSN w/ Spam", price:159},
+    {name:"CSN w/ Sausage", price:169},
+    {name:"CSN w/ Chicken Katsu", price:179}
+  ],
+  snacks: [
+    {name:"Hungarian Sandwich", price:75},
+    {name:"Extreme Hungarian Sandwich", price:99},
+    {name:"Regular Fries", price:55},
+    {name:"Overload Nachos", price:110},
+    {name:"Cheesy Bacon Fries", price:110},
+    {name:"Muffins", price:75}
+  ],
+  coffee: [
+    {name:"Americano", price:99},
+    {name:"Cafe Latte", price:115},
+    {name:"Caramel Latte", price:115},
+    {name:"Vanilla Latte", price:115},
+    {name:"Hazelnut Latte", price:115},
+    {name:"White Mocha", price:115}
+  ],
+  noncoffee: [
+    {name:"Milky Chocolate", price:115},
+    {name:"Milky Oreo", price:115},
+    {name:"Strawberry Milk", price:115}
+  ],
+  matcha: [
+    {name:"Matcha Latte", price:145},
+    {name:"Oreo Matcha", price:145},
+    {name:"Strawberry Matcha", price:145},
+    {name:"Biscoff Matcha", price:145},
+    {name:"Classic Matcha Latte", price:170},
+    {name:"Agave Oat Matcha", price:180},
+    {name:"Berry Matcha", price:180}
+  ]
+};
+
+let cart = [];
+let editMode = false;
+let currentCategory = "rice";
+
+/******************************** EDIT MENU BUTTON ********************************/
+document.getElementById("editMenuBtn").onclick = function(){
+  editMode = !editMode;
+
+  this.innerText = editMode ? "💾 Save Changes" : "✏️ Edit Menu";
+  this.classList.toggle("save-mode", editMode);
+
+  renderCategories();        // 🔥 IMPORTANT
+  renderCurrentCategory();
+};
+
+/******************************** CATEGORY RENDER ********************************/
+function renderCategories(){
+  const container = document.getElementById("categories");
+  container.innerHTML = "";
+
+  Object.keys(menu).forEach(cat => {
+    const btn = document.createElement("button");
+
+    btn.innerText = formatCategoryName(cat);
+    btn.classList.toggle("active", cat === currentCategory);
+
+    btn.onclick = () => {
+      currentCategory = cat;
+      renderCategories();
+      renderCurrentCategory();
+    };
+
+    // 🔥 DELETE BUTTON (EDIT MODE ONLY)
+    if(editMode){
+      const del = document.createElement("span");
+      del.innerText = " ❌";
+      del.style.color = "red";
+      del.style.marginLeft = "5px";
+      del.style.cursor = "pointer";
+
+      del.onclick = (e) => {
+        e.stopPropagation(); // para di mag select
+        deleteCategory(cat);
+      };
+
+      btn.appendChild(del);
+    }
+
+    container.appendChild(btn);
+  });
+
+  // ➕ ADD CATEGORY BUTTON
+  if(editMode){
+    const addBtn = document.createElement("button");
+    addBtn.innerText = "+ Add Category";
+    addBtn.className = "action";
+    addBtn.onclick = addCategory;
+
+    container.appendChild(addBtn);
+  }
+}
+
+/******************************** DELETE CATEGORIES ********************************/
+function deleteCategory(cat){
+  if(!confirm(`Delete "${cat}" category?`)) return;
+
+  delete menu[cat];
+
+  const keys = Object.keys(menu);
+
+  // 🔥 ADD THIS CHECK
+  if(keys.length === 0){
+    currentCategory = null;
+    document.getElementById("products").innerHTML = "<p>No categories available</p>";
+    renderCategories();
+    return;
+  }
+
+  // auto switch kung nabura current
+  if(cat === currentCategory){
+    currentCategory = keys[0];
+  }
+
+  renderCategories();
+  renderCurrentCategory();
+}
+
+/******************************** FORMAT CATEGORY NAME ********************************/
+function formatCategoryName(cat){
+  return cat.charAt(0).toUpperCase() + cat.slice(1);
+}
+
+/******************************** ADD CATEGORY ********************************/
+function addCategory(){
+  const name = prompt("Enter category name (no spaces):");
+
+  if(!name) return;
+
+  if(menu[name]){
+    alert("Category already exists!");
+    return;
+  }
+
+  menu[name] = [];
+  currentCategory = name;
+
+  renderCategories();
+  renderCurrentCategory();
+}
+
+/******************************** MAIN RENDER ********************************/
+function renderCurrentCategory(){
+  const container = document.getElementById("products");
+  container.innerHTML = "";
+
+  if(!currentCategory || !menu[currentCategory]){
+    container.innerHTML = "<p>No category selected</p>";
+    return;
+  }
+
+  menu[currentCategory].forEach((item, index) => {
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <img src="IMAGES/foodpic.jpg" alt="food">
+      <h4>${item.name}</h4>
+      <p>₱${item.price}</p>
+
+      ${editMode ? `<button class="delete-btn">🗑 Delete</button>` : ""}
+    `;
+
+    // NORMAL MODE (add to cart)
+    if(!editMode){
+      div.onclick = () => openProductModal(item);
+    }
+
+    // ✏️ EDIT MODE (CLICK CARD TO EDIT)
+    if(editMode){
+      div.onclick = () => {
+        const newName = prompt("Edit product name:", item.name);
+        const newPrice = parseFloat(prompt("Edit price:", item.price));
+
+        if(newName && !isNaN(newPrice)){
+          menu[currentCategory][index].name = newName;
+          menu[currentCategory][index].price = newPrice;
+          renderCurrentCategory();
+        }
+      };
+
+      // DELETE BUTTON
+      div.querySelector(".delete-btn").onclick = (e) => {
+        e.stopPropagation();
+        menu[currentCategory].splice(index, 1);
+        renderCurrentCategory();
+      };
+    }
+
+    container.appendChild(div);
+  });
+
+  // ➕ ADD PRODUCT BUTTON
+  if(editMode){
+    const addBtn = document.createElement("button");
+    addBtn.innerText = "+ Add Product";
+    addBtn.className = "action";
+    addBtn.style.marginTop = "10px";
+
+    addBtn.onclick = addProduct;
+
+    container.appendChild(addBtn);
+  }
+}
+
+/******************************** ADD PRODUCT ********************************/
+function addProduct(){
+  const name = prompt("Enter product name:");
+  const price = parseFloat(prompt("Enter price:"));
+
+  if(!name || isNaN(price)) return;
+
+  menu[currentCategory].push({
+    name: name,
+    price: price
+  });
+
+  renderCurrentCategory();
+}
+
+/******************************** DEFAULT LOAD ********************************/
+currentCategory = "rice";
+renderCategories();      // 🔥 ADD THIS
+renderCurrentCategory();
+
+/******************************** PAYMENT MODAL ********************************/
+const modal = document.getElementById("paymentModal");
+
+document.getElementById("placeOrderBtn").addEventListener("click", () => {
+
+  if(cart.length === 0){
+    alert("No items in cart!");
+    return;
+  }
+
+  openModal();
+});
+
+function openModal(){
+  modal.style.display = "flex";
+
+  const container = document.getElementById("modalOrderItems");
+  container.innerHTML = "";
+
+  let subtotal = 0;
+
+      cart.forEach(item => {
+      subtotal += item.price * item.qty;
+
+    container.innerHTML += `
+      <div style="display:flex; justify-content:space-between;">
+      <span>${item.name} (x${item.qty})</span>
+      <span>₱${item.price * item.qty}</span>
+      </div>
+    `;
+  });
+
+  document.getElementById("subtotalText").innerText = "Subtotal: ₱" + subtotal;
+  document.getElementById("totalText").innerText = "Total: ₱" + subtotal;
+
+  updateTotals();
+}
+
+function closeModal(){
+  modal.style.display = "none";
+}
+
+/******************************** DISCOUNT / TOTAL LOGIC **************************/
+document.getElementById("discountType").addEventListener("change", updateTotals);
+document.getElementById("customDiscount").addEventListener("input", updateTotals);
+
+function updateTotals(){
+  let subtotal = 0;
+  cart.forEach(item => subtotal += item.price * item.qty);
+
+  let discount = parseFloat(document.getElementById("discountType").value);
+  let custom = parseFloat(document.getElementById("customDiscount").value) || 0;
+
+  let finalDiscount = discount > 0 ? discount : custom;
+
+  let total = subtotal - (subtotal * finalDiscount / 100);
+
+  document.getElementById("totalText").innerText = "Total: ₱" + total.toFixed(2);
+
+}
+
+/******************************** AMOUNT INPUT ********************************/
+document.getElementById("amountInput").addEventListener("input", () => {
+  computeChange();
+});
+
+function computeChange(){
+  let totalText = document.getElementById("totalText").innerText;
+  let total = parseFloat(totalText.replace("Total: ₱", "")) || 0;
+
+  let amount = parseFloat(document.getElementById("amountInput").value);
+
+  // 👉 HINDI mag show agad kung empty
+  if(!amount || amount <= 0){
+    document.getElementById("changeText").innerText = "Change: ₱0";
+    return;
+  }
+
+  let change = amount - total;
+
+  document.getElementById("changeText").innerText =
+    "Change: ₱" + change.toFixed(2);
+}
+
+/******************************** CONFIRM PAYMENT ********************************/
+function confirmPayment(){
+  const method = document.getElementById("paymentMethod").value;
+  const amount = parseFloat(document.getElementById("amountInput").value);
+  const totalText = document.getElementById("totalText").innerText;
+  const total = parseFloat(totalText.replace("Total: ₱", "")) || 0;
+
+  if(method === ""){
+    alert("Select payment method!");
+    return;
+  }
+
+  // ✅ CASH VALIDATION (IMPORTANT PART)
+  if(method === "Cash"){
+    if(isNaN(amount) || amount <= 0){
+      alert("Please enter a valid cash amount!");
+      return;
+    }
+
+    if(amount < total){
+      alert("The entered amount is insufficient to complete the transaction.");
+      return;
+    }
+  }
+
+  if(method === "GCash"){
+    alert("Redirect to GCash QR / Payment (Simulation only)");
+  }
+
+  alert("Payment Successful!");
+
+  cart = [];
+  renderCart();
+  closeModal();
+}
+
+/******************************** PAYMENT METHOD : CASH OR GCASH ********************************/
+function handlePaymentMethod(){
+  const method = document.getElementById("paymentMethod").value;
+
+  document.getElementById("gcashBox").style.display = "none";
+  document.getElementById("cashBox").style.display = "none";
+
+  if(method === "GCash"){
+    document.getElementById("gcashBox").style.display = "block";
+  }
+
+  if(method === "Cash"){
+    document.getElementById("cashBox").style.display = "block";
+  }
+}
+
 /******************************** SIDEBAR TOGGLE ********************************/
-const menuBtn = document.getElementById("menu-btn");
-const sidebar = document.querySelector(".sidebar");
-const main = document.querySelector(".main");
+    const menuBtn = document.getElementById("menu-btn");
+    const sidebar = document.querySelector(".sidebar");
+    const main = document.querySelector(".main");
 
 menuBtn.onclick = function() {
   sidebar.classList.toggle("hide");
   main.classList.toggle("full");
 };
 
-/******************************** GLOBAL STATE VARIABLE ********************************/
-
-localStorage.removeItem("events"); 
-let date = new Date();
-let selected = null;
-let filterStatus = "All";
-let searchText = "";
-let editMode = false;
-let editTarget = null;
-let deleteTarget = null;
-
-let events = JSON.parse(localStorage.getItem("events")) || [];
-
-events = events.filter(e => !e.time.startsWith("10:"));
-localStorage.setItem("events", JSON.stringify(events));
-
-/******************************** render() ********************************/
-function render(){
-
-  renderTime();
-
-  const weekGrid = document.getElementById("weekGrid");
-  weekGrid.innerHTML = "";
-
-  let start = new Date(date);
-  start.setDate(date.getDate() - date.getDay());
-
-  for(let i=0;i<7;i++){
-
-    let day = new Date(start);
-    day.setDate(start.getDate() + i);
-
-    let dayStr = day.toISOString().split("T")[0];
-
-    let col = document.createElement("div");
-    col.className = "day-col";
-
-    let today = new Date().toISOString().split("T")[0];
-
-    if(dayStr === today){
-      col.style.background = "#ecfdf5";
-      col.style.borderRadius = "12px";
-    }
-
-    let dayEvents = events.filter(e => e.date === dayStr);
-
-  for(let h = 10; h <= 23; h++){
-    let line = document.createElement("div");
-    line.className = "hour-line";
-    col.appendChild(line);
-  }
-    dayEvents.forEach(e=>{
-      let [hour, min] = e.time.split(":").map(Number);
-
-      let cellHeight = parseInt(
-        getComputedStyle(document.documentElement)
-          .getPropertyValue('--cell-height')
-      );
-      let top = (hour - 10) * cellHeight + (min / 60 * cellHeight);
-
-      let div = document.createElement("div");
-      div.className = "event-block " + color(e.status);
-      div.style.top = top + "px";
-      div.style.height = "50px";
-
-      div.innerText = e.title;
-      div.setAttribute("data-note", e.notes || "No notes");
-
-      div.onclick = () => openPopup(e);
-
-      col.appendChild(div);
-    });
-    weekGrid.appendChild(col);
-  }
-
-  renderMini();
-  renderWeekDays();
-  updateLeftToday();
-  renderSide();
-}
-
-/******************************** formathour() ********************************/
-function formatHour(h){
-  const period = h >= 12 ? "PM" : "AM";
-  let hour = h % 12;
-  if(hour === 0) hour = 12;
-
-  if(hour === 12 && period === "PM") return "12:00 NN";
-
-  return `${hour}:00 ${period}`;
-}
-
-function renderTime(){
-
-  const timeCol = document.getElementById("timeCol");
-  timeCol.innerHTML = "";
-
-  let now = new Date().getHours();
-
-
-  for(let h = 10; h <= 23; h++){
-
-    let div = document.createElement("div");
-    div.className = "time-slot";
-
-    div.innerHTML = `<span>${formatHour(h)}</span>`;
-
-    if(h === now){
-      div.classList.add("current-hour");
-    }
-
-    timeCol.appendChild(div);
-  }
-}
-
-function renderSide(){
-
-  let today = new Date().toISOString().split("T")[0];
-
-  let todayEvents = events.filter(e => e.date === today);
-  let pendingEvents = events.filter(e => e.status === "Pending");
-
-  // LIMIT DISPLAY (NO SCROLL FIX)
-  let limit = 4;
-
-  document.getElementById("todayList").innerHTML =
-    (todayEvents.slice(0, limit).length
-      ? todayEvents.slice(0, limit).map(e=>`
-          <div class="item">${e.time} - ${e.title}</div>
-        `).join("")
-      : "<div class='item'>No events today</div>")
-    +
-    (todayEvents.length > limit ? `<div class="item">+ ${todayEvents.length - limit} more</div>` : "");
-
-  document.getElementById("pendingList").innerHTML =
-    (pendingEvents.slice(0, limit).length
-      ? pendingEvents.slice(0, limit).map(e=>`
-          <div class="item">${e.time} - ${e.title}</div>
-        `).join("")
-      : "<div class='item'>No pending events</div>")
-    +
-    (pendingEvents.length > limit ? `<div class="item">+ ${pendingEvents.length - limit} more</div>` : "");
-
-  document.getElementById("todayCount").innerText =
-    todayEvents.length === 0 ? "No Events" : todayEvents.length;
-  document.getElementById("pendingCount").innerText =
-    pendingEvents.length === 0 ? "No Pending" : pendingEvents.length;
-  }
-
-function openModal(){
-  document.getElementById("modal").style.display="flex";
-}
-
-function add(){
-
-  let newDate = selected || new Date().toISOString().split("T")[0];
-  let newTime = document.getElementById("time").value;
-
-  let title = document.getElementById("title").value;
-  let status = document.getElementById("status").value;
-  let notes = document.getElementById("notes").value;
-
-  // ❌ BLOCK 10:00 AM RANGE
-  if(newTime.startsWith("10:")){
-    alert("10:00 AM is not allowed");
-    return;
-  }
-
-  // ❌ EMPTY INPUT CHECK (recommended)
-  if(!title || !newTime){
-    alert("Please complete all fields");
-    return;
-  }
-
-  // ❌ CHECK IF TIME ALREADY EXISTS IN SAME DAY
-  let exists = events.find(e => 
-    e.date === newDate && e.time === newTime
-  );
-
-  if(exists){
-    alert("⚠️ This time slot already has a booking for this day!");
-    return;
-  }
-
-  // ✏️ EDIT MODE
-  if(editMode && editTarget){
-
-    editTarget.title = title;
-    editTarget.time = newTime;
-    editTarget.status = status;
-
-    editMode = false;
-    editTarget = null;
-
-  } 
-  // ➕ ADD NEW EVENT
-  else {
-
-    events.push({
-      date: newDate,
-      title: title,
-      time: newTime,
-      status: status,
-      notes: notes
-    });
-  }
-
-  // 💾 SAVE + RELOAD UI
-  save();
-  closeModal();
-  render();
-}
-
-function change(v){
-  date.setDate(date.getDate() + (v * 7)); // ✅ 1 WEEK SHIFT
-  render();
-}
-function miniChange(v){
-  date.setDate(1);
-  date.setMonth(date.getMonth() + v);
-
-  selected = null; // reset selected day (optional)
-  render();
-}
-function today(){
-  date=new Date();
-  render();
-}
-
-function search(v){
-  searchText=v;
-  render();
-}
-
-function filter(v){
-  filterStatus=v;
-  render();
-}
-
-function color(s){
-  if(s==="Accepted") return "green";
-  if(s==="Pending") return "orange";
-  return "red";
-}
-
-render();
-
-
-function save(){
-  localStorage.setItem("events", JSON.stringify(events));
-}
-
-function deleteEvent(date,title){
-  deleteTarget = {date,title};
-  document.getElementById("confirmModal").style.display="flex";
-}
-function confirmDelete(){
-
-  events = events.filter(e =>
-    !(e.date === deleteTarget.date && e.title === deleteTarget.title)
-  );
-
-  save();
-  closeConfirm();
-  render();
-}
-function closeConfirm(){
-  document.getElementById("confirmModal").style.display="none";
-  deleteTarget = null;
-}
-function editEvent(date,title){
-
-  editMode = true;
-
-  editTarget = events.find(e =>
-    e.date === date && e.title === title
-  );
-
-  document.getElementById("title").value = editTarget.title;
-  document.getElementById("time").value = editTarget.time;
-  document.getElementById("status").value = editTarget.status;
-
-  openModal();
-}
-
-document.addEventListener("keydown", (e)=>{
-  if(e.key === "Escape"){
-    document.getElementById("modal").style.display="none";
-    document.getElementById("popup").style.display="none";
-  }
-});
-
-document.getElementById("modal").addEventListener("click", (e)=>{
-  if(e.target.classList.contains("modal")){
-    e.target.style.display="none";
-  }
-});
-
-function renderMini(){
-
-  const grid = document.getElementById("miniGrid");
-  grid.innerHTML = "";
-
-  const y = date.getFullYear();
-  const m = date.getMonth();
-
-  document.getElementById("miniMonth").innerText =
-    date.toLocaleString('default',{month:'long',year:'numeric'});
-
-  // ✅ ADD DAYS HEADER
-  const days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-  days.forEach(d=>{
-    let head = document.createElement("div");
-    head.innerText = d;
-    head.style.fontSize = "11px";
-    head.style.fontWeight = "700";
-    head.style.color = "#6b7280";
-    head.style.textAlign = "center";
-    grid.appendChild(head);
-  });
-
-  let firstDay = new Date(y, m, 1).getDay();
-  let daysInMonth = new Date(y, m + 1, 0).getDate();
-
-  let totalCells = 42; // 6 rows
-
-  for(let i = 0; i < totalCells; i++){
-
-    let div = document.createElement("div");
-    div.className = "mini-day";
-
-    let dayNum = i - firstDay + 1;
-
-    if(dayNum > 0 && dayNum <= daysInMonth){
-
-      let dayStr = `${y}-${String(m+1).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`;
-
-      div.innerText = dayNum;
-
-      let todayStr = new Date().toISOString().split("T")[0];
-
-      if(dayStr === todayStr){
-        div.classList.add("mini-today");
-      }
-
-      if(dayStr === selected){
-        div.classList.add("mini-selected");
-      }
-
-      div.onclick = ()=>{
-        selected = dayStr;
-        date = new Date(dayStr);
-        render();
-      };
-
-    } else {
-      div.style.visibility = "hidden";
-    }
-
-    grid.appendChild(div);
-  }
-}
-
-function renderWeekDays(){
-  const el = document.getElementById("weekDays");
-
-  let start = new Date(date);
-  start.setDate(date.getDate() - date.getDay());
-
-  const days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-  let todayStr = new Date().toISOString().split("T")[0];
-
-  el.innerHTML = `
-    <div class="left-today">
-      <div id="leftDay"></div>
-      <div id="leftDate"></div>
-    </div>
-  `;
-
-  for(let i=0;i<7;i++){
-    let d = new Date(start);
-    d.setDate(start.getDate() + i);
-
-    let dayStr = d.toISOString().split("T")[0];
-
-    el.innerHTML += `
-      <div>
-        <div style="font-size:12px;color:#6b7280;font-weight:600;">
-          ${days[i]}
-        </div>
-
-        <div style="
-          margin-top:4px;
-          font-size:15px;
-          font-weight:700;
-          width:28px;
-          height:28px;
-          line-height:28px;
-          margin:auto;
-          border-radius:50%;
-          background:${dayStr === todayStr ? '#16a34a' : 'transparent'};
-          color:${dayStr === todayStr ? 'white' : '#111827'};
-        ">
-          ${d.getDate()}
-        </div>
-      </div>
-    `;
-  }
-}
-
-function openDayView(date){
-
-  let list = events.filter(e => e.date === date);
-
-  document.getElementById("dayTitle").innerText = "Bookings - " + date;
-
-  document.getElementById("dayEvents").innerHTML = list.length
-    ? list.map(e => `
-        <div class="item" style="cursor:pointer">
-          ${e.time} - ${e.title}
-        </div>
-      `).join("")
-    : "<p>No bookings for this day.</p>";
-
-  document.getElementById("dayModal").style.display = "flex";
-}
-
 /******************************** POS DATE DISPLAY ********************************/
-function updatecalendarDate(){
-  const el = document.getElementById("calendarDate");
-  if(!el) return;
-
+function updatePOSDate(){
+  const el = document.getElementById("posDate");
   const now = new Date();
 
-  el.textContent = now.toLocaleDateString('en-US', {
-    weekday: 'long',
+  el.textContent = "Today: " + now.toLocaleDateString('en-US', {
     month: 'long',
     day: 'numeric',
     year: 'numeric'
   });
 }
 
-function updateLeftToday(){
-  const now = new Date();
-
-  const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-
-  const day = dayNames[now.getDay()];
-  const dateNum = now.getDate();
-
-  document.getElementById("leftDay").innerText = day;
-  document.getElementById("leftDate").innerText = dateNum;
-}
-
-window.addEventListener("DOMContentLoaded", () => {
-  updatecalendarDate();
-  setInterval(updatecalendarDate, 60000);
-});
+document.addEventListener("DOMContentLoaded", updatePOSDate);
 </script>
-
-</body>
-</html>
