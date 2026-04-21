@@ -1,8 +1,7 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Transaction History</title>
+<title>Inventory</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
@@ -14,6 +13,7 @@
   font-family: 'Plus Jakarta Sans', 'Segoe UI', Roboto, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: all 0.2s ease-in-out;
 }
 body {
   font-family: Arial, sans-serif;
@@ -21,16 +21,7 @@ body {
   padding: 0;
   background: #f4f6f9;
 }
-:root {
-  --primary: #16a34a;
-  --primary-dark: #15803d;
-  --bg: #f8fafc;
-  --card: #ffffff;
-  --text: #1e293b;
-  --subtext: #64748b;
-  --border: #e2e8f0;
-  --radius: 12px;
-}
+
 /******************************** SIDEBAR (PRO UI) ********************************/
 .sidebar {
   width: 270px;
@@ -120,17 +111,14 @@ body {
 
 /*********************************** MAIN ********************************/
 .main {
-  height: 100vh;
   margin-left: 270px;
   display: flex;
   flex-direction: column;
-  overflow: hidden; 
+  height: 100vh;
+  overflow: hidden;
 }
 .main.full {
   margin-left: 0;
-  gap: 20px;
-  flex: 1.2;
-  min-width: 0;
 }
 
 /******************************** TOP BAR ********************************/
@@ -138,6 +126,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background: #e9e9e9;
   padding: 15px 25px;
   background: #ffffff;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
@@ -256,7 +245,7 @@ body {
 }
 
 /******************************** TRANSACTION ********************************/
-.transaction-header {
+.inventory-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -264,22 +253,23 @@ body {
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   padding: 20px 24px; 
-  margin: 20px 25px;  
+  margin: 10px 25px 10px 25px; /* ⬅️ bawasan bottom margin */
+  margin: 15px 25px 8px 25px; /* top | right | bottom | left */
   box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
-.transaction-header .header-left h1 {
+.inventory-header .header-left h1 {
   font-size: 20px;
   margin: 0;
   color: #114500;
   line-height: 1.2;
 }
-.transaction-header .header-left p {
+.inventory-header .header-left p {
   font-size: 13px;
   margin-top: 6px;
   color: #6b7280;
   line-height: 1.4;
 }
-.transaction-header .date-box {
+.inventory-header .date-box {
   background: #f4f6f9;
   padding: 10px 14px; 
   border-radius: 10px;
@@ -291,12 +281,31 @@ body {
   font-weight: 500;
   color: #333;
 }
+.inventory-toolbar{
+  margin: 15px 25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 .container {
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  overflow: visible; /* ✅ FIX */
+  overflow: visible;
+}
+.header-box select {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  font-weight: 700;
+  font-size: 13px;
+  color: #475569;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
 }
 /******************************** CONTENT ********************************/
 .content {
@@ -313,394 +322,533 @@ body {
   flex-direction: column;
   overflow: hidden;
 }
-
-/******************************** KPI ********************************/
-.kpi-wrapper {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  margin: 0px 20px 5px;
-}
-
-.kpi-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 18px 20px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-  transition: 0.2s ease;
-}
-
-.kpi-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-}
-
-.kpi-label {
-  font-size: 13px;
-  color: #64748b;
-}
-
-.kpi-value {
-  font-size: 26px;
-  font-weight: 700;
-  margin-top: 6px;
-  color: #0f172a;
-}
-
-/******************************** FILTER BAR  ********************************/
-.filter-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 25px;
-  margin: 0 25px 20px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-}
-.filter-right button {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: white;
-  cursor: pointer;
-  transition: 0.2s;
-}
-.filter-right button:hover {
-  background: #f1f5f9;
-}
-
-/******************************** SOURCE ********************************/
-.src {
-  padding: 10px 16px;
-  border-radius: 999px;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
-  color: #64748b;
-
-  transition: all 0.25s ease;
-  position: relative;
-}
-.src:hover {
-  background: linear-gradient(135deg, #34d399, #16a34a);
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(22, 163, 74, 0.25);
-}
-.src.active {
-  background: #16a34a;
-  color: white;
-  box-shadow: 0 6px 15px rgba(22, 163, 74, 0.25);
-}
-.source-buttons {
-  display: flex;
-  gap: 8px;
-  background: #f1f5f9;
-  padding: 6px;
-  border-radius: 999px;
-  border: 1px solid #e2e8f0;
-}
-.src.active::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.15);
-}
-/******************************** HISTORY CONTAINER ********************************/
-#historyContainer {
-  margin: 0 25px 25px;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-}
-
-/******************************** TABLE ********************************/
-.table-container {
-  margin: 0 25px 25px;
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  height: calc(100vh - 320px); 
-  overflow-y: auto;
-  overflow-x: auto;
-}
-/******************************** TRANSACTION TABLE ********************************/
-.transaction-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: 'Inter', sans-serif;
-}
-.transaction-table thead {
-  background: linear-gradient(135deg, #16a34a, #15803d);
-  color: white;
-}
-.transaction-table thead th {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background: linear-gradient(135deg, #16a34a, #15803d);
-}
-.transaction-table th {
-  padding: 14px;
-  font-size: 13px;
-  text-align: left;
-  font-weight: 600;
-  letter-spacing: 0.3px;
-}
-.transaction-table td {
-  padding: 14px;
-  font-size: 14px;
-  color: #0f172a;
-  border-bottom: 1px solid #f1f5f9;
-}
-.transaction-table tbody tr:hover {
-  background: #f8fafc;
-  transition: 0.2s;
-}
-/******************************** ID / AMOUNT/  ********************************/
-.id {
-  font-weight: 600;
-  color: #1e293b;
-}
-.amount {
-  font-weight: 600;
-  color: #0f172a;
-}
-
-/******************************** BADGE ********************************/
-.badge {
-  padding: 5px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-/* SOURCE BADGE */
-.badge.pos {
-  background: #dbeafe;
-  color: #1d4ed8;
-}
-
-.badge.online {
-  background: #e0f2fe;
-  color: #0284c7;
-}
-
-/* STATUS BADGE */
-.badge.paid {
-  background: #dcfce7;
-  color: #16a34a;
-}
-
-.badge.pending {
-  background: #fef9c3;
-  color: #ca8a04;
-}
-
-
-/******************************** VIEW TRANSACTION ********************************/
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-
-  justify-content: center;
-  align-items: center;
-
-  z-index: 999;
-}
-
-.modal-content {
-  background: white;
-  width: 350px;
-  border-radius: 12px;
-  padding: 20px;
-
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  animation: pop 0.2s ease;
-}
-
-@keyframes pop {
-  from { transform: scale(0.9); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-.modal-content h3 {
-  margin-bottom: 15px;
-  color: #114500;
-}
-
-.modal-content p {
-  font-size: 14px;
-  margin: 6px 0;
-  color: #333;
-}
-
-.close-btn {
-  margin-top: 15px;
-  padding: 8px 12px;
-  border: none;
-  background: #16a34a;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-}
-.close-btn:hover {
-  background: #15803d;
-}
-
-/******************************** UI MODAL ********************************/
-.txn-card {
+.inventory-module {
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  overflow: visible;
 }
-
-.txn-header {
+.form-box {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 15px;
 }
-
-.txn-header h2 {
+.form-title h3 {
+  margin: 0;
   font-size: 18px;
   color: #114500;
 }
-
-.txn-id {
-  font-size: 13px;
-  color: #64748b;
-}
-
-/* STATUS */
-.txn-status {
-  padding: 6px 12px;
-  border-radius: 999px;
+.form-title p {
+  margin: 3px 0 0;
   font-size: 12px;
-  font-weight: 600;
+  color: #777;
 }
-
-.txn-status.paid {
-  background: #dcfce7;
-  color: #16a34a;
-}
-
-.txn-status.pending {
-  background: #fef9c3;
-  color: #ca8a04;
-}
-
-.txn-status.cancelled {
-  background: #fee2e2;
-  color: #dc2626;
-}
-
-/* GRID */
-.txn-grid {
+.form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
+.form-box input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
 
-.txn-item {
+.form-box button {
+  background: #114500;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.input-group {
   display: flex;
   flex-direction: column;
-  background: #f8fafc;
-  padding: 10px;
-  border-radius: 10px;
+  position: relative;
+  z-index: 2;
 }
 
-.txn-item .label {
-  font-size: 11px;
-  color: #64748b;
-}
-
-.txn-item .value {
-  font-size: 14px;
+.input-group label {
+  font-size: 12px;
+  margin-bottom: 5px;
+  color: #555;
   font-weight: 600;
-  color: #0f172a;
 }
 
-/* TOTAL */
-.txn-total {
-  background: linear-gradient(135deg, #16a34a, #15803d);
-  color: white;
-  padding: 15px;
+.input-group input {
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  outline: none;
+  transition: 0.2s;
+  background: #fafafa;
+}
+
+.input-group input:focus {
+  border-color: #114500;
+  background: white;
+}
+input[type="number"] {
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  text-align: center;
+  width: 70px;
+}
+.table-head{
+  display:grid;
+  grid-template-columns: 2fr 1.4fr 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr;
+  background: linear-gradient(135deg, #114500, #1b5e20);
+  color:white;
+  padding:14px;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  margin-bottom:10px;
+}
+.table-body {
+  max-height: 400px;   /* 👈 scroll height */
+  overflow-y: auto;
+}
+.table-box {
+  background: white;
+  border-radius: 14px;
+  padding: 0;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  position: relative;
+  flex: 1;
+  min-height: 0;     /* IMPORTANT */
+  overflow-y: auto;
+  max-height: none;  /* REMOVE limit */
+}
+.table-header {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 2.2fr;
+  align-items: center;
+  gap: 14px;
+
+  background: linear-gradient(135deg, #114500, #2e7d32);
+  color: #e8f5e9;
+
+  padding: 14px 18px;
+  border-radius: 16px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+.table-header select {
+  appearance: none;
+
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  color: #ffffff;
+
   border-radius: 12px;
+  padding: 8px 38px 8px 12px; /* ⬅️ mas space sa arrow */
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  /* NEW ARROW */
+  background-image: url("data:image/svg+xml,%3Csvg fill='%23ffffff' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px; /* ⬅️ mas malaki */
+}
+/* FIX SELECTED (FOCUS) STATE */
+.table-header select:focus {
+  background: #ffffff;     /* solid white */
+  color: #166534;          /* dark green text */
+
+  border: 1px solid #22c55e;
+  box-shadow: 0 0 0 2px rgba(34,197,94,0.25);
+}
+.table-header select:hover {
+  background: #f0fdf4;
+  color: #14532d;
+  border-color: #22c55e; /* hindi na magre-resize */
+}
+.table-header select option {
+  background: #ffffff;
+  color: #268401;
+}
+.table-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 2.2fr;
+  align-items: center;
+  gap: 14px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  padding: 16px 18px;
+  margin-bottom: 12px;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.table-header > div,
+.table-row > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
 }
 
-.txn-total span {
-  font-size: 12px;
-  opacity: 0.8;
+.table-row > div:first-child {
+  font-weight: 700;
+  color: #111827;
 }
 
-.txn-total h1 {
-  margin-top: 5px;
-  font-size: 24px;
+.table-row > div:first-child {
+  font-weight: 700;
+  color: #111827;
 }
-/******************************** VIEW BUTTON ********************************/
-.view-btn {
-  padding: 6px 12px;
+.table-grid {
+  grid-template-columns: 2.2fr 1.5fr 0.8fr 1fr 1fr 1.2fr 1fr 1fr 2.5fr;
+}
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+tbody tr {
+  background: white;
+}
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+
+  background: #ffffff;
+  border-bottom: 2px solid #e5e7eb;
+
+  padding: 14px 10px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #6b7280;
+
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+.actions button {
+  margin: 0 3px;
+  padding: 5px 8px;
   border: none;
-  border-radius: 8px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.actions button:nth-child(1) {
+  background: #4caf50;
+  color: white;
+}
+
+.actions button:nth-child(2) {
+  background: #ff9800;
+  color: white;
+}
+
+.actions button:nth-child(3) {
+  background: #f44336;
+  color: white;
+}
+.action-btn {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+  white-space: nowrap;
+}
+.action-btn.add {
   background: #16a34a;
   color: white;
-  font-size: 12px;
+}
+
+.action-btn.minus {
+  background: #f59e0b;
+  color: white;
+}
+
+.action-btn.delete {
+  background: #64748b;
+  color: white;
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+.action-bar {
+  display: flex;
+  justify-content: flex-start; /* nasa left */
+  margin: 10px 25px;
+}
+.low-stock {
+  color: #d97706;
+  font-weight: 700;
+}
+
+.out-stock {
+  color: #dc2626;
+  font-weight: 800;
+}
+
+.ok-stock {
+  color: #16a34a;
+  font-weight: 600;
+}
+.add-btn {
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  color: white;
+
+  border: none;
+  padding: 10px 18px;
+  border-radius: 12px;
+
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+
   cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+  transition: all 0.25s ease;
+}
+.add-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+
+  background: linear-gradient(135deg, #15803d, #16a34a);
+
+  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+.add-btn:active {
+  transform: scale(0.96);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+/* MODAL BACKGROUND */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 99999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+}
+
+/* MODAL BOX */
+.modal-content {
+  background: white;
+  margin: 5% auto;
+  padding: 25px;
+  width: 600px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  animation: fadeIn 0.3s ease;
+  position: relative;
+  z-index: 10000;
+}
+
+/* HEADER */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-sub {
+  font-size: 13px;
+  color: gray;
+  margin-bottom: 15px;
+}
+.modal-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+/* CLOSE BUTTON */
+.close-btn {
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modern-table {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  background: #fff;
+  border-radius: 14px;
+  margin: 15px 25px;   
+  padding: 15px;
+  overflow: hidden;
+}
+.badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.badge.ok {
+  background: #dcfce7;
+  color: #166534;
+}
+.badge.low {
+  background: #fef9c3;
+  color: #92400e;
+}
+
+.badge.out {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+#category {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fafafa;
+  outline: none;
+}
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  width: 100%;
+  padding: 10px 40px 10px 14px; /* IMPORTANT: space sa arrow */
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+
+  background: #ffffff;
+
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+
+  /* ARROW INSIDE */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%236b7280' viewBox='0 0 20 20'%3E%3Cpath d='M5 7l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px;
+}
+
+select:hover {
+  background: #f0fdf4; /* light green */
+  border-color: #22c55e;
+}
+
+/* FOCUS */
+select:focus {
+  background: #ffffff;
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.25);
+}
+
+/* OPTION STYLE */
+select option {
+  color: #111827;
+  background: #ffffff;
+}
+
+/* OPTGROUP LABEL */
+select optgroup {
+  font-weight: 700;
+  color: #6b7280;
+}
+
+.filter-group{
+  display:flex;
+  gap:12px;
+}
+.filter {
+  background: #ffffff;
+  padding: 12px 14px;
+  border-radius: 14px;
+
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+
   transition: 0.2s;
 }
 
-.view-btn:hover {
-  background: #15803d;
-  transform: scale(1.05);
-}
-/******************************** MODAL ********************************/
-.date-modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  justify-content: center;
-  align-items: center;
-  z-index: 9999; /* 🔥 increase */
+.filter:hover {
+  transform: translateY(-2px);
 }
 
-.date-content {
-  background: white;
-  padding: 25px;
-  border-radius: var(--radius);
-  width: 300px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+.filter label{
+  font-size:11px;
+  color:#6b7280;
+  font-weight:600;
 }
 
-.date-actions {
-  margin-top: 15px;
+.filter select{
+  border:none;
+  outline:none;
+  font-size:13px;
+  font-weight:600;
+  background:transparent;
+}
+.header-select{
+  position: relative;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
 }
-
-.date-actions button {
-  padding: 8px 14px;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
+.header-select select{
+  width: 100%;
+  padding-right: 30px; /* space for arrow */
 }
-
-.date-actions button:first-child {
-  background: var(--primary);
-  color: white;
+.header-select i{
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+  font-size: 12px;
+  color: #e8f5e9;
 }
 </style>
 </head>
@@ -756,10 +904,10 @@ body {
 <div class="content-wrapper">
 
 <!--------------------------------------- TITLE ---------------------------------------------> 
-<div class="transaction-header">
+<div class="inventory-header">
   <div class="header-left">
-    <h1>Transaction History</h1>
-    <p>Handle your daily transactions and payment</p>
+    <h1>Inventory</h1>
+    <p>Manage and monitor your stock of products and ingredients</p>
   </div>
 
   <div class="header-right">
@@ -773,278 +921,209 @@ body {
 <!--------------------------------------- CONTAINER -------------------------------------------->
 <div class="container">
 
-    <!---------------------- KPI HEADER ----------------------------> 
-    <div class="kpi-wrapper">
+<div class="inventory-module">
 
-      <div class="kpi-card">
-        <span class="kpi-label">Total Transactions</span>
-        <h2 class="kpi-value" id="totalTx">0</h2>
+  <div class="action-bar">
+    <button class="add-btn" onclick="openModal()">+ Add Item</button>
+  </div>
+
+  <div class="table-box modern-table">
+  <!-- HEADER (HINDI MA-SSCROLL) -->
+<div class="table-header">
+
+  <div class="header-select">
+    <select id="filterItem" onchange="renderTable()">
+      <option value="">All Items</option>
+    </select>
+    <i class="fa-solid fa-chevron-down"></i>
+  </div>
+
+  <div class="header-select">
+    <select id="filterCategory" onchange="renderTable()">
+      <option value="">All Categories</option>
+      <option value="Beans">Beans</option>
+      <option value="Dairy">Dairy</option>
+      <option value="Dairy Alternative">Dairy Alternative</option>
+      <option value="Sweetener">Sweetener</option>
+      <option value="Syrup">Syrup</option>
+    </select>
+    <i class="fa-solid fa-chevron-down"></i>
+  </div>
+
+  <div class="header-select">
+    <select id="sortStock" onchange="renderTable()">
+      <option value="">Stock</option>
+      <option value="high">High to Low</option>
+      <option value="low">Low to High</option>
+    </select>
+    <i class="fa-solid fa-chevron-down"></i>
+  </div>
+
+  <div class="header-select">
+    <select id="sortCost" onchange="renderTable()">
+      <option value="">Cost</option>
+      <option value="high">High to Low</option>
+      <option value="low">Low to High</option>
+    </select>
+    <i class="fa-solid fa-chevron-down"></i>
+  </div>
+
+    <div class="header-select">
+      <select id="sortSelling" onchange="renderTable()">
+        <option value="">Selling</option>
+        <option value="high">High to Low</option>
+        <option value="low">Low to High</option>
+      </select>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="header-select">
+      <select id="sortTotal" onchange="renderTable()">
+        <option value="">Total</option>
+        <option value="high">High to Low</option>
+        <option value="low">Low to High</option>
+      </select>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="header-select">
+      <select id="sortStatus" onchange="renderTable()">
+        <option value="">Status</option>
+        <option value="ok">OK</option>
+        <option value="low">LOW</option>
+        <option value="out">OUT</option>
+      </select>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+    <div class="header-select">
+      <select id="sortReorder" onchange="renderTable()">
+        <option value="">Reorder</option>
+        <option value="high">High to Low</option>
+        <option value="low">Low to High</option>
+      </select>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+
+  <div class="header-select">
+    <select>
+      <option>Actions</option>
+      <option>Bulk Delete</option>
+      <option>Export</option>
+    </select>
+    <i class="fa-solid fa-chevron-down"></i>
+  </div>
+
+</div>
+
+  <!-- SCROLL AREA (ROWS LANG) -->
+  <div class="table-body" id="inventoryTable"></div>
+
+</div>
+
+<div id="inventoryModal" class="modal">
+  <div class="modal-content">
+
+    <div class="modal-header">
+      <h3>➕ Add Inventory Item</h3>
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+    </div>
+
+    <p class="modal-sub">Fill in product details below</p>
+
+    <div class="form-grid">
+
+      <div class="input-group">
+        <label>Item Name</label>
+        <input type="text" id="name">
       </div>
 
-      <div class="kpi-card">
-        <span class="kpi-label">Total Sales</span>
-        <h2 class="kpi-value" id="totalSales">₱0.00</h2>
+      <div class="input-group">
+        <label>Category</label>
+
+<select id="category">
+
+  <option value="" selected hidden>Select Category</option>
+
+  <!-- MAIN PRODUCTS -->
+  <optgroup label="Main Products">
+    <option value="Food">Food</option>
+    <option value="Drinks">Drinks</option>
+    <option value="Non-Food">Non-Food</option>
+  </optgroup>
+
+  <!-- INGREDIENTS -->
+  <optgroup label="Ingredients">
+    <option value="Beans">Beans</option>
+    <option value="Dairy">Dairy</option>
+    <option value="Dairy Alternative">Dairy Alternative</option>
+    <option value="Sweetener">Sweetener</option>
+    <option value="Syrup">Syrup</option>
+    <option value="Powder">Powder</option>
+    <option value="Tea Base">Tea Base</option>
+    <option value="Chocolate">Chocolate</option>
+    <option value="Toppings">Toppings</option>
+    <option value="Ice">Ice</option>
+    <option value="Water">Water</option>
+  </optgroup>
+
+  <!-- SUPPLIES -->
+  <optgroup label="Supplies">
+    <option value="Cups">Cups</option>
+    <option value="Lids">Lids</option>
+    <option value="Straws">Straws</option>
+    <option value="Napkins">Napkins</option>
+    <option value="Tissue">Tissue</option>
+    <option value="Takeout Packaging">Takeout Packaging</option>
+  </optgroup>
+
+  <!-- CLEANING -->
+  <optgroup label="Cleaning">
+    <option value="Detergent">Detergent</option>
+    <option value="Sanitizer">Sanitizer</option>
+    <option value="Cleaning Tools">Cleaning Tools</option>
+  </optgroup>
+
+  <!-- EQUIPMENT -->
+  <optgroup label="Equipment">
+    <option value="Machine Parts">Machine Parts</option>
+    <option value="Utensils">Utensils</option>
+    <option value="Tools">Tools</option>
+  </optgroup>
+
+</select>
+</div>
+
+      <div class="input-group">
+        <label>Initial Stock</label>
+        <input type="number" id="stock">
       </div>
 
-      <div class="kpi-card">
-        <span class="kpi-label">Today's Sales</span>
-        <h2 class="kpi-value" id="todaySales">₱0.00</h2>
+      <div class="input-group">
+        <label>Cost per Unit</label>
+        <input type="number" id="cost">
+      </div>
+
+      <div class="input-group">
+        <label>Selling Price</label>
+        <input type="number" id="selling">
+      </div>
+
+      <div class="input-group">
+        <label>Reorder Level</label>
+        <input type="number" id="reorder">
       </div>
 
     </div>
 
-    <!-- DIVIDER -->
-    <div class="divider-line"></div>
-
-<!--------------------------------------- FILTER ---------------------------------------------> 
-<div class="filter-bar">
-
-    <!-- LEFT SIDE -->
-    <div class="source-buttons">
-        <button class="src active" onclick="setSource('all', this)">ALL</button>
-        <button class="src" onclick="setSource('POS', this)">POS</button>
-        <button class="src" onclick="setSource('ONLINE_BOOKING', this)">ONLINE BOOKING</button>
-    </div>
-
-</div> <!-- ✅ IMPORTANT CLOSING TAG -->
-
-<div class="table-container">
-
-  <table class="transaction-table">
-
-    <thead>
-      <tr>
-        <th>Transaction ID</th>
-        <th>Date & Time</th>
-        <th>Customer</th>
-        <th>Source</th>
-        <th>Payment</th>
-        <th>Total</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-
-    <tbody>
-
-      <!-- ================= POS TRANSACTIONS ================= -->
-
-      <tr data-source="POS">
-        <td class="id">TXN-001</td>
-        <td>Apr 18, 2026 - 2:30 PM</td>
-        <td>Juan Dela Cruz</td>
-        <td><span class="badge pos">POS</span></td>
-        <td>GCash</td>
-        <td class="amount">₱180.00</td>
-        <td><span class="badge paid">Paid</span></td>
-        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
-      </tr>
-
-      <tr data-source="POS">
-        <td class="id">TXN-002</td>
-        <td>Apr 18, 2026 - 3:10 PM</td>
-        <td>Maria Santos</td>
-        <td><span class="badge pos">POS</span></td>
-        <td>Cash</td>
-        <td class="amount">₱250.00</td>
-        <td><span class="badge paid">Paid</span></td>
-        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
-      </tr>
-
-      <tr data-source="POS">
-        <td class="id">TXN-003</td>
-        <td>Apr 18, 2026 - 4:05 PM</td>
-        <td>Mark Reyes</td>
-        <td><span class="badge pos">POS</span></td>
-        <td>GCash</td>
-        <td class="amount">₱320.00</td>
-        <td><span class="badge pending">Pending</span></td>
-        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
-      </tr>
-
-      <!-- ================= ONLINE BOOKING: COFFEE ================= -->
-
-<tr data-source="ONLINE_BOOKING">
-        <td class="id">TXN-004</td>
-        <td>Apr 18, 2026 - 5:20 PM</td>
-        <td>Anna Lopez</td>
-        <td><span class="badge online">Coffee Booking</span></td>
-        <td>GCash</td>
-        <td class="amount">₱5,000</td>
-        <td><span class="badge paid">Paid</span></td>
-        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
-      </tr>
-
-<tr data-source="ONLINE_BOOKING">
-        <td class="id">TXN-005</td>
-        <td>Apr 18, 2026 - 6:00 PM</td>
-        <td>Kevin Cruz</td>
-        <td><span class="badge online">Coffee Booking</span></td>
-        <td>Cash</td>
-        <td class="amount">₱5,000</td>
-        <td><span class="badge pending">Pending</span></td>
-        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
-      </tr>
-
-<tr data-source="ONLINE_BOOKING">
-        <td class="id">TXN-006</td>
-        <td>Apr 18, 2026 - 6:45 PM</td>
-        <td>Sarah Lim</td>
-        <td><span class="badge online">Coffee Booking</span></td>
-        <td>GCash</td>
-        <td class="amount">₱5,000</td>
-        <td><span class="badge paid">Paid</span></td>
-        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
-      </tr>
-
-      <!-- ================= ONLINE BOOKING: MATCHA ================= -->
-
-<tr data-source="ONLINE_BOOKING">
-        <td class="id">TXN-007</td>
-        <td>Apr 18, 2026 - 7:10 PM</td>
-        <td>Yuki Tan</td>
-        <td><span class="badge online">Matcha Booking</span></td>
-        <td>GCash</td>
-        <td class="amount">₱9,000</td>
-        <td><span class="badge paid">Paid</span></td>
-        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
-      </tr>
-
-<tr data-source="ONLINE_BOOKING">
-        <td class="id">TXN-008</td>
-        <td>Apr 18, 2026 - 7:40 PM</td>
-        <td>Nicole Garcia</td>
-        <td><span class="badge online">Matcha Booking</span></td>
-        <td>Cash</td>
-        <td class="amount">₱9,000</td>
-        <td><span class="badge pending">Pending</span></td>
-        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
-      </tr>
-
-<tr data-source="ONLINE_BOOKING">
-        <td class="id">TXN-009</td>
-        <td>Apr 18, 2026 - 8:15 PM</td>
-        <td>James Park</td>
-        <td><span class="badge online">Matcha Booking</span></td>
-        <td>GCash</td>
-        <td class="amount">₱9,000</td>
-        <td><span class="badge paid">Paid</span></td>
-        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
-      </tr>
-
-      <!-- ================= ONLINE BOOKING: TATTOO ================= -->
-
-<tr data-source="ONLINE_BOOKING">
-        <td class="id">TXN-010</td>
-        <td>Apr 18, 2026 - 9:00 PM</td>
-        <td>Daniel Rivera</td>
-        <td><span class="badge online">Tattoo Booking</span></td>
-        <td>GCash</td>
-        <td class="amount">₱1,000</td>
-        <td><span class="badge pending">Pending</span></td>
-        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
-      </tr>
-
-<tr data-source="ONLINE_BOOKING">
-        <td class="id">TXN-011</td>
-        <td>Apr 18, 2026 - 9:30 PM</td>
-        <td>Michael Tan</td>
-        <td><span class="badge online">Tattoo Booking</span></td>
-        <td>Cash</td>
-        <td class="amount">₱1,000</td>
-        <td><span class="badge paid">Paid</span></td>
-        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
-      </tr>
-
-<tr data-source="ONLINE_BOOKING">
-        <td class="id">TXN-012</td>
-        <td>Apr 18, 2026 - 10:10 PM</td>
-        <td>Chris Gomez</td>
-        <td><span class="badge online">Tattoo Booking</span></td>
-        <td>GCash</td>
-        <td class="amount">₱1,000</td>
-        <td><span class="badge cancelled">Cancelled</span></td>
-        <td><button class="view-btn" onclick="viewTransaction(this)">View</button></td>
-      </tr>
-
-    </tbody>
-
-  </table>
-
-</div>
-
-<!--------------------------------------- DATE MODAL ---------------------------------------------> 
-<div id="dateModal" class="date-modal">
-    <div class="date-content">
-        <h3>Filter by Date</h3>
-
-        <label><input type="radio" name="dateFilter" value="7"> Last 7 Days</label>
-        <label><input type="radio" name="dateFilter" value="30"> Last 30 Days</label>
-        <label><input type="radio" name="dateFilter" value="90"> Last 90 Days</label>
-
-        <div class="date-actions">
-        <button onclick="applyDateFilter()">Apply Filter</button>
-        <button onclick="closeDateModal()">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<!--------------------------------------- TRANSACTION MODAL ---------------------------------------------> 
-<div id="transactionModal" class="date-modal">
-  <div class="date-content">
-    <h3>Filter by Transaction</h3>
-
-    <label><input type="radio" name="transactionFilter" value="Cash"> Cash</label>
-    <label><input type="radio" name="transactionFilter" value="GCash"> GCash</label>
-
-    <div class="date-actions">
-      <button onclick="applyTransactionFilter()">Apply Filter</button>
-      <button onclick="closeTransactionModal()">Cancel</button>
-    </div>
-  </div>
-</div>
-
-<!--------------------------------------- AMOUNT MODAL ---------------------------------------------> 
-<div id="amountModal" class="date-modal">
-  <div class="date-content">
-    <h3>Filter by Amount</h3>
-
-    <label><input type="radio" name="amountFilter" value="low"> Low → High</label>
-    <label><input type="radio" name="amountFilter" value="high"> High → Low</label>
-
-    <div class="date-actions">
-      <button onclick="applyAmountFilter()">Apply Filter</button>
-      <button onclick="closeAmountModal()">Cancel</button>
-    </div>
-  </div>
-</div>
-
-<!--------------------------------------- STATUS MODAL ---------------------------------------------> 
-<div id="statusModal" class="date-modal">
-  <div class="date-content">
-    <h3>Filter by Status</h3>
-
-    <label><input type="radio" name="statusFilter" value="Paid"> Paid</label>
-    <label><input type="radio" name="statusFilter" value="Pending"> Pending</label>
-    <label><input type="radio" name="statusFilter" value="Cancelled"> Cancelled</label>
-
-    <div class="date-actions">
-      <button onclick="applyStatusFilter()">Apply Filter</button>
-      <button onclick="closeStatusModal()">Cancel</button>
-    </div>
-  </div>
-</div>
-<!-- VIEW TRANSACTION MODAL -->
-<div id="viewModal" class="date-modal">
-  <div class="date-content">
-
-    <div id="modalBody"></div>
-
-    <div class="date-actions">
-      <button onclick="closeModal()">Close</button>
-    </div>
+    <div class="modal-footer">
+      <button class="add-btn" onclick="addItem(); closeModal();">
+        + Add Item
+      </button>
 
   </div>
+</div>
+
 </div>
 </body>
 </html>
@@ -1099,12 +1178,6 @@ function logout() {
   window.location.href = "login.html";
 }
 
-window.onclick = function(e) {
-  if (!e.target.closest('.admin')) {
-    document.getElementById("adminDropdown").style.display = "none";
-  }
-}
-
 /******************************** SIDEBAR TOGGLE ********************************/
 const menuBtn = document.getElementById("menu-btn");
 const sidebar = document.querySelector(".sidebar");
@@ -1132,88 +1205,349 @@ function updateTodayDate() {
 
 updateTodayDate();
 
-/******************************** SET SOURCE (ALL/POS/ONLINE BOOKING)  ********************************/
-function setSource(type, btn) {
+let inventory = [
+  { id: 1, name: "Espresso Beans", category: "Beans", stock: 25, cost: 850, selling: 0, reorder: 10 },
+  { id: 2, name: "Arabica Coffee Beans", category: "Beans", stock: 18, cost: 920, selling: 0, reorder: 10 },
+  { id: 3, name: "Robusta Beans", category: "Beans", stock: 20, cost: 780, selling: 0, reorder: 10 },
+  { id: 4, name: "Whole Milk", category: "Dairy", stock: 30, cost: 95, selling: 0, reorder: 10 },
+  { id: 5, name: "Fresh Milk", category: "Dairy", stock: 25, cost: 105, selling: 0, reorder: 10 },
+  { id: 6, name: "Oat Milk", category: "Dairy Alternative", stock: 15, cost: 160, selling: 0, reorder: 8 },
+  { id: 7, name: "Almond Milk", category: "Dairy Alternative", stock: 12, cost: 175, selling: 0, reorder: 8 },
+  { id: 8, name: "White Sugar", category: "Sweetener", stock: 40, cost: 60, selling: 0, reorder: 10 },
+  { id: 9, name: "Brown Sugar", category: "Sweetener", stock: 35, cost: 70, selling: 0, reorder: 10 },
+  { id: 10, name: "Vanilla Syrup", category: "Syrup", stock: 10, cost: 320, selling: 0, reorder: 5 }
+];
 
-  // active button UI
-  document.querySelectorAll('.src').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
+/* ADD ITEM */
+function addItem() {
 
-  const rows = document.querySelectorAll('.transaction-table tbody tr');
 
-  rows.forEach(row => {
-    const source = row.getAttribute('data-source');
+  let name = document.getElementById("name").value;
+  let category = document.getElementById("category").value;
 
-    if (type === 'all') {
-      row.style.display = '';
+  console.log("CATEGORY SELECTED:", category); // 👈 CHECK MO TO
+
+  let stock = parseFloat(document.getElementById("stock").value);
+  let cost = parseFloat(document.getElementById("cost").value);
+  let selling = parseFloat(document.getElementById("selling").value);
+  let reorder = parseFloat(document.getElementById("reorder").value);
+
+  console.log({
+    name,
+    category,
+    stock,
+    cost,
+    selling,
+    reorder
+  });
+
+    if (
+    !name.trim() ||
+    !category ||
+    category === "" ||
+    !stock && stock !== 0 ||
+    !cost && cost !== 0 ||
+    !selling && selling !== 0 ||
+    !reorder && reorder !== 0
+  ) {
+    alert("Please complete all fields including category");
+    return;
+  }
+
+  inventory.push({
+    id: Date.now(),
+    name,
+    category,
+    stock,
+    cost,
+    selling,
+    reorder
+  });
+
+  clearForm();
+  renderTable();
+}
+/* RENDER TABLE */
+function renderTable() {
+
+  let table = document.getElementById("inventoryTable");
+  table.innerHTML = "";
+
+  // GET SELECTED FILTER
+  const selectedCategory =
+    document.getElementById("filterCategory")?.value || "";
+
+  const selectedItem =
+    document.getElementById("filterItem")?.value || "";
+
+    let filteredInventory = inventory.filter(item => {
+      const isActive = item.active !== false;
+
+      const matchCategory = !selectedCategory || item.category === selectedCategory;
+      const matchItem = !selectedItem || item.name === selectedItem;
+
+      return isActive && matchCategory && matchItem;
+    });
+
+    const sortStock = document.getElementById("sortStock")?.value;
+    const sortCost = document.getElementById("sortCost")?.value;
+    const sortSelling = document.getElementById("sortSelling")?.value;
+    const sortTotal = document.getElementById("sortTotal")?.value;
+    const sortStatus = document.getElementById("sortStatus")?.value;
+    const sortReorder = document.getElementById("sortReorder")?.value;
+
+    /* STOCK SORT */
+    if (sortStock === "high") {
+      filteredInventory.sort((a, b) => b.stock - a.stock);
+    } 
+    else if (sortStock === "low") {
+      filteredInventory.sort((a, b) => a.stock - b.stock);
     }
-    else if (type === 'POS') {
-      row.style.display = (source === 'POS') ? '' : 'none';
+
+    /* COST SORT */
+    if (sortCost === "high") {
+      filteredInventory.sort((a, b) => b.cost - a.cost);
+    } 
+    else if (sortCost === "low") {
+      filteredInventory.sort((a, b) => a.cost - b.cost);
     }
-    else if (type === 'ONLINE_BOOKING') {
-      row.style.display = (source === 'ONLINE_BOOKING') ? '' : 'none';
+
+    if (sortSelling === "high") {
+      filteredInventory.sort((a, b) => b.selling - a.selling);
+    } 
+    else if (sortSelling === "low") {
+      filteredInventory.sort((a, b) => a.selling - b.selling);
     }
+
+    if (sortTotal === "high") {
+      filteredInventory.sort((a, b) => (b.stock * b.cost) - (a.stock * a.cost));
+    } 
+    else if (sortTotal === "low") {
+      filteredInventory.sort((a, b) => (a.stock * a.cost) - (b.stock * b.cost));
+    }
+
+    if (sortStatus === "ok") {
+      filteredInventory.sort((a, b) => b.stock - a.stock); // highest stock first
+    } 
+    else if (sortStatus === "low") {
+      filteredInventory.sort((a, b) => a.stock - b.stock);
+    } 
+    else if (sortStatus === "out") {
+      filteredInventory.sort((a, b) => a.stock - b.stock);
+    }
+    if (sortReorder === "high") {
+      filteredInventory.sort((a, b) => b.reorder - a.reorder);
+    } 
+    else if (sortReorder === "low") {
+      filteredInventory.sort((a, b) => a.reorder - b.reorder);
+    }
+
+  filteredInventory.forEach(item => {
+    let totalValue = item.stock * item.cost;
+
+    let statusClass = "ok";
+    let statusText = "OK";
+
+    if (item.stock <= 0) {
+      statusClass = "out";
+      statusText = "OUT";
+    } else if (item.stock <= item.reorder) {
+      statusClass = "low";
+      statusText = "LOW";
+    }
+
+    table.innerHTML += `
+        <div class="table-row">
+
+        <div>${item.name}</div>
+        <div>${item.category}</div>
+        <div>${item.editing
+              ? `<input type="number" id="stock-${item.id}" value="${item.stock}" style="width:70px;">`
+              : item.stock
+          }
+        </div>
+        <div>₱${item.cost.toFixed(2)}</div>
+        <div>₱${item.selling.toFixed(2)}</div>
+        <div>₱${totalValue.toFixed(2)}</div>
+
+        <div><span class="badge ${statusClass}">${statusText}</span></div>
+
+        <div>${item.reorder}</div>
+
+        <div>
+          ${
+            item.editing
+              ? `
+                <button class="action-btn add" onclick="saveStock(${item.id})">Update</button>
+                <button class="action-btn minus" onclick="cancelEdit(${item.id})">Cancel</button>
+              `
+              : `
+                ${
+                  item.active === true
+                    ? `<button class="action-btn add" onclick="restoreItem(${item.id})">Restore</button>`
+                    : `<button class="action-btn add" onclick="editStock(${item.id})">Edit</button>
+                      <button class="action-btn delete" onclick="markInactive(${item.id})">Mark Inactive</button>`
+                }
+              `
+          }
+        </div>
+
+      </div>
+    `;
+  });
+
+  updateItemDropdown();
+}
+
+/* STOCK IN */
+function stockIn(id) {
+  let qty = parseFloat(prompt("Add stock quantity:"));
+
+  if (isNaN(qty)) return;
+
+  inventory = inventory.map(item => {
+    if (item.id === id) {
+      item.stock += qty;
+    }
+    return item;
+  });
+
+  renderTable();
+}
+function stockOut(id) {
+  let qty = parseFloat(prompt("Deduct stock quantity:"));
+
+  if (isNaN(qty)) return;
+
+  inventory = inventory.map(item => {
+    if (item.id === id) {
+      item.stock -= qty;
+      if (item.stock < 0) item.stock = 0;
+    }
+    return item;
+  });
+
+  renderTable();
+}
+
+function markInactive(id) {
+  inventory = inventory.map(item => {
+    if (item.id === id) {
+      item.active = false;
+    }
+    return item;
+  });
+
+  renderTable();
+}
+function restoreItem(id) {
+  inventory = inventory.map(item => {
+    if (item.id === id) {
+      item.active = true;
+    }
+    return item;
+  });
+
+  renderTable();
+}
+
+function clearForm() {
+  document.getElementById("name").value = "";
+
+  const categorySelect = document.getElementById("category");
+  categorySelect.selectedIndex = 0;
+
+  document.getElementById("stock").value = "";
+  document.getElementById("cost").value = "";
+  document.getElementById("selling").value = "";
+  document.getElementById("reorder").value = "";
+}
+window.addEventListener("DOMContentLoaded", () => {
+  renderTable();
+});
+
+function openModal() {
+  document.getElementById("inventoryModal").style.display = "block";
+}
+
+function closeModal() {
+  document.getElementById("inventoryModal").style.display = "none";
+}
+
+/* close kapag nag click sa labas */
+window.onclick = function (e) {
+
+  // ADMIN DROPDOWN CLOSE
+  if (!e.target.closest('.admin')) {
+    const dropdown = document.getElementById("adminDropdown");
+    if (dropdown) dropdown.style.display = "none";
+  }
+
+  // MODAL CLOSE
+  const modal = document.getElementById("inventoryModal");
+  if (e.target === modal) {
+    modal.style.display = "none";
+  }
+};
+
+function updateItemDropdown() {
+  const itemSelect = document.getElementById("filterItem");
+  const selectedCategory =
+    document.getElementById("filterCategory")?.value || "";
+
+  if (!itemSelect) return;
+
+  itemSelect.innerHTML = `<option value="">All Items</option>`;
+
+  let filteredItems = inventory.filter(item => {
+    return !selectedCategory || item.category === selectedCategory;
+  });
+
+  filteredItems.forEach(item => {
+    itemSelect.innerHTML += `
+      <option value="${item.name}">
+        ${item.name}
+      </option>
+    `;
   });
 }
 
-/******************************** VIEW TRANSACTION ********************************/
-function viewTransaction(btn) {
-  const row = btn.closest("tr");
-  const cells = row.querySelectorAll("td");
+window.addEventListener("DOMContentLoaded", () => {
+  updateTodayDate();
+  renderTable();
+  updateItemDropdown();
+});
 
-const status = cells[6].innerText.toLowerCase();
-
-const html = `
-  <div class="txn-card">
-
-    <div class="txn-header">
-      <div>
-        <h2>Transaction Details</h2>
-        <span class="txn-id">${cells[0].innerText}</span>
-      </div>
-      <div class="txn-status ${status}">
-        ${cells[6].innerText}
-      </div>
-    </div>
-
-    <div class="txn-grid">
-
-      <div class="txn-item">
-        <span class="label">Date</span>
-        <span class="value">${cells[1].innerText}</span>
-      </div>
-
-      <div class="txn-item">
-        <span class="label">Customer</span>
-        <span class="value">${cells[2].innerText}</span>
-      </div>
-
-      <div class="txn-item">
-        <span class="label">Source</span>
-        <span class="value">${cells[3].innerText}</span>
-      </div>
-
-      <div class="txn-item">
-        <span class="label">Payment</span>
-        <span class="value">${cells[4].innerText}</span>
-      </div>
-
-    </div>
-
-    <div class="txn-total">
-      <span>Total</span>
-      <h1>${cells[5].innerText}</h1>
-    </div>
-
-  </div>
-`;
-
-  document.getElementById("modalBody").innerHTML = html;
-  document.getElementById("viewModal").style.display = "flex";
+function editStock(id) {
+  inventory = inventory.map(item => {
+    if (item.id === id) item.editing = true;
+    return item;
+  });
+  renderTable();
 }
 
-/******************************* CLOSE MODAL ********************************/
-function closeModal() {
-  document.getElementById("viewModal").style.display = "none";
+function saveStock(id) {
+  let input = document.getElementById(`stock-${id}`);
+  let newValue = parseFloat(input.value);
+
+  if (isNaN(newValue)) return;
+
+  inventory = inventory.map(item => {
+    if (item.id === id) {
+      item.stock = newValue;
+      item.editing = false;
+    }
+    return item;
+  });
+
+  renderTable();
+}
+
+function cancelEdit(id) {
+  inventory = inventory.map(item => {
+    if (item.id === id) item.editing = false;
+    return item;
+  });
+  renderTable();
 }
 </script>
