@@ -197,7 +197,56 @@ body {
   font-weight: 500;
   color: #166534;
 }
+.calendar-dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-top: 12px;
+}
+.calendar-day{
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+}
+.calendar-day:hover{
+  background:#ecfdf5;
+  border:1px solid #22c55e;
 
+  color:#065f46;
+
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(34,197,94,0.15);
+}
+.calendar-today {
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  color: white;
+  font-weight: 800;
+  box-shadow: 0 10px 20px rgba(22,163,74,0.25);
+}
+.calendar-selected {
+  outline: 2px solid #0e8018;
+  outline-offset: 2px;
+}
+/* FORCE FIX HOVER TEXT VISIBILITY */
+.calendar-day:hover,
+.mini-day:hover{
+  background: #bbf7d0 !important;
+  color: #064e3b !important;   /* 👈 force dark text */
+  border-color: #22c55e !important;
+
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(34,197,94,0.25);
+}
+
+/* ALSO FORCE NORMAL TEXT */
+.calendar-day,
+.mini-day{
+  color: #1f2937 !important;
+}
 /******************************** SEARCH BAR ********************************/
 .search-container {
   display: flex;
@@ -342,7 +391,7 @@ body {
 /******************************** LAYOUT ********************************/
 .layout{
   display: grid;
-  grid-template-columns: 320px 1fr 240px;
+  grid-template-columns: 1fr 260px; /* mini calendar + right panel */
   gap: 18px;
   flex: 1;
   min-height: 0;
@@ -364,71 +413,49 @@ body {
   height: auto;            
   max-height: none;   
 }
-.calendar{
-  background:white;
-  border-radius:20px;
-  padding:16px;
-  border:1px solid #eef2f7;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  display:flex;
-  flex-direction:column;
-  height: auto;
-  min-height: 100%;
-  overflow: hidden;
-}
 .calendar .header{
   display:flex;
   justify-content:center;
   align-items:center;
   gap:20px;
 }
-.calendar-top{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:16px;
-  margin-bottom:10px;
-}
-.calendar-top button{
-  background:#f1f5f9;
-  border:none;
-  padding:8px 14px;
-  border-radius:10px;
-  font-weight:600;
-  cursor:pointer;
-}
-
 /******************************** MINI CALENDAR ********************************/
-.mini-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:10px;
+.mini-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding: 4px 2px;
 }
-.mini-header button{
-  background:#f1f5f9;
-  border:none;
-  border-radius:10px;
-  padding:6px 10px;
-  cursor:pointer;
-  font-size:16px;
-  transition:0.2s;
+.mini-header h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
 }
-.mini-header button:hover{
-  background:#16a34a;
-  color:white;
+.mini-header button {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: #f8fafc;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
 }
-.mini-calendar{
-  background:white;
-  border-radius:20px;
-  padding:14px;
-  border:1px solid #eef2f7;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  height: fit-content;
-  max-height: 580px;
-  overflow: hidden;
-  width: 320px;     
-  min-width: 300px;  
+.mini-header button:hover {
+  background: #16a34a;
+  color: white;
+  border-color: #16a34a;
+  transform: translateY(-1px);
+}
+.mini-calendar {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 18px;
+  border: 1px solid #eef2f7;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  width: 100%;
+  transition: all 0.3s ease;
 }
 .mini-calendar h4{
   font-size:14px;
@@ -436,39 +463,166 @@ body {
   margin-bottom:10px;
   color:#111827;
 }
-.mini-grid{
-  display:grid;
-  grid-template-columns:repeat(7,1fr);
-  gap:6px;
-  flex:1;
-  overflow:hidden;
+.mini-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  overflow: hidden;
+  max-height: 360px;   /* adjust to fit 6 rows */
+}
+.mini-grid > div:first-child {
+  font-size: 10px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-align: center;
+  padding: 6px 0;
+  letter-spacing: 0.5px;
+  row-gap: 8px;
 }
 .mini-day {
-  text-align:center;      
-  cursor:pointer;
-  background:white;
-  border:1px solid #eef2f7;
-  transition:0.2s ease;
-  font-weight:500;
-  padding:12px 0;   
-  font-size:14px;
-  border-radius:12px;
+  height: 42px;        /* 🔥 smaller para magkasya 6 rows */
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  position: relative;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 6px;
 }
 .mini-day:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-  border-color: #16a34a;
-  background:#ecfdf5;
+  transform: translateY(-4px) scale(1.04);
+
+  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+
+  border-color: #22c55e;
+
+  box-shadow:
+    0 12px 30px rgba(34,197,94,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+
+  color: #064e3b;
 }
 .mini-today {
-  background: #16a34a;
-  color: white;
-  font-weight: 600;
+  background: linear-gradient(135deg, #16a34a, #22c55e) !important;
+  color: white !important;
+
+  box-shadow:
+    0 15px 35px rgba(34,197,94,0.45),
+    0 0 0 3px rgba(34,197,94,0.2);
+
+  transform: scale(1.06);
 }
 .mini-selected {
-  outline: 2px solid #3b82f6;
+  outline: none;
+  border: 2px solid #3b82f6;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+/* ✨ EMPTY CELLS */
+.mini-day[style*="visibility: hidden"] {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.mini-day::after {
+  content: "";
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+
+  background: transparent;
+}
+.mini-day.has-event::after {
+  background: #22c55e;
+  box-shadow: 0 0 8px #22c55e;
 }
 
+/* orange = pending */
+.mini-day.has-pending::after {
+  background: #f59e0b;
+  box-shadow: 0 0 8px #f59e0b;
+}
+
+/* blue = accepted */
+.mini-day.has-accepted::after {
+  background: #3b82f6;
+  box-shadow: 0 0 8px #3b82f6;
+}
+.mini-day,
+.day-events,
+.event-chip {
+  z-index: 1;
+}
+/* ================= NEW CALENDAR UI FIX ================= */
+
+.mini-calendar .calendar-nav{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:15px;
+  margin-bottom:12px;
+  padding:14px;
+  border-radius:16px;
+
+  background: linear-gradient(135deg, #16a34a, #22c55e) !important;
+  color:white;
+  box-shadow: 0 10px 25px rgba(34,197,94,0.35);
+}
+.mini-calendar {
+  height: fit-content;
+  max-height: 520px;   /* 🔥 prevents overflow */
+  overflow: hidden;
+}
+
+/* BUTTON */
+.mini-calendar .nav-btn{
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  border:none;
+  background: rgba(255,255,255,0.25);
+  color:white;
+  cursor:pointer;
+}
+
+.mini-calendar .nav-btn:hover{
+  background:white;
+  color:#16a34a;
+  transform:scale(1.1);
+}
+
+/* WEEK HEADER */
+.mini-calendar .week-header{
+  display:grid;
+  grid-template-columns: repeat(7,1fr);
+  padding:8px 0;
+  margin-bottom:6px;
+
+  background:#ecfdf5;
+  border-radius:10px;
+  border:1px solid #bbf7d0;
+}
+
+.mini-calendar .week-header div{
+  text-align:center;
+  font-size:11px;
+  font-weight:700;
+  color:#166534;
+  letter-spacing:1px;
+}
+
+/* FIX MINI GRID SPACING */
+.mini-calendar .mini-grid{
+  gap:6px;
+}
 /******************************** CURRENT DAY LEFT SIDE (inside Hours Calendar ) ********************************/
 .left-today{
   display:flex;
@@ -502,13 +656,14 @@ body {
   max-height: calc(var(--visible-hours) * var(--cell-height));
   overflow-y: auto;
 }
-.week-days{
-  display:grid;
-  grid-template-columns:100px repeat(7,1fr);
-  align-items:center;
-  text-align:center;
-  border-bottom:1px solid #e5e7eb;
-  margin-bottom:5px;
+.week-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-top: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f8fafc;
+  border-radius: 12px;
 }
 .week-days > div{
   display:flex;
@@ -604,6 +759,16 @@ body {
 }
 
 /******************************** NOTES INSIDE HOUR / EVENTS ********************************/
+.day-events {
+  position: absolute;
+  top: 20px; /* push events pababa */
+  left: 4px;
+  right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  z-index: 1;
+}
 .day-note{
   position:absolute;
   top:8px;
@@ -633,11 +798,27 @@ body {
   background: rgba(22,163,74,0.06);
   border-radius:12px;
 }
+.day-number {
+  position: absolute;
+  top: 4px;
+  left: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #111827;
+  z-index: 5;
+}
 #dayEvents{
   max-height: 300px;
   overflow-y: auto;
   margin-top: 10px;
   padding-right: 5px;
+}
+.date-label{
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
 }
 .today-btn{
   background:#16a34a !important;
@@ -760,6 +941,16 @@ body {
 }
 
 /******************************** EVENT BLOCK ********************************/
+.event-chip {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  color: white;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .event-block {
   position:absolute;
   left:8px;
@@ -818,16 +1009,14 @@ body {
 }
 
 /******************************** MODAL ********************************/
-.modal{
+.modal {
   display:none;
   position:fixed;
   inset:0;
   background:rgba(0,0,0,0.5);
   justify-content:center;
   align-items:center;
-  opacity:0;
-  transform:scale(0.95);
-  transition:0.2s ease;
+  z-index: 9999; 
 }
 .modal[style*="flex"]{
   opacity:1;
@@ -839,6 +1028,8 @@ body {
   border-radius:16px;
   width:320px;
   box-shadow:0 20px 40px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 10000;
 }
 
 .modal-content h3{
@@ -882,7 +1073,137 @@ body {
     background:#3b82f6;
     color:white;
 }
+.month-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
 
+.month-filters {
+  display: flex;
+  gap: 6px;
+}
+
+.month-filters select {
+  font-size: 11px;
+  padding: 4px 6px;
+
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+
+  background: white;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.month-filters select:hover {
+  border-color: #22c55e;
+  box-shadow: 0 3px 10px rgba(34,197,94,0.15);
+}
+
+.calendar-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+/* SCHEDULE MODAL DESIGN */
+
+#dayEvents{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+.schedule-row{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.schedule-time{
+  min-width: 90px;
+  text-align: right;
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 600;
+}
+.schedule-card{
+  flex: 1;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+  transition: 0.25s ease;
+}
+.schedule-card:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+.schedule-info{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.schedule-title{
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+.schedule-status{
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  width: fit-content;
+}
+.schedule-status.accepted{
+  background: #dcfce7;
+  color: #166534;
+}
+.schedule-status.pending{
+  background: #fef3c7;
+  color: #92400e;
+}
+.schedule-status.declined{
+  background: #fee2e2;
+  color: #991b1b;
+}
+.schedule-actions{
+  display: flex;
+  align-items: center;
+}
+.no-events{
+  text-align: center;
+  color: #9ca3af;
+  font-size: 13px;
+  padding: 20px;
+}
+.btn-cancel{
+  background: #fee2e2;
+  color: #b91c1c;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn-cancel:hover{
+  background: #ef4444;
+  color: white;
+  transform: scale(1.05);
+}
+.schedule-status.cancelled{
+  background: #fee2e2;
+  color: #b91c1c;
+}
 </style>
 </head>
 <body>
@@ -900,8 +1221,9 @@ body {
       <button data-page="Calendar.html"><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
       <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">Point of Sale</button>
       <button data-page="Transactionhistory.html"><img src="IMAGES/transactionhistoryicon.png" class="icon">Transaction History</button>
+      <button data-page="Reports.html"><img src="IMAGES/reporticon.png" class="icon">Reports</button>
       <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Booking Request</button>
-      <button data-page="Eventmanagement.php"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
+      <button data-page="Eventmanagement.html"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
       <button data-page="Inventory.html"><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
       <button data-page="Feedback.html"><img src="IMAGES/feedbackicon.png" class="icon">Customer Feedback</button>
       <button data-page="Settings.html"><img src="IMAGES/settingsicon.png" class="icon">Settings</button>
@@ -952,43 +1274,72 @@ body {
 </div>
 
 <!--------------------------------------- TOOLBAR ---------------------------------------------> 
-
-
 <div class="layout">
 
 <!--------------------------------------- MINI CALENDAR ---------------------------------------------> 
 <div class="mini-calendar">
 
-  <div class="mini-header">
-    <button onclick="miniChange(-1)">‹</button>
-    <h4 id="miniMonth"></h4>
-    <button onclick="miniChange(1)">›</button>
-  </div>
+  <!-- ✨ NEW MODERN HEADER -->
+<div class="calendar-nav">
 
-    <div class="mini-grid" id="miniGrid"></div>
+  <button class="nav-btn" onclick="changeMonth(-1)">‹</button>
+
+<div class="month-center">
+
+  <h2 id="monthTitle"></h2>
+
+<div class="month-filters">
+
+  <select id="monthFilter" onchange="updateFromDropdowns()">
+    <option value="">All Months</option>
+    <option value="0">Jan</option>
+    <option value="1">Feb</option>
+    <option value="2">Mar</option>
+    <option value="3">Apr</option>
+    <option value="4">May</option>
+    <option value="5">Jun</option>
+    <option value="6">Jul</option>
+    <option value="7">Aug</option>
+    <option value="8">Sep</option>
+    <option value="9">Oct</option>
+    <option value="10">Nov</option>
+    <option value="11">Dec</option>
+  </select>
+
+  <select id="dayFilter" onchange="updateFromDropdowns()">
+    <option value="">Day</option>
+    <script>
+      for(let i=1;i<=31;i++){
+        document.write(`<option value="${i}">${i}</option>`);
+      }
+    </script>
+  </select>
+
+    <select id="yearFilter" onchange="updateFromDropdowns()">
+      <option value="">Year</option>
+    </select>
+
 </div>
-<!--------------------------------------- HOUR CALENDAR ---------------------------------------------> 
-<div class="calendar">
+</div>
 
-  <!-- TOP NAV -->
-  <div class="calendar-top">
-    <button onclick="change(-1)">‹</button>
-    <button class="today-btn" onclick="today()">Today's Schedule</button>
-    <button onclick="change(1)">›</button>
+  <button class="nav-btn" onclick="changeMonth(1)">›</button>
+
+</div>
+  <!-- ✨ WEEK DESIGN -->
+  <div class="week-header">
+    <div>SUN</div>
+    <div>MON</div>
+    <div>TUE</div>
+    <div>WED</div>
+    <div>THU</div>
+    <div>FRI</div>
+    <div>SAT</div>
   </div>
 
-  <!-- DAYS + DATES -->
-  <div class="week-days" id="weekDays"></div>
+  <!-- 📅 CALENDAR GRID -->
+  <div class="mini-grid" id="miniGrid"></div>
 
-  <!-- GRID -->
-  <div class="week">
-
-      <div class="time-col" id="timeCol"></div>
-
-      <!-- GRID -->
-      <div class="week-grid" id="weekGrid"></div>
-    </div>
-  </div>
+</div>
 
 <!--------------------------------------- LEGEND / Event Package --------------------------------------------->
 <div class="legend-panel">
@@ -1038,6 +1389,7 @@ body {
       <option>Pending</option>
       <option>Accepted</option>
       <option>Declined</option>
+      <option>Cancelled</option>
     </select>
     <button class="btn-green" onclick="add()">Save</button>
   </div>
@@ -1129,119 +1481,33 @@ menuBtn.onclick = function() {
   main.classList.toggle("full");
 };
 
-/******************************** GLOBAL STATE VARIABLE ********************************/
-
-localStorage.removeItem("events"); 
 let date = new Date();
 let selected = null;
-let filterStatus = "All";
 let searchText = "";
-let editMode = false;
-let editTarget = null;
-let deleteTarget = null;
+let filterStatus = "All";
+let filterYearValue = "";
+let filterMonthValue = "";
+let viewMode = "month";
+let viewDate = new Date();
 
 let events = JSON.parse(localStorage.getItem("events")) || [];
 
-events = events.filter(e => !e.time.startsWith("10:"));
-localStorage.setItem("events", JSON.stringify(events));
-
+// 👇 ILAGAY DITO
+let eventColors = {
+  "Coffee Booth": "#facc15",
+  "Matcha Booth": "#22c55e",
+  "Tattoo Event": "#3b82f6"
+};
 /******************************** render() ********************************/
 function render(){
 
-  renderTime();
-
-  const weekGrid = document.getElementById("weekGrid");
-  weekGrid.innerHTML = "";
-
-  let start = new Date(date);
-  start.setDate(date.getDate() - date.getDay());
-
-  for(let i=0;i<7;i++){
-
-    let day = new Date(start);
-    day.setDate(start.getDate() + i);
-
-    let dayStr = day.toISOString().split("T")[0];
-
-    let col = document.createElement("div");
-    col.className = "day-col";
-
-    let today = new Date().toISOString().split("T")[0];
-
-    if(dayStr === today){
-      col.style.background = "#ecfdf5";
-      col.style.borderRadius = "12px";
-    }
-
-    let dayEvents = events.filter(e => e.date === dayStr);
-
-  for(let h = 10; h <= 23; h++){
-    let line = document.createElement("div");
-    line.className = "hour-line";
-    col.appendChild(line);
-  }
-    dayEvents.forEach(e=>{
-      let [hour, min] = e.time.split(":").map(Number);
-
-      let cellHeight = parseInt(
-        getComputedStyle(document.documentElement)
-          .getPropertyValue('--cell-height')
-      );
-      let top = (hour - 10) * cellHeight + (min / 60 * cellHeight);
-
-      let div = document.createElement("div");
-      div.className = "event-block " + color(e.status);
-      div.style.top = top + "px";
-      div.style.height = "50px";
-
-      div.innerText = e.title;
-      div.setAttribute("data-note", e.notes || "No notes");
-
-      div.onclick = () => openPopup(e);
-
-      col.appendChild(div);
-    });
-    weekGrid.appendChild(col);
+  if(viewMode === "year"){
+    renderYearView();
+    return;
   }
 
   renderMini();
-  renderWeekDays();
-  updateLeftToday();
   renderSide();
-}
-
-/******************************** formathour() ********************************/
-function formatHour(h){
-  const period = h >= 12 ? "PM" : "AM";
-  let hour = h % 12;
-  if(hour === 0) hour = 12;
-
-  if(hour === 12 && period === "PM") return "12:00 NN";
-
-  return `${hour}:00 ${period}`;
-}
-
-function renderTime(){
-
-  const timeCol = document.getElementById("timeCol");
-  timeCol.innerHTML = "";
-
-  let now = new Date().getHours();
-
-
-  for(let h = 10; h <= 23; h++){
-
-    let div = document.createElement("div");
-    div.className = "time-slot";
-
-    div.innerHTML = `<span>${formatHour(h)}</span>`;
-
-    if(h === now){
-      div.classList.add("current-hour");
-    }
-
-    timeCol.appendChild(div);
-  }
 }
 
 function renderSide(){
@@ -1251,35 +1517,19 @@ function renderSide(){
   let todayEvents = events.filter(e => e.date === today);
   let pendingEvents = events.filter(e => e.status === "Pending");
 
-  // LIMIT DISPLAY (NO SCROLL FIX)
-  let limit = 4;
-
   document.getElementById("todayList").innerHTML =
-    (todayEvents.slice(0, limit).length
-      ? todayEvents.slice(0, limit).map(e=>`
-          <div class="item">${e.time} - ${e.title}</div>
-        `).join("")
-      : "<div class='item'>No events today</div>")
-    +
-    (todayEvents.length > limit ? `<div class="item">+ ${todayEvents.length - limit} more</div>` : "");
+    todayEvents.length
+      ? todayEvents.map(e =>
+          `<div class="item">${e.time} - ${e.title}</div>`
+        ).join("")
+      : "<div class='item'>No events today</div>";
 
   document.getElementById("pendingList").innerHTML =
-    (pendingEvents.slice(0, limit).length
-      ? pendingEvents.slice(0, limit).map(e=>`
-          <div class="item">${e.time} - ${e.title}</div>
-        `).join("")
-      : "<div class='item'>No pending events</div>")
-    +
-    (pendingEvents.length > limit ? `<div class="item">+ ${pendingEvents.length - limit} more</div>` : "");
-
-  document.getElementById("todayCount").innerText =
-    todayEvents.length === 0 ? "No Events" : todayEvents.length;
-  document.getElementById("pendingCount").innerText =
-    pendingEvents.length === 0 ? "No Pending" : pendingEvents.length;
-  }
-
-function openModal(){
-  document.getElementById("modal").style.display="flex";
+    pendingEvents.length
+      ? pendingEvents.map(e =>
+          `<div class="item">${e.time} - ${e.title}</div>`
+        ).join("")
+      : "<div class='item'>No pending events</div>";
 }
 
 function add(){
@@ -1376,7 +1626,6 @@ function color(s){
 
 render();
 
-
 function save(){
   localStorage.setItem("events", JSON.stringify(events));
 }
@@ -1430,30 +1679,21 @@ document.getElementById("modal").addEventListener("click", (e)=>{
 function renderMini(){
 
   const grid = document.getElementById("miniGrid");
+  if(!grid) return;
+
   grid.innerHTML = "";
 
-  const y = date.getFullYear();
-  const m = date.getMonth();
+  // ✅ FINAL SOURCE OF TRUTH
+  let y = viewDate.getFullYear();
+  let m = viewDate.getMonth();
 
-  document.getElementById("miniMonth").innerText =
-    date.toLocaleString('default',{month:'long',year:'numeric'});
-
-  // ✅ ADD DAYS HEADER
-  const days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-  days.forEach(d=>{
-    let head = document.createElement("div");
-    head.innerText = d;
-    head.style.fontSize = "11px";
-    head.style.fontWeight = "700";
-    head.style.color = "#6b7280";
-    head.style.textAlign = "center";
-    grid.appendChild(head);
-  });
+  document.getElementById("monthTitle").innerText =
+    new Date(y, m).toLocaleString('default',{month:'long',year:'numeric'});
 
   let firstDay = new Date(y, m, 1).getDay();
   let daysInMonth = new Date(y, m + 1, 0).getDate();
 
-  let totalCells = 42; // 6 rows
+  let totalCells = 42;
 
   for(let i = 0; i < totalCells; i++){
 
@@ -1466,22 +1706,46 @@ function renderMini(){
 
       let dayStr = `${y}-${String(m+1).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`;
 
-      div.innerText = dayNum;
+      div.innerHTML = `<div class="day-number">${dayNum}</div>`;
 
+      // EVENTS
+      let dayEvents = events.filter(e => e.date === dayStr);
+
+      if(dayEvents.length > 0){
+
+        let container = document.createElement("div");
+        container.className = "day-events";
+
+        dayEvents.slice(0, 3).forEach(ev => {
+          let chip = document.createElement("div");
+          chip.className = "event-chip";
+          chip.style.background = eventColors[ev.title] || "#16a34a";
+          chip.innerText = ev.title;
+
+          container.appendChild(chip);
+        });
+
+        div.appendChild(container);
+      }
+
+      // TODAY
       let todayStr = new Date().toISOString().split("T")[0];
-
       if(dayStr === todayStr){
         div.classList.add("mini-today");
       }
 
+      //selected
       if(dayStr === selected){
         div.classList.add("mini-selected");
       }
+      div.onclick = () => {
 
-      div.onclick = ()=>{
-        selected = dayStr;
-        date = new Date(dayStr);
-        render();
+        let y = viewDate.getFullYear();
+        let m = viewDate.getMonth();
+
+        let fullDate = `${y}-${String(m+1).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`;
+
+        openDayView(fullDate);
       };
 
     } else {
@@ -1491,71 +1755,96 @@ function renderMini(){
     grid.appendChild(div);
   }
 }
-
-function renderWeekDays(){
-  const el = document.getElementById("weekDays");
-
-  let start = new Date(date);
-  start.setDate(date.getDate() - date.getDay());
-
-  const days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-  let todayStr = new Date().toISOString().split("T")[0];
-
-  el.innerHTML = `
-    <div class="left-today">
-      <div id="leftDay"></div>
-      <div id="leftDate"></div>
-    </div>
-  `;
-
-  for(let i=0;i<7;i++){
-    let d = new Date(start);
-    d.setDate(start.getDate() + i);
-
-    let dayStr = d.toISOString().split("T")[0];
-
-    el.innerHTML += `
-      <div>
-        <div style="font-size:12px;color:#6b7280;font-weight:600;">
-          ${days[i]}
-        </div>
-
-        <div style="
-          margin-top:4px;
-          font-size:15px;
-          font-weight:700;
-          width:28px;
-          height:28px;
-          line-height:28px;
-          margin:auto;
-          border-radius:50%;
-          background:${dayStr === todayStr ? '#16a34a' : 'transparent'};
-          color:${dayStr === todayStr ? 'white' : '#111827'};
-        ">
-          ${d.getDate()}
-        </div>
-      </div>
-    `;
-  }
-}
-
 function openDayView(date){
 
   let list = events.filter(e => e.date === date);
 
-  document.getElementById("dayTitle").innerText = "Bookings - " + date;
+  let active = list.filter(e => e.status !== "Cancelled");
+  let cancelled = list.filter(e => e.status === "Cancelled");
 
-  document.getElementById("dayEvents").innerHTML = list.length
-    ? list.map(e => `
-        <div class="item" style="cursor:pointer">
-          ${e.time} - ${e.title}
+  document.getElementById("dayTitle").innerText = "Schedule - " + date;
+
+  function renderItems(items){
+    return items.map(e => {
+
+      let color = eventColors[e.title] || "#16a34a";
+
+      return `
+        <div class="schedule-row">
+
+          <div class="schedule-time">
+            ${formatTime(e.time)}
+          </div>
+
+          <div class="schedule-card" style="border-left:5px solid ${color}">
+            
+            <div class="schedule-info">
+              <div class="schedule-title">${e.title}</div>
+
+              <div class="schedule-status ${e.status.toLowerCase()}">
+                ${e.status === "Cancelled" ? "❌ " : ""}${e.status}
+              </div>
+            </div>
+
+          </div>
+
         </div>
-      `).join("")
-    : "<p>No bookings for this day.</p>";
+      `;
+    }).join("");
+  }
+
+  document.getElementById("dayEvents").innerHTML = `
+    
+    <div style="font-size:13px;font-weight:700;color:#6b7280;margin-bottom:8px;">
+      Accepted / Pending / Declined
+    </div>
+
+    ${active.length ? renderItems(active) : "<p class='no-events'>No active events</p>"}
+
+    <div style="font-size:13px;font-weight:700;color:#b91c1c;margin:16px 0 8px;">
+      Cancelled Events
+    </div>
+
+    ${cancelled.length ? renderItems(cancelled) : `
+      <div class="schedule-row">
+
+        <div class="schedule-time">
+          11:00 AM
+        </div>
+
+        <div class="schedule-card" style="border-left:5px solid #3b82f6">
+
+          <div class="schedule-info">
+            <div class="schedule-title">Matcha Booth</div>
+
+            <div class="schedule-status cancelled">
+              ❌ Cancelled
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    `}
+
+  `;
 
   document.getElementById("dayModal").style.display = "flex";
+  document.getElementById("dayModal").addEventListener("click", function(e){
+  if (e.target === this) {
+    this.style.display = "none";
+  }
+});
 }
+function formatTime(time){
+  let [h, m] = time.split(":");
+  h = parseInt(h);
 
+  let suffix = h >= 12 ? "PM" : "AM";
+  h = h % 12 || 12;
+
+  return `${h}:${m} ${suffix}`;
+}
 /******************************** POS DATE DISPLAY ********************************/
 function updatecalendarDate(){
   const el = document.getElementById("calendarDate");
@@ -1571,22 +1860,126 @@ function updatecalendarDate(){
   });
 }
 
-function updateLeftToday(){
-  const now = new Date();
-
-  const dayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
-
-  const day = dayNames[now.getDay()];
-  const dateNum = now.getDate();
-
-  document.getElementById("leftDay").innerText = day;
-  document.getElementById("leftDate").innerText = dateNum;
-}
-
 window.addEventListener("DOMContentLoaded", () => {
   updatecalendarDate();
   setInterval(updatecalendarDate, 60000);
 });
+function changeMonth(v){
+
+  let y = viewDate.getFullYear();
+  let m = viewDate.getMonth() + v;
+
+  // ✅ reset to 1 first
+  viewDate = new Date(y, m, 1);
+
+  syncSelectedDate();
+  render();
+}
+function changeView(value){
+  viewMode = value;
+  render();
+}
+function syncSelectedDate(){
+
+  let y = viewDate.getFullYear();
+  let m = viewDate.getMonth();
+
+  let d = selected ? new Date(selected).getDate() : 1;
+
+  // ✅ clamp day (prevents Feb 30, etc.)
+  let maxDay = new Date(y, m + 1, 0).getDate();
+  d = Math.min(d, maxDay);
+
+  viewDate = new Date(y, m, d);
+
+  selected = viewDate.toISOString().split("T")[0];
+
+  // ✅ ALSO SYNC DROPDOWNS
+  document.getElementById("monthFilter").value = m;
+  document.getElementById("dayFilter").value = d;
+  document.getElementById("yearFilter").value = y;
+}
+function formatLocalDate(date){
+  let y = date.getFullYear();
+  let m = String(date.getMonth()+1).padStart(2,'0');
+  let d = String(date.getDate()).padStart(2,'0');
+  return `${y}-${m}-${d}`;
+}
+function updateFromDropdowns(){
+  let y = document.getElementById("yearFilter").value;
+  let m = document.getElementById("monthFilter").value;
+  let d = document.getElementById("dayFilter").value;
+
+  let now = new Date();
+
+  y = y ? Number(y) : now.getFullYear();
+  m = m ? Number(m) : now.getMonth();
+  d = d ? Number(d) : now.getDate();
+
+  let maxDay = new Date(y, m + 1, 0).getDate();
+  if(d > maxDay) d = maxDay;
+
+  viewDate = new Date(y, m, d);
+  selected = formatLocalDate(viewDate);
+
+  render();
+}
+window.addEventListener("DOMContentLoaded", () => {
+
+  // ✅ GENERATE YEARS HERE
+  const yearSelect = document.getElementById("yearFilter");
+  yearSelect.innerHTML = '<option value="">Year</option>';
+
+  let currentYear = new Date().getFullYear();
+
+  for(let i = currentYear - 50; i <= currentYear + 50; i++){
+    let option = document.createElement("option");
+    option.value = i;
+    option.textContent = i;
+    yearSelect.appendChild(option);
+  }
+
+  // ✅ existing mo
+  syncSelectedDate();
+  render();
+});
+
+function generateRandomEventsForCurrentMonth(count = 10){
+
+  let y = viewDate.getFullYear();
+  let m = viewDate.getMonth();
+
+  let daysInMonth = new Date(y, m + 1, 0).getDate();
+
+  // ONLY YOUR EVENT PACKAGES
+  let titles = [
+    "Coffee Booth",
+    "Matcha Booth",
+    "Tattoo Event"
+  ];
+
+  let statuses = ["Pending", "Accepted", "Declined"];
+
+  for(let i = 0; i < count; i++){
+
+    let randomDay = Math.floor(Math.random() * daysInMonth) + 1;
+
+    let dateStr = `${y}-${String(m+1).padStart(2,'0')}-${String(randomDay).padStart(2,'0')}`;
+
+    let randomHour = Math.floor(Math.random() * 10) + 8; // 8AM–5PM
+    let randomTime = `${String(randomHour).padStart(2,'0')}:00`;
+
+    events.push({
+      date: dateStr,
+      title: titles[Math.floor(Math.random() * titles.length)],
+      time: randomTime,
+      status: statuses[Math.floor(Math.random() * statuses.length)]
+    });
+  }
+
+  save();
+  render();
+}
 </script>
 
 </body>
