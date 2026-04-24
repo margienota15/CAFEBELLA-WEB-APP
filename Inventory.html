@@ -1,7 +1,8 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Inventory</title>
+<title>Transaction History</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
@@ -13,7 +14,6 @@
   font-family: 'Plus Jakarta Sans', 'Segoe UI', Roboto, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: all 0.2s ease-in-out;
 }
 body {
   font-family: Arial, sans-serif;
@@ -21,7 +21,16 @@ body {
   padding: 0;
   background: #f4f6f9;
 }
-
+:root {
+  --primary: #16a34a;
+  --primary-dark: #15803d;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #1e293b;
+  --subtext: #64748b;
+  --border: #e2e8f0;
+  --radius: 12px;
+}
 /******************************** SIDEBAR (PRO UI) ********************************/
 .sidebar {
   width: 270px;
@@ -111,14 +120,17 @@ body {
 
 /*********************************** MAIN ********************************/
 .main {
+  height: 100vh;
   margin-left: 270px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  overflow: hidden; 
 }
 .main.full {
   margin-left: 0;
+  gap: 20px;
+  flex: 1.2;
+  min-width: 0;
 }
 
 /******************************** TOP BAR ********************************/
@@ -126,7 +138,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #e9e9e9;
   padding: 15px 25px;
   background: #ffffff;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
@@ -245,7 +256,7 @@ body {
 }
 
 /******************************** TRANSACTION ********************************/
-.inventory-header {
+.transaction-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -253,23 +264,22 @@ body {
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   padding: 20px 24px; 
-  margin: 10px 25px 10px 25px; /* ⬅️ bawasan bottom margin */
-  margin: 15px 25px 8px 25px; /* top | right | bottom | left */
+  margin: 20px 25px;  
   box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
-.inventory-header .header-left h1 {
+.transaction-header .header-left h1 {
   font-size: 20px;
   margin: 0;
   color: #114500;
   line-height: 1.2;
 }
-.inventory-header .header-left p {
+.transaction-header .header-left p {
   font-size: 13px;
   margin-top: 6px;
   color: #6b7280;
   line-height: 1.4;
 }
-.inventory-header .date-box {
+.transaction-header .date-box {
   background: #f4f6f9;
   padding: 10px 14px; 
   border-radius: 10px;
@@ -281,31 +291,12 @@ body {
   font-weight: 500;
   color: #333;
 }
-.inventory-toolbar{
-  margin: 15px 25px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
 .container {
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  overflow: visible;
-}
-.header-box select {
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: transparent;
-  font-weight: 700;
-  font-size: 13px;
-  color: #475569;
-  text-align: center;
-  outline: none;
-  cursor: pointer;
-  appearance: none;
+  overflow: visible; /* ✅ FIX */
 }
 /******************************** CONTENT ********************************/
 .content {
@@ -322,533 +313,344 @@ body {
   flex-direction: column;
   overflow: hidden;
 }
-.inventory-module {
-  flex: 1;
-  min-height: 0;
+
+/* ================= CONTAINER ================= */
+.inventory-actions {
+  margin: 0 25px 10px 25px;
   display: flex;
-  flex-direction: column;
-  overflow: visible;
-}
-.form-box {
-  background: white;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-.form-title h3 {
-  margin: 0;
-  font-size: 18px;
-  color: #114500;
-}
-.form-title p {
-  margin: 3px 0 0;
-  font-size: 12px;
-  color: #777;
-}
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-.form-box input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  justify-content: flex-end;
 }
 
-.form-box button {
-  background: #114500;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.input-group {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  z-index: 2;
-}
-
-.input-group label {
-  font-size: 12px;
-  margin-bottom: 5px;
-  color: #555;
-  font-weight: 600;
-}
-
-.input-group input {
-  padding: 10px;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  outline: none;
-  transition: 0.2s;
-  background: #fafafa;
-}
-
-.input-group input:focus {
-  border-color: #114500;
-  background: white;
-}
-input[type="number"] {
-  padding: 6px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  text-align: center;
-  width: 70px;
-}
-.table-head{
-  display:grid;
-  grid-template-columns: 2fr 1.4fr 1fr 1fr 1fr 1fr 1fr 1fr 1.5fr;
-  background: linear-gradient(135deg, #114500, #1b5e20);
-  color:white;
-  padding:14px;
-  border-radius:12px;
-  font-size:12px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:0.5px;
-  margin-bottom:10px;
-}
-.table-body {
-  max-height: 400px;   /* 👈 scroll height */
-  overflow-y: auto;
-}
-.table-box {
-  background: white;
-  border-radius: 14px;
-  padding: 0;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-  position: relative;
-  flex: 1;
-  min-height: 0;     /* IMPORTANT */
-  overflow-y: auto;
-  max-height: none;  /* REMOVE limit */
-}
-.table-header {
-  display: grid;
-  grid-template-columns: 2fr 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 2.2fr;
-  align-items: center;
-  gap: 14px;
-
-  background: linear-gradient(135deg, #114500, #2e7d32);
-  color: #e8f5e9;
-
-  padding: 14px 18px;
-  border-radius: 16px;
-
-  font-size: 13px;
-  font-weight: 600;
-
-  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
-}
-.table-header select {
-  appearance: none;
-
-  background: linear-gradient(135deg, #16a34a, #22c55e);
-  color: #ffffff;
-
-  border-radius: 12px;
-  padding: 8px 38px 8px 12px; /* ⬅️ mas space sa arrow */
-
-  font-size: 13px;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  /* NEW ARROW */
-  background-image: url("data:image/svg+xml,%3Csvg fill='%23ffffff' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 18px; /* ⬅️ mas malaki */
-}
-/* FIX SELECTED (FOCUS) STATE */
-.table-header select:focus {
-  background: #ffffff;     /* solid white */
-  color: #166534;          /* dark green text */
-
-  border: 1px solid #22c55e;
-  box-shadow: 0 0 0 2px rgba(34,197,94,0.25);
-}
-.table-header select:hover {
-  background: #f0fdf4;
-  color: #14532d;
-  border-color: #22c55e; /* hindi na magre-resize */
-}
-.table-header select option {
+.inventory-container {
+  margin: 20px 25px;
   background: #ffffff;
-  color: #268401;
-}
-.table-row {
-  display: grid;
-  grid-template-columns: 2fr 1.5fr 1fr 1fr 1fr 1fr 1fr 1fr 2.2fr;
-  align-items: center;
-  gap: 14px;
-
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
   border-radius: 16px;
-
-  padding: 16px 18px;
-  margin-bottom: 12px;
-
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-.table-header > div,
-.table-row > div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  padding: 0; /* 🔥 remove padding para flush */
+  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+  border: 1px solid #eef2f7;
+  height: 500px; /* 🔥 fixed height = smooth scroll */
+  overflow: auto;
+  scroll-behavior: smooth; /* 🔥 smooth scroll */
+  scrollbar-width: thin;
+  scrollbar-color: #16a34a #f1f5f9;
 }
 
-.table-row > div:first-child {
-  font-weight: 700;
-  color: #111827;
-}
-
-.table-row > div:first-child {
-  font-weight: 700;
-  color: #111827;
-}
-.table-grid {
-  grid-template-columns: 2.2fr 1.5fr 0.8fr 1fr 1fr 1.2fr 1fr 1fr 2.5fr;
-}
-table {
+/* ================= TABLE ================= */
+.inventory-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
 }
-
-th, td {
-  padding: 12px;
-  border-bottom: 1px solid #eee;
-  text-align: center;
+.inventory-table tbody {
+  position: relative;
+  z-index: 1;
 }
-tbody tr {
-  background: white;
+.inventory-table tbody td {
+  padding: 16px;
 }
-thead th {
+/* ================= HEADER ================= */
+.inventory-table thead th {
   position: sticky;
   top: 0;
   z-index: 50;
-
   background: #ffffff;
-  border-bottom: 2px solid #e5e7eb;
-
-  padding: 14px 10px;
+  background-image: linear-gradient(135deg, #114500, #1b5e20);
+  color: #fff;
+  padding: 16px;
   font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: #6b7280;
-
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-.actions button {
-  margin: 0 3px;
-  padding: 5px 8px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.actions button:nth-child(1) {
-  background: #4caf50;
-  color: white;
-}
-
-.actions button:nth-child(2) {
-  background: #ff9800;
-  color: white;
-}
-
-.actions button:nth-child(3) {
-  background: #f44336;
-  color: white;
-}
-.action-btn {
-  border: none;
-  padding: 8px 14px;
-  border-radius: 10px;
-
-  font-size: 12px;
+  letter-spacing: 0.6px;
   font-weight: 600;
-
-  cursor: pointer;
-  transition: 0.2s ease;
+  text-align: center;
   white-space: nowrap;
 }
-.action-btn.add {
+.inventory-table thead th i {
+  margin-left: 6px;
+  font-size: 10px;
+  opacity: 0.8;
+  cursor: pointer; /* 👈 important */
+  user-select: none;
+}
+.inventory-table thead th::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.15), transparent);
+}
+.inventory-table thead th:hover {
+  background: linear-gradient(135deg, #166534, #14532d);
+}
+.inventory-table tbody tr:last-child td {
+  border-bottom: none;
+}
+/* ================= CELLS ================= */
+.inventory-table td {
+  padding: 16px;
+  font-size: 14px;
+  text-align: center;
+  border-bottom: 1px solid #eef2f7;
+  vertical-align: middle;
+}
+
+/* ================= ROW ================= */
+.inventory-row {
+  transition: 0.2s ease;
+}
+
+.inventory-row:hover {
+  background: #f9fbfd;
+}
+.inventory-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.inventory-container::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+.inventory-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  border-radius: 10px;
+}
+
+.inventory-container::-webkit-scrollbar-thumb:hover {
+  background: #166534;
+}
+.inventory-table td:nth-child(7),
+.inventory-table td:nth-child(8) {
+  text-align: center;
+  vertical-align: middle;
+}
+/* ================= TEXT ================= */
+.item-name {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.supplier {
+  color: #475569;
+  font-size: 13px;
+}
+
+.stock {
+  font-weight: 700;
+  color: #111827;
+}
+
+/* ================= CATEGORY BADGE ================= */
+.badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.badge.category {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+/* ================= STATUS ================= */
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* STATUS COLORS */
+.status.low {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.status.ok {
+  background: #dcfce7;
+  color: #166534;
+}
+
+/* ================= ACTIONS ================= */
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ================= BUTTONS ================= */
+.btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* BUTTON COLORS */
+.btn.edit {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.btn.restock {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+/* HOVER EFFECT */
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+.btn:hover i {
+  transform: scale(1.2);
+  transition: 0.2s;
+}
+.btn:active {
+  transform: scale(0.95);
+}
+
+.filter-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  color: black;
+  min-width: 150px;
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  z-index: 200;
+  padding: 8px;
+}
+
+.filter-dropdown div {
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.filter-dropdown div:hover {
   background: #16a34a;
   color: white;
 }
-
-.action-btn.minus {
-  background: #f59e0b;
-  color: white;
-}
-
-.action-btn.delete {
-  background: #64748b;
-  color: white;
-}
-
-.action-btn:hover {
-  transform: translateY(-1px);
-  opacity: 0.95;
-}
-.action-bar {
-  display: flex;
-  justify-content: flex-start; /* nasa left */
-  margin: 10px 25px;
-}
-.low-stock {
-  color: #d97706;
-  font-weight: 700;
-}
-
-.out-stock {
-  color: #dc2626;
-  font-weight: 800;
-}
-
-.ok-stock {
-  color: #16a34a;
-  font-weight: 600;
-}
 .add-btn {
-  background: linear-gradient(135deg, #16a34a, #22c55e);
+  background: linear-gradient(135deg, #16a34a, #15803d);
   color: white;
-
   border: none;
-  padding: 10px 18px;
-  border-radius: 12px;
-
-  font-size: 13px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.3px;
-
   cursor: pointer;
-
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 8px;
-
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-
-  transition: all 0.25s ease;
+  transition: 0.2s ease;
 }
+
 .add-btn:hover {
-  transform: translateY(-2px) scale(1.02);
-
-  background: linear-gradient(135deg, #15803d, #16a34a);
-
-  box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
 }
+
 .add-btn:active {
-  transform: scale(0.96);
-  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+  transform: scale(0.95);
 }
-/* MODAL BACKGROUND */
+
+/* ================= MODAL ================= */
 .modal {
   display: none;
   position: fixed;
-  z-index: 99999;
+  z-index: 999;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(4px);
+  justify-content: center;
+  align-items: center;
 }
-
-/* MODAL BOX */
 .modal-content {
   background: white;
-  margin: 5% auto;
-  padding: 25px;
-  width: 600px;
-  border-radius: 16px;
+  width: 420px;
+  border-radius: 12px;
+  padding: 20px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  animation: fadeIn 0.3s ease;
-  position: relative;
-  z-index: 10000;
+  animation: pop 0.2s ease;
 }
-
-/* HEADER */
+@keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.modal-sub {
-  font-size: 13px;
-  color: gray;
   margin-bottom: 15px;
 }
-.modal-footer {
-  margin-top: 20px;
-  display: flex;
-  justify-content: flex-end;
+.modal-header h2 {
+  font-size: 18px;
+  color: #114500;
 }
-/* CLOSE BUTTON */
-.close-btn {
-  font-size: 22px;
+.modal.show {
+  display: flex;
+}
+.close {
+  font-size: 24px;
   cursor: pointer;
 }
 
-/* ANIMATION */
-@keyframes fadeIn {
-  from {
-    transform: translateY(-20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.modern-table {
+.modal-body {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 10px;
-  background: #fff;
-  border-radius: 14px;
-  margin: 15px 25px;   
-  padding: 15px;
-  overflow: hidden;
-}
-.badge {
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 700;
-}
-.badge.ok {
-  background: #dcfce7;
-  color: #166534;
-}
-.badge.low {
-  background: #fef9c3;
-  color: #92400e;
+  gap: 10px;
 }
 
-.badge.out {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-#category {
-  width: 100%;
+.modal-body input {
   padding: 10px;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
   outline: none;
 }
-select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
 
-  width: 100%;
-  padding: 10px 40px 10px 14px; /* IMPORTANT: space sa arrow */
-  border-radius: 12px;
-  border: 1px solid #e5e7eb;
-
-  background: #ffffff;
-
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-
-  /* ARROW INSIDE */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%236b7280' viewBox='0 0 20 20'%3E%3Cpath d='M5 7l5 5 5-5z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 14px;
-}
-
-select:hover {
-  background: #f0fdf4; /* light green */
-  border-color: #22c55e;
-}
-
-/* FOCUS */
-select:focus {
-  background: #ffffff;
-  border-color: #16a34a;
-  box-shadow: 0 0 0 3px rgba(34,197,94,0.25);
-}
-
-/* OPTION STYLE */
-select option {
-  color: #111827;
-  background: #ffffff;
-}
-
-/* OPTGROUP LABEL */
-select optgroup {
-  font-weight: 700;
-  color: #6b7280;
-}
-
-.filter-group{
-  display:flex;
-  gap:12px;
-}
-.filter {
-  background: #ffffff;
-  padding: 12px 14px;
-  border-radius: 14px;
-
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
-
-  transition: 0.2s;
-}
-
-.filter:hover {
-  transform: translateY(-2px);
-}
-
-.filter label{
-  font-size:11px;
-  color:#6b7280;
-  font-weight:600;
-}
-
-.filter select{
-  border:none;
-  outline:none;
-  font-size:13px;
-  font-weight:600;
-  background:transparent;
-}
-.header-select{
-  position: relative;
+.modal-footer {
+  margin-top: 15px;
   display: flex;
-  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
 }
-.header-select select{
-  width: 100%;
-  padding-right: 30px; /* space for arrow */
+
+.cancel-btn {
+  background: #e5e7eb;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
 }
-.header-select i{
-  position: absolute;
-  right: 10px;
-  pointer-events: none;
-  font-size: 12px;
-  color: #e8f5e9;
+
+.save-btn {
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: white;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -867,6 +669,7 @@ select optgroup {
       <button data-page="Calendar.html"><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
       <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">Point of Sale</button>
       <button data-page="Transactionhistory.html"><img src="IMAGES/transactionhistoryicon.png" class="icon">Transaction History</button>
+      <button data-page="Reports.html"><img src="IMAGES/reporticon.png" class="icon">Reports</button>
       <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Booking Request</button>
       <button data-page="Eventmanagement.html"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
       <button data-page="Inventory.html"><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
@@ -904,10 +707,10 @@ select optgroup {
 <div class="content-wrapper">
 
 <!--------------------------------------- TITLE ---------------------------------------------> 
-<div class="inventory-header">
+<div class="transaction-header">
   <div class="header-left">
-    <h1>Inventory</h1>
-    <p>Manage and monitor your stock of products and ingredients</p>
+    <h1>Inventory Management</h1>
+    <p>Track and manage your stock and items</p>
   </div>
 
   <div class="header-right">
@@ -918,212 +721,321 @@ select optgroup {
   </div>
 </div>
 
-<!--------------------------------------- CONTAINER -------------------------------------------->
-<div class="container">
-
-<div class="inventory-module">
-
-  <div class="action-bar">
-    <button class="add-btn" onclick="openModal()">+ Add Item</button>
-  </div>
-
-  <div class="table-box modern-table">
-  <!-- HEADER (HINDI MA-SSCROLL) -->
-<div class="table-header">
-
-  <div class="header-select">
-    <select id="filterItem" onchange="renderTable()">
-      <option value="">All Items</option>
-    </select>
-    <i class="fa-solid fa-chevron-down"></i>
-  </div>
-
-  <div class="header-select">
-    <select id="filterCategory" onchange="renderTable()">
-      <option value="">All Categories</option>
-      <option value="Beans">Beans</option>
-      <option value="Dairy">Dairy</option>
-      <option value="Dairy Alternative">Dairy Alternative</option>
-      <option value="Sweetener">Sweetener</option>
-      <option value="Syrup">Syrup</option>
-    </select>
-    <i class="fa-solid fa-chevron-down"></i>
-  </div>
-
-  <div class="header-select">
-    <select id="sortStock" onchange="renderTable()">
-      <option value="">Stock</option>
-      <option value="high">High to Low</option>
-      <option value="low">Low to High</option>
-    </select>
-    <i class="fa-solid fa-chevron-down"></i>
-  </div>
-
-  <div class="header-select">
-    <select id="sortCost" onchange="renderTable()">
-      <option value="">Cost</option>
-      <option value="high">High to Low</option>
-      <option value="low">Low to High</option>
-    </select>
-    <i class="fa-solid fa-chevron-down"></i>
-  </div>
-
-    <div class="header-select">
-      <select id="sortSelling" onchange="renderTable()">
-        <option value="">Selling</option>
-        <option value="high">High to Low</option>
-        <option value="low">Low to High</option>
-      </select>
-      <i class="fa-solid fa-chevron-down"></i>
-    </div>
-
-    <div class="header-select">
-      <select id="sortTotal" onchange="renderTable()">
-        <option value="">Total</option>
-        <option value="high">High to Low</option>
-        <option value="low">Low to High</option>
-      </select>
-      <i class="fa-solid fa-chevron-down"></i>
-    </div>
-
-    <div class="header-select">
-      <select id="sortStatus" onchange="renderTable()">
-        <option value="">Status</option>
-        <option value="ok">OK</option>
-        <option value="low">LOW</option>
-        <option value="out">OUT</option>
-      </select>
-      <i class="fa-solid fa-chevron-down"></i>
-    </div>
-
-    <div class="header-select">
-      <select id="sortReorder" onchange="renderTable()">
-        <option value="">Reorder</option>
-        <option value="high">High to Low</option>
-        <option value="low">Low to High</option>
-      </select>
-      <i class="fa-solid fa-chevron-down"></i>
-    </div>
-
-  <div class="header-select">
-    <select>
-      <option>Actions</option>
-      <option>Bulk Delete</option>
-      <option>Export</option>
-    </select>
-    <i class="fa-solid fa-chevron-down"></i>
-  </div>
-
+<!-- ADD ITEM BUTTON -->
+<div class="inventory-actions">
+  <button class="add-btn" onclick="openModal()">
+    <i class="fa-solid fa-plus"></i> Add Item
+  </button>
 </div>
+<!-- INVENTORY TABLE -->
+<div class="inventory-container">
 
-  <!-- SCROLL AREA (ROWS LANG) -->
-  <div class="table-body" id="inventoryTable"></div>
+  <table class="inventory-table">
+    <thead>
+      <tr>
+        <th data-col="0" class="filterable">
+          Item Name <i class="fa-solid fa-chevron-down"></i>
+          <div class="filter-dropdown"></div>
+        </th>
 
+        <th data-col="1" class="filterable">
+          Category <i class="fa-solid fa-chevron-down"></i>
+          <div class="filter-dropdown"></div>
+        </th>
+
+        <th data-col="2" class="filterable">
+          Supplier <i class="fa-solid fa-chevron-down"></i>
+          <div class="filter-dropdown"></div>
+        </th>
+
+        <th data-col="3" class="filterable">
+          Unit <i class="fa-solid fa-chevron-down"></i>
+          <div class="filter-dropdown"></div>
+        </th>
+
+        <th data-col="4" class="filterable">
+          Stock <i class="fa-solid fa-chevron-down"></i>
+          <div class="filter-dropdown"></div>
+        </th>
+
+        <th data-col="4" class="filterable">
+          Cost (₱) <i class="fa-solid fa-chevron-down"></i>
+          <div class="filter-dropdown"></div>
+        </th>
+
+        <th data-col="4" class="filterable">
+         Total Value <i class="fa-solid fa-chevron-down"></i>
+          <div class="filter-dropdown"></div>
+        </th>
+
+        <th data-col="5" class="filterable">
+          Reorder Level <i class="fa-solid fa-chevron-down"></i>
+          <div class="filter-dropdown"></div>
+        </th>
+
+        <th data-col="6" class="filterable">
+          Status <i class="fa-solid fa-chevron-down"></i>
+          <div class="filter-dropdown"></div>
+        </th>
+
+        <th data-col="7">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody id="inventoryBody">
+
+ <tr class="inventory-row">
+  <td class="item-name">Espresso Beans</td>
+  <td><span class="badge category">Beans</span></td>
+  <td class="supplier">Coffee Supplier Co.</td>
+  <td>kg</td>
+  <td class="stock">5</td>
+  <td class="cost">₱250</td>
+  <td class="total-value">₱1250</td>
+  <td class="reorder">10</td>
+  <td><span class="status low">Low Stock</span></td>
+  <td class="actions">
+    <button class="btn edit" onclick="editItem(this)">
+      <i class="fa-solid fa-pen"></i>
+    </button>
+    <button class="btn restock" onclick="restockItem(this)">
+      <i class="fa-solid fa-rotate"></i>
+    </button>
+  </td>
+</tr>
+
+<tr class="inventory-row">
+  <td class="item-name">Arabica Beans</td>
+  <td><span class="badge category">Beans</span></td>
+  <td class="supplier">Premium Beans PH</td>
+  <td>kg</td>
+  <td class="stock">18</td>
+  <td class="cost">₱300</td>
+  <td class="total-value">₱5400</td>
+  <td class="reorder">10</td>
+  <td><span class="status ok">In Stock</span></td>
+  <td class="actions">
+    <button class="btn edit" onclick="editItem(this)">
+      <i class="fa-solid fa-pen"></i>
+    </button>
+    <button class="btn restock" onclick="restockItem(this)">
+      <i class="fa-solid fa-rotate"></i>
+    </button>
+  </td>
+</tr>
+
+<tr class="inventory-row">
+  <td class="item-name">Robusta Beans</td>
+  <td><span class="badge category">Beans</span></td>
+  <td class="supplier">Local Farm Supply</td>
+  <td>kg</td>
+  <td class="stock">20</td>
+  <td class="cost">₱280</td>
+  <td class="total-value">₱5600</td>
+  <td class="reorder">10</td>
+  <td><span class="status ok">In Stock</span></td>
+  <td class="actions">
+    <button class="btn edit" onclick="editItem(this)">
+      <i class="fa-solid fa-pen"></i>
+    </button>
+    <button class="btn restock" onclick="restockItem(this)">
+      <i class="fa-solid fa-rotate"></i>
+    </button>
+  </td>
+</tr>
+
+<tr class="inventory-row">
+  <td class="item-name">Fresh Milk</td>
+  <td><span class="badge category">Dairy</span></td>
+  <td class="supplier">Alaska Supplier</td>
+  <td>liters</td>
+  <td class="stock">8</td>
+  <td class="cost">₱120</td>
+  <td class="total-value">₱960</td>
+  <td class="reorder">15</td>
+  <td><span class="status low">Low Stock</span></td>
+  <td class="actions">
+    <button class="btn edit" onclick="editItem(this)">
+      <i class="fa-solid fa-pen"></i>
+    </button>
+    <button class="btn restock" onclick="restockItem(this)">
+      <i class="fa-solid fa-rotate"></i>
+    </button>
+  </td>
+</tr>
+
+<tr class="inventory-row">
+  <td class="item-name">Oat Milk</td>
+  <td><span class="badge category">Dairy Alternative</span></td>
+  <td class="supplier">Healthy Options</td>
+  <td>liters</td>
+  <td class="stock">12</td>
+  <td class="cost">₱160</td>
+  <td class="total-value">₱1920</td>
+  <td class="reorder">10</td>
+  <td><span class="status ok">In Stock</span></td>
+  <td class="actions">
+    <button class="btn edit" onclick="editItem(this)">
+      <i class="fa-solid fa-pen"></i>
+    </button>
+    <button class="btn restock" onclick="restockItem(this)">
+      <i class="fa-solid fa-rotate"></i>
+    </button>
+  </td>
+</tr>
+
+<tr class="inventory-row">
+  <td class="item-name">Chocolate Syrup</td>
+  <td><span class="badge category">Syrup</span></td>
+  <td class="supplier">Torani PH</td>
+  <td>bottle</td>
+  <td class="stock">6</td>
+  <td class="cost">₱180</td>
+  <td class="total-value">₱1080</td>
+  <td class="reorder">10</td>
+  <td><span class="status low">Low Stock</span></td>
+  <td class="actions">
+    <button class="btn edit" onclick="editItem(this)">
+      <i class="fa-solid fa-pen"></i>
+    </button>
+    <button class="btn restock" onclick="restockItem(this)">
+      <i class="fa-solid fa-rotate"></i>
+    </button>
+  </td>
+</tr>
+
+<tr class="inventory-row">
+  <td class="item-name">Caramel Syrup</td>
+  <td><span class="badge category">Syrup</span></td>
+  <td class="supplier">Torani PH</td>
+  <td>bottle</td>
+  <td class="stock">14</td>
+  <td class="cost">₱190</td>
+  <td class="total-value">₱2660</td>
+  <td class="reorder">10</td>
+  <td><span class="status ok">In Stock</span></td>
+  <td class="actions">
+    <button class="btn edit" onclick="editItem(this)">
+      <i class="fa-solid fa-pen"></i>
+    </button>
+    <button class="btn restock" onclick="restockItem(this)">
+      <i class="fa-solid fa-rotate"></i>
+    </button>
+  </td>
+</tr>
+
+<tr class="inventory-row">
+  <td class="item-name">Vanilla Syrup</td>
+  <td><span class="badge category">Syrup</span></td>
+  <td class="supplier">DaVinci Gourmet</td>
+  <td>bottle</td>
+  <td class="stock">9</td>
+  <td class="cost">₱200</td>
+  <td class="total-value">₱1800</td>
+  <td class="reorder">10</td>
+  <td><span class="status low">Low Stock</span></td>
+  <td class="actions">
+    <button class="btn edit" onclick="editItem(this)">
+      <i class="fa-solid fa-pen"></i>
+    </button>
+    <button class="btn restock" onclick="restockItem(this)">
+      <i class="fa-solid fa-rotate"></i>
+    </button>
+  </td>
+</tr>
+
+<tr class="inventory-row">
+  <td class="item-name">Ice Cubes</td>
+  <td><span class="badge category">Supplies</span></td>
+  <td class="supplier">Local Ice Plant</td>
+  <td>kg</td>
+  <td class="stock">25</td>
+  <td class="cost">₱50</td>
+  <td class="total-value">₱1250</td>
+  <td class="reorder">10</td>
+  <td><span class="status ok">In Stock</span></td>
+  <td class="actions">
+    <button class="btn edit" onclick="editItem(this)">
+      <i class="fa-solid fa-pen"></i>
+    </button>
+    <button class="btn restock" onclick="restockItem(this)">
+      <i class="fa-solid fa-rotate"></i>
+    </button>
+  </td>
+</tr>
+
+<tr class="inventory-row">
+  <td class="item-name">Sugar</td>
+  <td><span class="badge category">Ingredients</span></td>
+  <td class="supplier">Puregold Supplier</td>
+  <td>kg</td>
+  <td class="stock">30</td>
+  <td class="cost">₱70</td>
+  <td class="total-value">₱2100</td>
+  <td class="reorder">15</td>
+  <td><span class="status ok">In Stock</span></td>
+  <td class="actions">
+    <button class="btn edit" onclick="editItem(this)">
+      <i class="fa-solid fa-pen"></i>
+    </button>
+    <button class="btn restock" onclick="restockItem(this)">
+      <i class="fa-solid fa-rotate"></i>
+    </button>
+  </td>
+</tr>
+
+<tr class="inventory-row">
+  <td class="item-name">Brown Sugar</td>
+  <td><span class="badge category">Ingredients</span></td>
+  <td class="supplier">Puregold Supplier</td>
+  <td>kg</td>
+  <td class="stock">7</td>
+  <td class="cost">₱80</td>
+  <td class="total-value">₱560</td>
+  <td class="reorder">15</td>
+  <td><span class="status low">Low Stock</span></td>
+  <td class="actions">
+    <button class="btn edit" onclick="editItem(this)">
+      <i class="fa-solid fa-pen"></i>
+    </button>
+    <button class="btn restock" onclick="restockItem(this)">
+      <i class="fa-solid fa-rotate"></i>
+    </button>
+  </td>
+</tr>
+
+    <!-- Continue same pattern for remaining rows... -->
+
+    </tbody>
+  </table>
 </div>
-
-<div id="inventoryModal" class="modal">
+</div>
+<!-- ================= ADD ITEM MODAL ================= -->
+<div id="addModal" class="modal">
   <div class="modal-content">
 
     <div class="modal-header">
-      <h3>➕ Add Inventory Item</h3>
-      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h2>Add New Item</h2>
+      <span class="close" onclick="closeModal()">&times;</span>
     </div>
 
-    <p class="modal-sub">Fill in product details below</p>
+    <div class="modal-body">
 
-    <div class="form-grid">
-
-      <div class="input-group">
-        <label>Item Name</label>
-        <input type="text" id="name">
-      </div>
-
-      <div class="input-group">
-        <label>Category</label>
-
-<select id="category">
-
-  <option value="" selected hidden>Select Category</option>
-
-  <!-- MAIN PRODUCTS -->
-  <optgroup label="Main Products">
-    <option value="Food">Food</option>
-    <option value="Drinks">Drinks</option>
-    <option value="Non-Food">Non-Food</option>
-  </optgroup>
-
-  <!-- INGREDIENTS -->
-  <optgroup label="Ingredients">
-    <option value="Beans">Beans</option>
-    <option value="Dairy">Dairy</option>
-    <option value="Dairy Alternative">Dairy Alternative</option>
-    <option value="Sweetener">Sweetener</option>
-    <option value="Syrup">Syrup</option>
-    <option value="Powder">Powder</option>
-    <option value="Tea Base">Tea Base</option>
-    <option value="Chocolate">Chocolate</option>
-    <option value="Toppings">Toppings</option>
-    <option value="Ice">Ice</option>
-    <option value="Water">Water</option>
-  </optgroup>
-
-  <!-- SUPPLIES -->
-  <optgroup label="Supplies">
-    <option value="Cups">Cups</option>
-    <option value="Lids">Lids</option>
-    <option value="Straws">Straws</option>
-    <option value="Napkins">Napkins</option>
-    <option value="Tissue">Tissue</option>
-    <option value="Takeout Packaging">Takeout Packaging</option>
-  </optgroup>
-
-  <!-- CLEANING -->
-  <optgroup label="Cleaning">
-    <option value="Detergent">Detergent</option>
-    <option value="Sanitizer">Sanitizer</option>
-    <option value="Cleaning Tools">Cleaning Tools</option>
-  </optgroup>
-
-  <!-- EQUIPMENT -->
-  <optgroup label="Equipment">
-    <option value="Machine Parts">Machine Parts</option>
-    <option value="Utensils">Utensils</option>
-    <option value="Tools">Tools</option>
-  </optgroup>
-
-</select>
-</div>
-
-      <div class="input-group">
-        <label>Initial Stock</label>
-        <input type="number" id="stock">
-      </div>
-
-      <div class="input-group">
-        <label>Cost per Unit</label>
-        <input type="number" id="cost">
-      </div>
-
-      <div class="input-group">
-        <label>Selling Price</label>
-        <input type="number" id="selling">
-      </div>
-
-      <div class="input-group">
-        <label>Reorder Level</label>
-        <input type="number" id="reorder">
-      </div>
+      <input type="text" id="itemName" placeholder="Item Name">
+      <input type="text" id="category" placeholder="Category">
+      <input type="text" id="supplier" placeholder="Supplier">
+      <input type="text" id="unit" placeholder="Unit (kg, pcs, etc)">
+      <input type="number" id="stock" placeholder="Stock">
+      <input type="number" id="reorder" placeholder="Reorder Level">
 
     </div>
 
     <div class="modal-footer">
-      <button class="add-btn" onclick="addItem(); closeModal();">
-        + Add Item
-      </button>
+      <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+      <button class="save-btn" onclick="addItem()">Save Item</button>
+    </div>
 
   </div>
-</div>
-
 </div>
 </body>
 </html>
@@ -1178,6 +1090,12 @@ function logout() {
   window.location.href = "login.html";
 }
 
+window.onclick = function(e) {
+  if (!e.target.closest('.admin')) {
+    document.getElementById("adminDropdown").style.display = "none";
+  }
+}
+
 /******************************** SIDEBAR TOGGLE ********************************/
 const menuBtn = document.getElementById("menu-btn");
 const sidebar = document.querySelector(".sidebar");
@@ -1205,349 +1123,320 @@ function updateTodayDate() {
 
 updateTodayDate();
 
-let inventory = [
-  { id: 1, name: "Espresso Beans", category: "Beans", stock: 25, cost: 850, selling: 0, reorder: 10 },
-  { id: 2, name: "Arabica Coffee Beans", category: "Beans", stock: 18, cost: 920, selling: 0, reorder: 10 },
-  { id: 3, name: "Robusta Beans", category: "Beans", stock: 20, cost: 780, selling: 0, reorder: 10 },
-  { id: 4, name: "Whole Milk", category: "Dairy", stock: 30, cost: 95, selling: 0, reorder: 10 },
-  { id: 5, name: "Fresh Milk", category: "Dairy", stock: 25, cost: 105, selling: 0, reorder: 10 },
-  { id: 6, name: "Oat Milk", category: "Dairy Alternative", stock: 15, cost: 160, selling: 0, reorder: 8 },
-  { id: 7, name: "Almond Milk", category: "Dairy Alternative", stock: 12, cost: 175, selling: 0, reorder: 8 },
-  { id: 8, name: "White Sugar", category: "Sweetener", stock: 40, cost: 60, selling: 0, reorder: 10 },
-  { id: 9, name: "Brown Sugar", category: "Sweetener", stock: 35, cost: 70, selling: 0, reorder: 10 },
-  { id: 10, name: "Vanilla Syrup", category: "Syrup", stock: 10, cost: 320, selling: 0, reorder: 5 }
-];
+/******************************** INVENTORY SYSTEM ********************************/
 
-/* ADD ITEM */
-function addItem() {
+function updateStatus() {
+  let rows = document.querySelectorAll("#inventoryBody tr");
 
+  rows.forEach(row => {
+    let stock = row.querySelector(".stock");
+    let status = row.querySelector(".status");
+    let reorder = row.children[5].innerText;
 
-  let name = document.getElementById("name").value;
-  let category = document.getElementById("category").value;
+    let stockVal = parseInt(stock.innerText);
+    let reorderVal = parseInt(reorder);
 
-  console.log("CATEGORY SELECTED:", category); // 👈 CHECK MO TO
-
-  let stock = parseFloat(document.getElementById("stock").value);
-  let cost = parseFloat(document.getElementById("cost").value);
-  let selling = parseFloat(document.getElementById("selling").value);
-  let reorder = parseFloat(document.getElementById("reorder").value);
-
-  console.log({
-    name,
-    category,
-    stock,
-    cost,
-    selling,
-    reorder
+    if (stockVal <= reorderVal) {
+      status.innerText = "Low Stock";
+      status.className = "status low";
+    } else {
+      status.innerText = "In Stock";
+      status.className = "status ok";
+    }
   });
+}
 
-    if (
-    !name.trim() ||
-    !category ||
-    category === "" ||
-    !stock && stock !== 0 ||
-    !cost && cost !== 0 ||
-    !selling && selling !== 0 ||
-    !reorder && reorder !== 0
-  ) {
-    alert("Please complete all fields including category");
+function editItem(btn) {
+  let row = btn.closest("tr");
+
+  // kung naka-edit na, balik save mode
+  if (row.classList.contains("editing")) {
+    saveRow(row, btn);
     return;
   }
 
-  inventory.push({
-    id: Date.now(),
-    name,
-    category,
-    stock,
-    cost,
-    selling,
-    reorder
-  });
+  row.classList.add("editing");
 
-  clearForm();
-  renderTable();
+  let cells = {
+    name: row.querySelector(".item-name"),
+    category: row.children[1],
+    supplier: row.children[2],
+    unit: row.children[3],
+    stock: row.querySelector(".stock"),
+    cost: row.querySelector(".cost"),
+    reorder: row.children[7]
+  };
+
+  cells.name.innerHTML = `<input value="${cells.name.innerText}">`;
+  cells.category.innerHTML = `<input value="${cells.category.innerText}">`;
+  cells.supplier.innerHTML = `<input value="${cells.supplier.innerText}">`;
+  cells.unit.innerHTML = `<input value="${cells.unit.innerText}">`;
+  cells.stock.innerHTML = `<input type="number" value="${cells.stock.innerText}">`;
+  cells.cost.innerHTML = `<input type="number" value="${cells.cost.innerText.replace('₱','')}">`;
+  cells.reorder.innerHTML = `<input type="number" value="${cells.reorder.innerText}">`;
+
+  btn.innerHTML = `<i class="fa-solid fa-check"></i>`;
 }
-/* RENDER TABLE */
-function renderTable() {
 
-  let table = document.getElementById("inventoryTable");
-  table.innerHTML = "";
+function saveRow(row, btn) {
+  let name = row.querySelector(".item-name input").value;
+  let category = row.children[1].querySelector("input").value;
+  let supplier = row.children[2].querySelector("input").value;
+  let unit = row.children[3].querySelector("input").value;
+  let stock = parseFloat(row.querySelector(".stock input").value);
+  let cost = parseFloat(row.querySelector(".cost input").value);
+  let reorder = parseFloat(row.children[7].querySelector("input").value);
 
-  // GET SELECTED FILTER
-  const selectedCategory =
-    document.getElementById("filterCategory")?.value || "";
+  // update cells back to text
+  row.querySelector(".item-name").innerText = name;
+  row.children[1].innerText = category;
+  row.children[2].innerText = supplier;
+  row.children[3].innerText = unit;
+  row.querySelector(".stock").innerText = stock;
+  row.querySelector(".cost").innerText = "₱" + cost.toFixed(2);
+  row.children[7].innerText = reorder;
 
-  const selectedItem =
-    document.getElementById("filterItem")?.value || "";
+  // TOTAL VALUE
+  let total = stock * cost;
+  let totalCell = row.querySelector(".total-value");
+  if (totalCell) {
+    totalCell.innerText = "₱" + total.toFixed(2);
+  }
 
-    let filteredInventory = inventory.filter(item => {
-      const isActive = item.active !== false;
+  // STATUS UPDATE
+  let status = row.querySelector(".status");
 
-      const matchCategory = !selectedCategory || item.category === selectedCategory;
-      const matchItem = !selectedItem || item.name === selectedItem;
+  if (stock <= reorder) {
+    status.innerText = "Low Stock";
+    status.className = "status low";
+  } else {
+    status.innerText = "In Stock";
+    status.className = "status ok";
+  }
 
-      return isActive && matchCategory && matchItem;
+  // reset edit state
+  row.classList.remove("editing");
+  btn.innerHTML = `<i class="fa-solid fa-pen"></i>`;
+}
+function restockItem(btn) {
+  if (!confirm("Add 5 stock to this item?")) return;
+
+  let row = btn.parentElement.parentElement;
+  let stock = row.querySelector(".stock");
+
+  stock.innerText = parseInt(stock.innerText) + 5;
+
+  updateStatus();
+  updateTotalValue(row); // 🔥 AUTO UPDATE VALUE
+}
+
+updateStatus();
+
+// ================= SORTING =================
+let sortDirection = {}; // track per column
+
+document.querySelectorAll(".inventory-table thead th").forEach((header) => {
+  header.addEventListener("click", () => {
+    let colIndex = header.getAttribute("data-col");
+
+    if (colIndex === null) return;
+
+    let tbody = document.getElementById("inventoryBody");
+    let rows = Array.from(tbody.querySelectorAll("tr"));
+
+    sortDirection[colIndex] = !sortDirection[colIndex];
+
+    rows.sort((a, b) => {
+      let A = a.children[colIndex].innerText.trim();
+      let B = b.children[colIndex].innerText.trim();
+
+      let numA = parseFloat(A);
+      let numB = parseFloat(B);
+
+      if (!isNaN(numA) && !isNaN(numB)) {
+        return sortDirection[colIndex] ? numA - numB : numB - numA;
+      }
+
+      return sortDirection[colIndex]
+        ? A.localeCompare(B)
+        : B.localeCompare(A);
     });
 
-    const sortStock = document.getElementById("sortStock")?.value;
-    const sortCost = document.getElementById("sortCost")?.value;
-    const sortSelling = document.getElementById("sortSelling")?.value;
-    const sortTotal = document.getElementById("sortTotal")?.value;
-    const sortStatus = document.getElementById("sortStatus")?.value;
-    const sortReorder = document.getElementById("sortReorder")?.value;
+    rows.forEach(row => tbody.appendChild(row));
 
-    /* STOCK SORT */
-    if (sortStock === "high") {
-      filteredInventory.sort((a, b) => b.stock - a.stock);
-    } 
-    else if (sortStock === "low") {
-      filteredInventory.sort((a, b) => a.stock - b.stock);
-    }
-
-    /* COST SORT */
-    if (sortCost === "high") {
-      filteredInventory.sort((a, b) => b.cost - a.cost);
-    } 
-    else if (sortCost === "low") {
-      filteredInventory.sort((a, b) => a.cost - b.cost);
-    }
-
-    if (sortSelling === "high") {
-      filteredInventory.sort((a, b) => b.selling - a.selling);
-    } 
-    else if (sortSelling === "low") {
-      filteredInventory.sort((a, b) => a.selling - b.selling);
-    }
-
-    if (sortTotal === "high") {
-      filteredInventory.sort((a, b) => (b.stock * b.cost) - (a.stock * a.cost));
-    } 
-    else if (sortTotal === "low") {
-      filteredInventory.sort((a, b) => (a.stock * a.cost) - (b.stock * b.cost));
-    }
-
-    if (sortStatus === "ok") {
-      filteredInventory.sort((a, b) => b.stock - a.stock); // highest stock first
-    } 
-    else if (sortStatus === "low") {
-      filteredInventory.sort((a, b) => a.stock - b.stock);
-    } 
-    else if (sortStatus === "out") {
-      filteredInventory.sort((a, b) => a.stock - b.stock);
-    }
-    if (sortReorder === "high") {
-      filteredInventory.sort((a, b) => b.reorder - a.reorder);
-    } 
-    else if (sortReorder === "low") {
-      filteredInventory.sort((a, b) => a.reorder - b.reorder);
-    }
-
-  filteredInventory.forEach(item => {
-    let totalValue = item.stock * item.cost;
-
-    let statusClass = "ok";
-    let statusText = "OK";
-
-    if (item.stock <= 0) {
-      statusClass = "out";
-      statusText = "OUT";
-    } else if (item.stock <= item.reorder) {
-      statusClass = "low";
-      statusText = "LOW";
-    }
-
-    table.innerHTML += `
-        <div class="table-row">
-
-        <div>${item.name}</div>
-        <div>${item.category}</div>
-        <div>${item.editing
-              ? `<input type="number" id="stock-${item.id}" value="${item.stock}" style="width:70px;">`
-              : item.stock
-          }
-        </div>
-        <div>₱${item.cost.toFixed(2)}</div>
-        <div>₱${item.selling.toFixed(2)}</div>
-        <div>₱${totalValue.toFixed(2)}</div>
-
-        <div><span class="badge ${statusClass}">${statusText}</span></div>
-
-        <div>${item.reorder}</div>
-
-        <div>
-          ${
-            item.editing
-              ? `
-                <button class="action-btn add" onclick="saveStock(${item.id})">Update</button>
-                <button class="action-btn minus" onclick="cancelEdit(${item.id})">Cancel</button>
-              `
-              : `
-                ${
-                  item.active === true
-                    ? `<button class="action-btn add" onclick="restoreItem(${item.id})">Restore</button>`
-                    : `<button class="action-btn add" onclick="editStock(${item.id})">Edit</button>
-                      <button class="action-btn delete" onclick="markInactive(${item.id})">Mark Inactive</button>`
-                }
-              `
-          }
-        </div>
-
-      </div>
-    `;
+    updateArrows(header, sortDirection[colIndex]);
   });
-
-  updateItemDropdown();
-}
-
-/* STOCK IN */
-function stockIn(id) {
-  let qty = parseFloat(prompt("Add stock quantity:"));
-
-  if (isNaN(qty)) return;
-
-  inventory = inventory.map(item => {
-    if (item.id === id) {
-      item.stock += qty;
-    }
-    return item;
-  });
-
-  renderTable();
-}
-function stockOut(id) {
-  let qty = parseFloat(prompt("Deduct stock quantity:"));
-
-  if (isNaN(qty)) return;
-
-  inventory = inventory.map(item => {
-    if (item.id === id) {
-      item.stock -= qty;
-      if (item.stock < 0) item.stock = 0;
-    }
-    return item;
-  });
-
-  renderTable();
-}
-
-function markInactive(id) {
-  inventory = inventory.map(item => {
-    if (item.id === id) {
-      item.active = false;
-    }
-    return item;
-  });
-
-  renderTable();
-}
-function restoreItem(id) {
-  inventory = inventory.map(item => {
-    if (item.id === id) {
-      item.active = true;
-    }
-    return item;
-  });
-
-  renderTable();
-}
-
-function clearForm() {
-  document.getElementById("name").value = "";
-
-  const categorySelect = document.getElementById("category");
-  categorySelect.selectedIndex = 0;
-
-  document.getElementById("stock").value = "";
-  document.getElementById("cost").value = "";
-  document.getElementById("selling").value = "";
-  document.getElementById("reorder").value = "";
-}
-window.addEventListener("DOMContentLoaded", () => {
-  renderTable();
 });
 
+document.querySelectorAll(".filterable").forEach((header) => {
+  let colIndex = header.getAttribute("data-col");
+  let dropdown = header.querySelector(".filter-dropdown");
+
+  let values = new Set();
+
+  document.querySelectorAll("#inventoryBody tr").forEach(row => {
+    values.add(row.children[colIndex].innerText.trim());
+  });
+
+  let allOption = document.createElement("div");
+  allOption.innerText = "All";
+  allOption.onclick = () => filterTable(colIndex, "All");
+  dropdown.appendChild(allOption);
+
+  values.forEach(val => {
+    let option = document.createElement("div");
+    option.innerText = val;
+    option.onclick = () => filterTable(colIndex, val);
+    dropdown.appendChild(option);
+  });
+
+  header.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    document.querySelectorAll(".filter-dropdown")
+      .forEach(d => d.style.display = "none");
+
+    dropdown.style.display =
+      dropdown.style.display === "block" ? "none" : "block";
+  });
+});
+
+function filterTable(colIndex, value) {
+  let rows = document.querySelectorAll("#inventoryBody tr");
+
+  rows.forEach(row => {
+    let cell = row.children[colIndex].innerText.trim();
+
+    row.style.display =
+      (value === "All" || cell === value) ? "" : "none";
+  });
+}
+
+window.addEventListener("click", () => {
+  document.querySelectorAll(".filter-dropdown")
+    .forEach(d => d.style.display = "none");
+});
+
+function updateArrows(activeHeader, isAsc) {
+  document.querySelectorAll(".inventory-table thead th i").forEach(icon => {
+    icon.classList.remove("fa-chevron-up");
+    icon.classList.add("fa-chevron-down");
+  });
+
+  let icon = activeHeader.querySelector("i");
+  if (icon) {
+    icon.classList.remove("fa-chevron-down");
+    icon.classList.add(isAsc ? "fa-chevron-up" : "fa-chevron-down");
+  }
+}
+
+
+function addItem() {
+
+  let category = prompt("Enter Category:");
+  let supplier = prompt("Enter Supplier:");
+  let unit = prompt("Enter Unit (kg, pcs, etc):");
+  let stock = prompt("Enter Stock:");
+  let reorder = prompt("Enter Reorder Level:");
+
+  if (!name || !stock || !reorder) return;
+
+  let tbody = document.getElementById("inventoryBody");
+
+  let row = `
+    <tr class="inventory-row">
+      <td class="item-name">${name}</td>
+      <td><span class="badge category">${category}</span></td>
+      <td class="supplier">${supplier}</td>
+      <td>${unit}</td>
+      <td class="stock">${stock}</td>
+      <td>${reorder}</td>
+      <td><span class="status ok">In Stock</span></td>
+      <td class="actions">
+        <button class="btn edit" onclick="editItem(this)">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+        <button class="btn restock" onclick="restockItem(this)">
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+      </td>
+    </tr>
+  `;
+
+  tbody.insertAdjacentHTML("beforeend", row);
+
+  updateStatus();
+}
 function openModal() {
-  document.getElementById("inventoryModal").style.display = "block";
+  document.getElementById("addModal").classList.add("show");
 }
 
 function closeModal() {
-  document.getElementById("inventoryModal").style.display = "none";
+  document.getElementById("addModal").classList.remove("show");
 }
 
-/* close kapag nag click sa labas */
-window.onclick = function (e) {
+function addItem() {
+  let name = document.getElementById("itemName").value;
+  let category = document.getElementById("category").value;
+  let supplier = document.getElementById("supplier").value;
+  let unit = document.getElementById("unit").value;
+  let stock = document.getElementById("stock").value;
+  let reorder = document.getElementById("reorder").value;
 
-  // ADMIN DROPDOWN CLOSE
-  if (!e.target.closest('.admin')) {
-    const dropdown = document.getElementById("adminDropdown");
-    if (dropdown) dropdown.style.display = "none";
+  if (!name || !stock || !reorder) {
+    alert("Please complete required fields!");
+    return;
   }
 
-  // MODAL CLOSE
-  const modal = document.getElementById("inventoryModal");
-  if (e.target === modal) {
-    modal.style.display = "none";
+  let tbody = document.getElementById("inventoryBody");
+
+  let status = stock <= reorder
+    ? `<span class="status low">Low Stock</span>`
+    : `<span class="status ok">In Stock</span>`;
+
+  let row = `
+    <tr class="inventory-row">
+      <td class="item-name">${name}</td>
+      <td><span class="badge category">${category}</span></td>
+      <td class="supplier">${supplier}</td>
+      <td>${unit}</td>
+      <td class="stock">${stock}</td>
+      <td>${reorder}</td>
+      <td>${status}</td>
+      <td class="actions">
+        <button class="btn edit" onclick="editItem(this)">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+        <button class="btn restock" onclick="restockItem(this)">
+          <i class="fa-solid fa-rotate"></i>
+        </button>
+      </td>
+    </tr>
+  `;
+
+  tbody.insertAdjacentHTML("beforeend", row);
+
+  closeModal();
+}
+
+function updateTotalValue(row) {
+  let stock = parseFloat(row.querySelector(".stock").innerText);
+  let costText = row.querySelector(".cost").innerText.replace("₱", "");
+  let cost = parseFloat(costText);
+
+  let total = stock * cost;
+
+  let totalCell = row.querySelector(".total-value");
+  if (totalCell) {
+    totalCell.innerText = "₱" + total.toFixed(2);
   }
-};
+}
 
-function updateItemDropdown() {
-  const itemSelect = document.getElementById("filterItem");
-  const selectedCategory =
-    document.getElementById("filterCategory")?.value || "";
-
-  if (!itemSelect) return;
-
-  itemSelect.innerHTML = `<option value="">All Items</option>`;
-
-  let filteredItems = inventory.filter(item => {
-    return !selectedCategory || item.category === selectedCategory;
-  });
-
-  filteredItems.forEach(item => {
-    itemSelect.innerHTML += `
-      <option value="${item.name}">
-        ${item.name}
-      </option>
-    `;
+function updateAllTotalValues() {
+  document.querySelectorAll("#inventoryBody tr").forEach(row => {
+    updateTotalValue(row);
   });
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  updateTodayDate();
-  renderTable();
-  updateItemDropdown();
-});
-
-function editStock(id) {
-  inventory = inventory.map(item => {
-    if (item.id === id) item.editing = true;
-    return item;
-  });
-  renderTable();
-}
-
-function saveStock(id) {
-  let input = document.getElementById(`stock-${id}`);
-  let newValue = parseFloat(input.value);
-
-  if (isNaN(newValue)) return;
-
-  inventory = inventory.map(item => {
-    if (item.id === id) {
-      item.stock = newValue;
-      item.editing = false;
-    }
-    return item;
-  });
-
-  renderTable();
-}
-
-function cancelEdit(id) {
-  inventory = inventory.map(item => {
-    if (item.id === id) item.editing = false;
-    return item;
-  });
-  renderTable();
-}
+updateAllTotalValues();
 </script>
