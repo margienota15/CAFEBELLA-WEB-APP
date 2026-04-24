@@ -11,10 +11,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Plus Jakarta Sans', 'Segoe UI', Roboto, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: all 0.2s ease-in-out;
 }
 body {
   font-family: Arial, sans-serif;
@@ -114,12 +112,6 @@ body {
   opacity: 0.95;
   transition: 0.2s;
 }
-.menu button img.icon {
-  width: 25px;
-  height: 25px;
-  object-fit: contain;
-  display: block; 
-}
 #menu-btn {
   font-size: 22px;
   background: #114500;
@@ -182,7 +174,7 @@ body {
 .calendar-header-left p{
   font-size: 13px;
   margin-top: 3px;
-  color: #6b7280;
+  color: #114500;
 }
 .calendar-header-right .date-box{
   background:#ecfdf5;
@@ -203,24 +195,6 @@ body {
   gap: 6px;
   margin-top: 12px;
 }
-.calendar-day{
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  line-height: 1;
-  padding: 0;
-}
-.calendar-day:hover{
-  background:#ecfdf5;
-  border:1px solid #22c55e;
-
-  color:#065f46;
-
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(34,197,94,0.15);
-}
 .calendar-today {
   background: linear-gradient(135deg, #16a34a, #22c55e);
   color: white;
@@ -240,12 +214,6 @@ body {
 
   transform: translateY(-2px);
   box-shadow: 0 6px 14px rgba(34,197,94,0.25);
-}
-
-/* ALSO FORCE NORMAL TEXT */
-.calendar-day,
-.mini-day{
-  color: #1f2937 !important;
 }
 /******************************** SEARCH BAR ********************************/
 .search-container {
@@ -419,6 +387,20 @@ body {
   align-items:center;
   gap:20px;
 }
+.calendar-nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  width: 100%;
+  padding: 10px 18px;
+
+  border-radius: 16px;
+  background: linear-gradient(135deg, #ffffff, #f8fafc);
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+}
+
 /******************************** MINI CALENDAR ********************************/
 .mini-header {
   display: flex;
@@ -479,31 +461,19 @@ body {
   letter-spacing: 0.5px;
   row-gap: 8px;
 }
-.mini-day {
-  height: 42px;        /* 🔥 smaller para magkasya 6 rows */
+.mini-day{
+  height: 58px;        /* 🔥 from ~42px → bigger cell */
   font-size: 13px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  padding: 0;
-  position: relative;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 6px;
-}
-.mini-day:hover {
-  transform: translateY(-4px) scale(1.04);
-
-  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-
-  border-color: #22c55e;
-
-  box-shadow:
-    0 12px 30px rgba(34,197,94,0.25),
-    inset 0 1px 0 rgba(255,255,255,0.6);
-
-  color: #064e3b;
+  padding: 8px;
+  position: relative;
+  overflow: hidden;     /* keep events inside */
+  border-radius: 12px;
+  border: 1px solid #0d4204;  /* 👈 light clean border */
+  background: #ffffff;
+  box-sizing: border-box;
 }
 .mini-today {
   background: linear-gradient(135deg, #16a34a, #22c55e) !important;
@@ -592,25 +562,20 @@ body {
   color:white;
   cursor:pointer;
 }
-
 .mini-calendar .nav-btn:hover{
   background:white;
   color:#16a34a;
   transform:scale(1.1);
 }
-
-/* WEEK HEADER */
 .mini-calendar .week-header{
   display:grid;
   grid-template-columns: repeat(7,1fr);
   padding:8px 0;
   margin-bottom:6px;
-
   background:#ecfdf5;
   border-radius:10px;
   border:1px solid #bbf7d0;
 }
-
 .mini-calendar .week-header div{
   text-align:center;
   font-size:11px;
@@ -618,10 +583,50 @@ body {
   color:#166534;
   letter-spacing:1px;
 }
-
-/* FIX MINI GRID SPACING */
 .mini-calendar .mini-grid{
   gap:6px;
+}
+
+.nav-btn{
+  width: 38px;
+  height: 38px;
+  flex-shrink:0;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+
+  background: white;
+  color: #16a34a;
+
+  font-size: 18px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.nav-btn:hover{
+  background: #16a34a;
+  color: white;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(22,163,74,0.25);
+}
+.nav-left{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex:1;
+}
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  justify-content:flex-end;
+  flex:1;
 }
 /******************************** CURRENT DAY LEFT SIDE (inside Hours Calendar ) ********************************/
 .left-today{
@@ -671,23 +676,8 @@ body {
   align-items:center;
   justify-content:center;
 }
-.week-grid{
-  display: contents;
-  height: fit-content;
-}
 
 /******************************** TIMELINE ( inside Hour Calendar ) ********************************/
-.hour-line{
-  height: var(--cell-height);
-  min-height: var(--cell-height);
-  border-bottom:1px solid #f1f5f9;
-}
-.time-col{
-  width:100px;
-  background:#fafafa;
-  border-right:1px solid #e5e7eb;
-  height: 100%;
-}
 .time-slot{
   height: var(--cell-height);
   display:flex;
@@ -732,7 +722,12 @@ body {
   box-shadow: 0 0 12px #22c55e;
   border-radius: 4px;
 }
-
+.current-date{
+  font-size:13px;
+  font-weight:600;
+  color:#ffffff;
+  white-space:nowrap;
+}
 /******************************** HEADER ********************************/
 .header{
   display:flex;
@@ -759,15 +754,18 @@ body {
 }
 
 /******************************** NOTES INSIDE HOUR / EVENTS ********************************/
-.day-events {
+.day-events{
   position: absolute;
-  top: 20px; /* push events pababa */
+  top: 26px;   /* moved down a bit */
   left: 4px;
   right: 4px;
+
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  z-index: 1;
+  gap: 4px;
+
+  max-height: calc(100% - 30px);
+  overflow: hidden;
 }
 .day-note{
   position:absolute;
@@ -816,7 +814,7 @@ body {
 .date-label{
   font-size: 12px;
   font-weight: 600;
-  color: #6b7280;
+  color: #ffffff;
   margin-bottom: 6px;
   letter-spacing: 0.5px;
 }
@@ -858,9 +856,9 @@ body {
   color:#374151;
 }
 .dot{
-  width:10px;
-  height:10px;
-  border-radius:3px;
+  width:9px;
+  height:9px;
+  border-radius:50%;
 }
 .yellow{ background:#facc15; }
 .green{ background:#22c55e; }
@@ -941,15 +939,14 @@ body {
 }
 
 /******************************** EVENT BLOCK ********************************/
-.event-chip {
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 999px;
-  color: white;
-  font-weight: 600;
-  white-space: nowrap;
+.event-chip{
+  max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+  padding: 3px 6px;
+  border-radius: 999px;
 }
 .event-block {
   position:absolute;
@@ -1043,74 +1040,58 @@ body {
   border-radius:8px;
   border:1px solid var(--border);
 }
-
-/******************************** POP UP ********************************/
-.popup{
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  background:white;
-  padding:20px;
-  border-radius:14px;
+.month-center{
   display:none;
-  width:280px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+  flex-direction:column;
+  align-items:center;
+  gap:2px;   /* 🔥 reduced spacing */
 }
-
-.popup button{
-  margin-top:10px;
-  margin-right:5px;
-  padding:8px 10px;
-  border-radius:8px;
+.month-filters{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin-top:2px;   /* 🔥 from 6px → 2px */
 }
-
-.popup .delete{
-    background:#ef4444;
-    color:white;
-}
-.popup .edit{
-    background:#3b82f6;
-    color:white;
-}
-.month-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.month-filters {
-  display: flex;
-  gap: 6px;
-}
-
-.month-filters select {
+.month-filters select{
   font-size: 11px;
-  padding: 4px 6px;
+  font-weight: 600;
 
+  padding: 4px 8px;
   border-radius: 8px;
-  border: 1px solid #e5e7eb;
 
-  background: white;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+
+  color: #374151;
 
   cursor: pointer;
 
-  transition: 0.2s ease;
+  transition: all 0.2s ease;
+  outline: none;
 }
-
-.month-filters select:hover {
+.month-filters select:hover{
   border-color: #22c55e;
-  box-shadow: 0 3px 10px rgba(34,197,94,0.15);
+  box-shadow: 0 6px 14px rgba(34,197,94,0.15);
+  transform: translateY(-1px);
 }
-
-.calendar-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.month-filters select:focus{
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
 }
-/* SCHEDULE MODAL DESIGN */
-
+#monthTitle{
+  font-family: 'Plus Jakarta Sans', 'Segoe UI', Roboto, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600; /* more professional than 800 */
+  letter-spacing: 0.5px;
+  color: #114500;
+  text-transform: none; /* remove ALL CAPS effect */
+  padding: 6px 14px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #ecfdf5, #dcfce7);
+  border: 1px solid #bbf7d0;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+  margin:0;
+}
 #dayEvents{
   display: flex;
   flex-direction: column;
@@ -1167,8 +1148,8 @@ body {
   color: #166534;
 }
 .schedule-status.pending{
-  background: #fef3c7;
-  color: #92400e;
+  background: #f59e0b;
+  color: #ffffff;
 }
 .schedule-status.declined{
   background: #fee2e2;
@@ -1183,6 +1164,22 @@ body {
   color: #9ca3af;
   font-size: 13px;
   padding: 20px;
+}
+
+.btn-green{
+  background:#16a34a;
+  color:white;
+  border:none;
+  padding:10px 14px;
+  border-radius:10px;
+  width:100%;
+  margin-top:10px;
+  cursor:pointer;
+  font-weight:600;
+  transition:0.2s;
+}
+.btn-green:hover{
+  background:#15803d;
 }
 .btn-cancel{
   background: #fee2e2;
@@ -1203,6 +1200,65 @@ body {
 .schedule-status.cancelled{
   background: #fee2e2;
   color: #b91c1c;
+}
+
+/******************************** EVENT TYPES COLORS ********************************/
+.yellow { background:#facc15; }
+.blue { background:#3b82f6; }
+.purple { background:#a855f7; }
+
+/******************************** STATUS COLORS ********************************/
+.status-accepted{
+  width:10px;
+  height:10px;
+  background:#22c55e; /* green */
+  border-radius:50%;
+  display:inline-block;
+}
+
+.status-pending{
+  width:10px;
+  height:10px;
+  background:#f59e0b; /* orange */
+  border-radius:50%;
+  display:inline-block;
+}
+
+.status-cancelled{
+  width:10px;
+  height:10px;
+  background:#ef4444; /* red */
+  border-radius:50%;
+  display:inline-block;
+}
+/******************************** CLEAN SPACING ********************************/
+.legend-panel{
+  display:flex;
+  flex-direction:column;
+  gap:6px;   /* was 10px → tighter */
+}
+.legend-panel h3{
+  margin:6px 0 2px;   /* reduce top/bottom spacing */
+  font-size:15px;
+  font-weight:700;
+  color:#111827;
+}
+.legend-item{
+  margin:0;          /* remove extra spacing */
+  padding:2px 0;     /* tighter vertical spacing */
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.legend-divider{
+  height:1px;
+  background:#e5e7eb;
+  margin:4px 0;   /* tighter */
+}
+.side-box{
+  margin-top:4px;   /* closer together */
+  padding:10px;     /* slightly reduced */
 }
 </style>
 </head>
@@ -1282,47 +1338,56 @@ body {
   <!-- ✨ NEW MODERN HEADER -->
 <div class="calendar-nav">
 
-  <button class="nav-btn" onclick="changeMonth(-1)">‹</button>
+  <!-- LEFT: Month navigation + current date -->
+  <div class="nav-left">
 
-<div class="month-center">
+    <button class="nav-btn" onclick="changeMonth(-1)">‹</button>
 
-  <h2 id="monthTitle"></h2>
+    <div class="current-date">
+      <span id="currentFullDate"></span>
+    </div>
 
-<div class="month-filters">
+    <button class="nav-btn" onclick="changeMonth(1)">›</button>
 
-  <select id="monthFilter" onchange="updateFromDropdowns()">
-    <option value="">All Months</option>
-    <option value="0">Jan</option>
-    <option value="1">Feb</option>
-    <option value="2">Mar</option>
-    <option value="3">Apr</option>
-    <option value="4">May</option>
-    <option value="5">Jun</option>
-    <option value="6">Jul</option>
-    <option value="7">Aug</option>
-    <option value="8">Sep</option>
-    <option value="9">Oct</option>
-    <option value="10">Nov</option>
-    <option value="11">Dec</option>
-  </select>
+  </div>
 
-  <select id="dayFilter" onchange="updateFromDropdowns()">
-    <option value="">Day</option>
-    <script>
-      for(let i=1;i<=31;i++){
-        document.write(`<option value="${i}">${i}</option>`);
-      }
-    </script>
-  </select>
+  <!-- RIGHT: Title + Filters -->
+  <div class="nav-right">
 
-    <select id="yearFilter" onchange="updateFromDropdowns()">
-      <option value="">Year</option>
-    </select>
+    <div class="month-filters">
 
-</div>
-</div>
+      <select id="monthFilter" onchange="updateFromDropdowns()">
+        <option value="">Month</option>
+        <option value="0">Jan</option>
+        <option value="1">Feb</option>
+        <option value="2">Mar</option>
+        <option value="3">Apr</option>
+        <option value="4">May</option>
+        <option value="5">Jun</option>
+        <option value="6">Jul</option>
+        <option value="7">Aug</option>
+        <option value="8">Sep</option>
+        <option value="9">Oct</option>
+        <option value="10">Nov</option>
+        <option value="11">Dec</option>
+      </select>
 
-  <button class="nav-btn" onclick="changeMonth(1)">›</button>
+      <select id="dayFilter" onchange="updateFromDropdowns()">
+        <option value="">Day</option>
+        <script>
+          for(let i=1;i<=31;i++){
+            document.write(`<option value="${i}">${i}</option>`);
+          }
+        </script>
+      </select>
+
+      <select id="yearFilter" onchange="updateFromDropdowns()">
+        <option value="">Year</option>
+      </select>
+
+    </div>
+
+  </div>
 
 </div>
   <!-- ✨ WEEK DESIGN -->
@@ -1343,7 +1408,9 @@ body {
 
 <!--------------------------------------- LEGEND / Event Package --------------------------------------------->
 <div class="legend-panel">
-  <h3>Event Packages</h3>
+
+  <!-- EVENT TYPES -->
+  <h3>Event Types</h3>
 
   <div class="legend-item">
     <span class="dot yellow"></span>
@@ -1351,16 +1418,38 @@ body {
   </div>
 
   <div class="legend-item">
-    <span class="dot green"></span>
+    <span class="dot blue"></span>
     Matcha Booth
   </div>
 
   <div class="legend-item">
-    <span class="dot blue"></span>
+    <span class="dot purple"></span>
     Tattoo Event
   </div>
 
-  <!-- TODAY BOX -->
+  <div class="legend-divider"></div>
+
+  <!-- STATUS -->
+  <h3>Status</h3>
+
+  <div class="legend-item">
+    <span class="dot status-accepted"></span>
+    Accepted
+  </div>
+
+  <div class="legend-item">
+    <span class="dot status-pending"></span>
+    Pending
+  </div>
+
+  <div class="legend-item">
+    <span class="dot status-cancelled"></span>
+    Cancelled
+  </div>
+
+  <div class="legend-divider"></div>
+
+  <!-- TODAY -->
   <div class="side-box today-box">
     <div class="box-header">
       <h4>Today</h4>
@@ -1369,7 +1458,7 @@ body {
     <div id="todayList" class="box-list"></div>
   </div>
 
-  <!-- PENDING BOX -->
+  <!-- PENDING -->
   <div class="side-box pending-box">
     <div class="box-header">
       <h4>Pending</h4>
@@ -1377,6 +1466,7 @@ body {
     </div>
     <div id="pendingList" class="box-list"></div>
   </div>
+
 </div>
 
 <!--------------------------------------- MODAL --------------------------------------------->
@@ -1416,6 +1506,26 @@ body {
 
 <script>
 
+let editMode = false;
+let editTarget = null;
+let deleteTarget = null;
+let date = new Date();
+let selected = null;
+let searchText = "";
+let filterStatus = "All";
+let filterYearValue = "";
+let filterMonthValue = "";
+let viewMode = "month";
+let viewDate = new Date();
+
+let events = JSON.parse(localStorage.getItem("events")) || [];
+
+// 👇 ILAGAY DITO
+let eventColors = {
+  "Coffee Booth": "#facc15",
+  "Matcha Booth": "#22c55e",
+  "Tattoo Event": "#3b82f6"
+};
 /******************************** MENU BUTTON ********************************/
     const sidebarButtons = document.querySelectorAll('.sidebar .menu button');
 
@@ -1481,23 +1591,6 @@ menuBtn.onclick = function() {
   main.classList.toggle("full");
 };
 
-let date = new Date();
-let selected = null;
-let searchText = "";
-let filterStatus = "All";
-let filterYearValue = "";
-let filterMonthValue = "";
-let viewMode = "month";
-let viewDate = new Date();
-
-let events = JSON.parse(localStorage.getItem("events")) || [];
-
-// 👇 ILAGAY DITO
-let eventColors = {
-  "Coffee Booth": "#facc15",
-  "Matcha Booth": "#22c55e",
-  "Tattoo Event": "#3b82f6"
-};
 /******************************** render() ********************************/
 function render(){
 
@@ -1539,15 +1632,12 @@ function add(){
 
   let title = document.getElementById("title").value;
   let status = document.getElementById("status").value;
-  let notes = document.getElementById("notes").value;
 
-  // ❌ BLOCK 10:00 AM RANGE
   if(newTime.startsWith("10:")){
     alert("10:00 AM is not allowed");
     return;
   }
 
-  // ❌ EMPTY INPUT CHECK (recommended)
   if(!title || !newTime){
     alert("Please complete all fields");
     return;
@@ -1686,9 +1776,6 @@ function renderMini(){
   // ✅ FINAL SOURCE OF TRUTH
   let y = viewDate.getFullYear();
   let m = viewDate.getMonth();
-
-  document.getElementById("monthTitle").innerText =
-    new Date(y, m).toLocaleString('default',{month:'long',year:'numeric'});
 
   let firstDay = new Date(y, m, 1).getDay();
   let daysInMonth = new Date(y, m + 1, 0).getDate();
@@ -1864,6 +1951,7 @@ window.addEventListener("DOMContentLoaded", () => {
   updatecalendarDate();
   setInterval(updatecalendarDate, 60000);
 });
+
 function changeMonth(v){
 
   let y = viewDate.getFullYear();
@@ -1980,6 +2068,23 @@ function generateRandomEventsForCurrentMonth(count = 10){
   save();
   render();
 }
+
+function updateCurrentFullDate(){
+  const el = document.getElementById("currentFullDate");
+  if(!el) return;
+
+  const now = new Date();
+
+  el.textContent = now.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  });
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  updateCurrentFullDate();
+});
 </script>
 
 </body>
