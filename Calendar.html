@@ -832,28 +832,33 @@ body {
 }
 
 /******************************** LEGEND / Coffee Booth Matcha Booth Tattoo Event ********************************/
-.legend-panel{
-  background:white;
-  border-radius:16px;
-  padding:16px;
-  border:1px solid #eef2f7;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-  height: fit-content;
-  width: 220px;
+.legend-row{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  align-items:center;
+  padding:4px 0;
 }
-.legend-panel h3{
-  font-size:15px;
-  margin-bottom:12px;
-  color:#111827;
+.legend-header{
   font-weight:700;
+  font-size:13px;
+  color:#111827;
+  margin-bottom:4px;
 }
 .legend-item{
   display:flex;
   align-items:center;
-  gap:10px;
-  margin-bottom:10px;
+  gap:8px;
   font-size:13px;
-  color:#374151;
+}
+.legend-panel{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.legend-divider{
+  height:1px;
+  background:#e5e7eb;
+  margin:8px 0;
 }
 .dot{
   width:9px;
@@ -1151,6 +1156,7 @@ body {
   background: #f59e0b;
   color: #ffffff;
 }
+
 .schedule-status.declined{
   background: #fee2e2;
   color: #991b1b;
@@ -1409,42 +1415,49 @@ body {
 <!--------------------------------------- LEGEND / Event Package --------------------------------------------->
 <div class="legend-panel">
 
-  <!-- EVENT TYPES -->
-  <h3>Event Types</h3>
-
-  <div class="legend-item">
-    <span class="dot yellow"></span>
-    Coffee Booth
+  <!-- HEADER -->
+  <div class="legend-row legend-header">
+    <div>Event Types</div>
+    <div>Status</div>
   </div>
 
-  <div class="legend-item">
-    <span class="dot blue"></span>
-    Matcha Booth
+  <!-- ROW 1 -->
+  <div class="legend-row">
+    <div class="legend-item">
+      <span class="dot yellow"></span>
+      Coffee Booth
+    </div>
+
+    <div class="legend-item">
+      <span class="status-accepted"></span>
+      Accepted
+    </div>
   </div>
 
-  <div class="legend-item">
-    <span class="dot purple"></span>
-    Tattoo Event
+  <!-- ROW 2 -->
+  <div class="legend-row">
+    <div class="legend-item">
+      <span class="dot blue"></span>
+      Matcha Booth
+    </div>
+
+    <div class="legend-item">
+      <span class="status-pending"></span>
+      Pending
+    </div>
   </div>
 
-  <div class="legend-divider"></div>
+  <!-- ROW 3 -->
+  <div class="legend-row">
+    <div class="legend-item">
+      <span class="dot purple"></span>
+      Tattoo Event
+    </div>
 
-  <!-- STATUS -->
-  <h3>Status</h3>
-
-  <div class="legend-item">
-    <span class="dot status-accepted"></span>
-    Accepted
-  </div>
-
-  <div class="legend-item">
-    <span class="dot status-pending"></span>
-    Pending
-  </div>
-
-  <div class="legend-item">
-    <span class="dot status-cancelled"></span>
-    Cancelled
+    <div class="legend-item">
+      <span class="status-cancelled"></span>
+      Cancelled
+    </div>
   </div>
 
   <div class="legend-divider"></div>
