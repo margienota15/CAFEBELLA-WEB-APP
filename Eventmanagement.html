@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -20,6 +21,15 @@ body {
   margin: 0;
   padding: 0;
   background: #f4f6f9;
+}
+:root {
+  --primary: #2e7d32;
+  --primary-dark: #1b5e20;
+  --bg: #f5f7fa;
+  --card-bg: #ffffff;
+  --text: #2b2b2b;
+  --subtext: #777;
+  --border: #e5e7eb;
 }
 
 /******************************** SIDEBAR (PRO UI) ********************************/
@@ -116,6 +126,8 @@ body {
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
+  padding: 0;
+  background: #f4f6f9;
 }
 .main.full {
   margin-left: 0;
@@ -253,13 +265,8 @@ body {
   border: 1px solid #e5e7eb;
   border-radius: 14px;
   padding: 20px 24px; 
-  margin: 15px 25px;
+  margin: 20px 25px; 
   box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-}
-.event-grid{
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
 }
 .event-header .header-left h1 {
   font-size: 20px;
@@ -273,7 +280,7 @@ body {
   color: #6b7280;
   line-height: 1.4;
 }
-.event-header .date-box {
+.booking-header .date-box {
   background: #f4f6f9;
   padding: 10px 14px; 
   border-radius: 10px;
@@ -284,103 +291,6 @@ body {
   white-space: nowrap;
   font-weight: 500;
   color: #333;
-}
-.event-details{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
-}
-.event-layout{
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 15px;
-  padding: 0 25px;
-  flex: 1;
-  min-height: 0;
-}
-.event-card{
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 18px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  min-height: 0;
-  overflow: hidden;
-}
-.event-card:hover{
-  transform: translateY(-3px);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.08);
-}
-.event-card .title{
-  font-size: 18px;
-  font-weight: 700;
-  color: #114500;
-  margin-bottom: 14px;
-}
-.event-title{
-  font-size: 22px;
-  font-weight: 800;
-  color:#114500;
-  display:flex;
-  flex-direction:column;
-  gap:4px;
-}
-.event-title span{
-  font-size: 12px;
-  font-weight: 600;
-  color:#6b7280;
-}
-.event-badge{
-  margin-top: 10px;
-  display:inline-block;
-  background:#e8f5e9;
-  color:#2e7d32;
-  padding:6px 12px;
-  border-radius: 999px;
-  font-size:12px;
-  font-weight:600;
-}
-.event-location{
-  margin-top:10px;
-  font-size:13px;
-  color:#4b5563;
-  font-weight:500;
-}
-.event-grid-modern{
-  margin-top:18px;
-  display:grid;
-  gap:12px;
-  max-height: 360px;
-  overflow-y: auto;
-  padding-right: 5px;
-}
-.event-card::-webkit-scrollbar{
-  width: 6px;
-}
-.event-card::-webkit-scrollbar-thumb{
-  background: #ccc;
-  border-radius: 10px;
-}
-.event-detail-card{
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  font-family: 'Inter', sans-serif;
-}
-#eventDetails{
-  overflow-y: auto;
-  flex: 1;
-  padding-right: 8px;
-}
-.all-events-title{
-  font-size: 16px;
-  font-weight: 700;
-  color: #111827;
-  margin-bottom: 16px;
-  letter-spacing: 0.2px;
 }
 
 /******************************** CONTENT ********************************/
@@ -397,8 +307,54 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  padding: 0; 
 }
 
+/******************************** EVENT LAYOUT FIX ********************************/
+.event-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr; /* LEFT fixed, RIGHT flexible */
+  gap: 20px;
+  padding: 0 25px;
+  align-items: stretch;
+}
+
+/* LEFT SIDE CARD */
+.event-card.modern-event-card {
+  height: fit-content;
+}
+
+/* RIGHT SIDE CARD */
+.event-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+}
+.event-title {
+  margin-bottom: 15px;
+}
+
+.event-title h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #114500;
+}
+
+.event-title span {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.event-grid-modern {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 /******************************** STATS (MODERN CARDS) ********************************/
 .stats{
   display:grid;
@@ -1057,6 +1013,7 @@ body {
       <button data-page="Calendar.html"><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
       <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">Point of Sale</button>
       <button data-page="Transactionhistory.html"><img src="IMAGES/transactionhistoryicon.png" class="icon">Transaction History</button>
+      <button data-page="Reports.html"><img src="IMAGES/reporticon.png" class="icon">Reports</button>
       <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Booking Request</button>
       <button data-page="Eventmanagement.html"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
       <button data-page="Inventory.html"><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
