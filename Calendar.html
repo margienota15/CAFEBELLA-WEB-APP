@@ -11,6 +11,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', 'Segoe UI', Roboto, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -19,25 +20,20 @@ body {
   margin: 0;
   padding: 0;
   background: #f4f6f9;
-  overflow:hidden;
 }
-
-:root{
-  --primary:#16a34a;
-  --primary2:#22c55e;
-  --bg:#f3f6fb;
-  --card:#ffffff;
-  --text:#111827;
-  --muted:#6b7280;
-  --border:#e5e7eb;
-  --shadow:0 10px 25px rgba(0,0,0,0.08);
-  --cell-height: 70px;   /* 👈 from 52px → 70px (bigger rows) */
-  --visible-hours: 14;
+:root {
+  --primary: #16a34a;
+  --primary-dark: #15803d;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #1e293b;
+  --subtext: #64748b;
+  --border: #e2e8f0;
+  --radius: 12px;
 }
-
 /******************************** SIDEBAR (PRO UI) ********************************/
 .sidebar {
-  width: 260px;
+  width: 270px;
   height: 100vh;
   background: 
     linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
@@ -105,12 +101,11 @@ body {
   transform: translateX(6px);
 }
 .menu button img.icon {
-  width: 24px;
-  height: 24px;
+  width: 25px;
+  height: 25px;
   object-fit: contain;
-  filter: brightness(0) invert(1); 
-  opacity: 0.95;
-  transition: 0.2s;
+  display: block;
+  filter: brightness(0) invert(1);
 }
 #menu-btn {
   font-size: 22px;
@@ -125,15 +120,17 @@ body {
 
 /*********************************** MAIN ********************************/
 .main {
+  height: 100vh;
   margin-left: 270px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
-  padding: 0;
+  overflow: hidden; 
 }
 .main.full {
   margin-left: 0;
+  gap: 20px;
+  flex: 1.2;
+  min-width: 0;
 }
 
 /******************************** TOP BAR ********************************/
@@ -141,80 +138,17 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 15px 25px;
   background: #ffffff;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
   border-bottom: 1px solid #eee;
-  padding: 15px 0;
-  width: 100%;
 }
 .left-section {
   display: flex;
   align-items: center;
   gap: 15px;
-  padding-left: 20px;   
 }
 
-/******************************** CALENDAR ********************************/
-.calendar-header-card{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 16px 20px; 
-  margin: 16px 10px 14px; 
-  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-}
-.calendar-header-left h1{
-  font-size: 20px;
-  margin: 0;
-  color: #114500;
-}
-.calendar-header-left p{
-  font-size: 13px;
-  margin-top: 3px;
-  color: #114500;
-}
-.calendar-header-right .date-box{
-  background:#ecfdf5;
-  padding:10px 14px;
-  border-radius:12px;
-  font-size:13px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  white-space:nowrap;
-  border: 1px solid #bbf7d0;
-  font-weight: 500;
-  color: #166534;
-}
-.calendar-dates {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
-  margin-top: 12px;
-}
-.calendar-today {
-  background: linear-gradient(135deg, #16a34a, #22c55e);
-  color: white;
-  font-weight: 800;
-  box-shadow: 0 10px 20px rgba(22,163,74,0.25);
-}
-.calendar-selected {
-  outline: 2px solid #0e8018;
-  outline-offset: 2px;
-}
-/* FORCE FIX HOVER TEXT VISIBILITY */
-.calendar-day:hover,
-.mini-day:hover{
-  background: #bbf7d0 !important;
-  color: #064e3b !important;   /* 👈 force dark text */
-  border-color: #22c55e !important;
-
-  transform: translateY(-2px);
-  box-shadow: 0 6px 14px rgba(34,197,94,0.25);
-}
 /******************************** SEARCH BAR ********************************/
 .search-container {
   display: flex;
@@ -225,6 +159,7 @@ body {
   border-radius: 25px;
   width: 350px;
 }
+
 .search-container span {
   margin-right: 10px;
   font-size: 16px;
@@ -248,7 +183,6 @@ body {
   border-radius: 50px;
   box-shadow: 0 3px 10px rgba(0,0,0,0.1);
   transition: 0.3s;
-  margin-right: 20px;   
 }
 .admin:hover {
   background: #f1f1f1;
@@ -321,34 +255,58 @@ body {
   color: white;
 }
 
-/******************************** NAVBAR ********************************/
-.title-container {
+/******************************** TRANSACTION ********************************/
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 20px 24px; 
+  margin: 20px 25px;  
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+.calendar-header .header-left h1 {
+  font-size: 20px;
+  margin: 0;
+  color: #114500;
+  line-height: 1.2;
+}
+.calendar-header .header-left p {
+  font-size: 13px;
+  margin-top: 6px;
+  color: #6b7280;
+  line-height: 1.4;
+}
+.calendar-header .date-box {
+  background: #f4f6f9;
+  padding: 10px 14px; 
+  border-radius: 10px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-weight: 500;
+  color: #333;
+}
+.container {
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-left: 3px;
-  margin-left: 0;
-  padding-top: 9px;
+  overflow: visible; /* ✅ FIX */
 }
-.title-container h1 {
-  font-size: 28px;
-  margin-bottom: 10px;
-  color: #114500;
-}
-.title-container p {
-  font-size: 16px;  
-  color: #555;
-}
-
 /******************************** CONTENT ********************************/
 .content {
   display: flex;
   flex: 1;
   gap: 20px;
-  overflow: auto;
+  overflow: hidden;
   min-height: 0; 
 }
-.content-wrapper{
+.content-wrapper {
   flex: 1;
   min-height: 0;
   display: flex;
@@ -1290,7 +1248,7 @@ body {
       <button data-page="Feedback.html"><img src="IMAGES/feedbackicon.png" class="icon">Customer Feedback</button>
       <button data-page="Settings.html"><img src="IMAGES/settingsicon.png" class="icon">Settings</button>
     </div>
-    </div>      
+    </div> 
 
 <!--------------------------------------- MAIN ---------------------------------------------> 
     <div class="main">
@@ -1321,16 +1279,16 @@ body {
 <div class="content-wrapper">
 
 <!--------------------------------------- TITLE ---------------------------------------------> 
-<div class="calendar-header-card">
-  <div class="calendar-header-left">
+<div class="calendar-header">
+  <div class="header-left">
     <h1>Calendar</h1>
     <p>Manage schedules, bookings, and daily events in real time</p>
   </div>
 
-  <div class="calendar-header-right">
+  <div class="header-right">
     <div class="date-box">
       <i class="fa-solid fa-calendar"></i>
-      <span id="calendarDate"></span>
+      <span id="todayDate">Today: </span>
     </div>
   </div>
 </div>
