@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Transaction History</title>
+<title>Reports</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
@@ -20,7 +20,6 @@ body {
   margin: 0;
   padding: 0;
   background: #f4f6f9;
-  overflow: hidden;
 }
 :root {
   --primary: #16a34a;
@@ -121,11 +120,11 @@ body {
 
 /*********************************** MAIN ********************************/
 .main {
+  height: 100vh;
   margin-left: 270px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  overflow: hidden; 
 }
 .main.full {
   margin-left: 0;
@@ -264,8 +263,8 @@ body {
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 14px;
-  padding: 12px 18px;
-  margin: 15px 20px; 
+  padding: 20px 24px; 
+  margin: 20px 25px;  
   box-shadow: 0 4px 12px rgba(0,0,0,0.06);
 }
 .report-header .header-left h1 {
@@ -295,7 +294,9 @@ body {
 .container {
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: visible; /* ✅ FIX */
 }
 /******************************** CONTENT ********************************/
 .content {
@@ -310,8 +311,12 @@ body {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  overflow: visible;
+  overflow: hidden;
 }
+
+
+
+
 .report-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -1035,7 +1040,6 @@ body {
 <div class="report-cards">
 
   <div class="report-card active sales" onclick="showTable('sales', this)">
-    <div class="card-icon">📊</div>
     <div class="card-text">
       <h3>Total Sales Table</h3>
       <p>View all sales records</p>
@@ -1043,7 +1047,6 @@ body {
   </div>
 
   <div class="report-card transactions" onclick="showTable('transactions', this)">
-    <div class="card-icon">🧾</div>
     <div class="card-text">
       <h3>Total Transactions Table</h3>
       <p>All order history</p>
@@ -1051,7 +1054,6 @@ body {
   </div>
 
   <div class="report-card profit" onclick="showTable('profit', this)">
-    <div class="card-icon">💰</div>
     <div class="card-text">
       <h3>Total Profit Table</h3>
       <p>Revenue vs cost</p>
@@ -1059,7 +1061,6 @@ body {
   </div>
 
   <div class="report-card best" onclick="showTable('best', this)">
-    <div class="card-icon">🥇</div>
     <div class="card-text">
       <h3>Best Selling Table</h3>
       <p>Top performing products</p>
@@ -1084,14 +1085,14 @@ body {
         <tr>
           <td>2026-04-20</td>
           <td>ORD001</td>
-          <td>☕ Cappuccino</td>
+          <td>Cappuccino</td>
           <td>2</td>
           <td>₱260</td>
         </tr>
         <tr>
           <td>2026-04-20</td>
           <td>ORD002</td>
-          <td>🧋 Iced Latte</td>
+          <td>Iced Latte</td>
           <td>1</td>
           <td>₱150</td>
         </tr>
@@ -1175,14 +1176,14 @@ body {
       </thead>
       <tbody>
         <tr>
-          <td>☕ Cappuccino</td>
+          <td>Cappuccino</td>
           <td>Hot Coffee</td>
           <td>50</td>
           <td>₱6,500</td>
           <td>35%</td>
         </tr>
         <tr>
-          <td>🧋 Iced Latte</td>
+          <td>Iced Latte</td>
           <td>Cold Coffee</td>
           <td>40</td>
           <td>₱6,000</td>
