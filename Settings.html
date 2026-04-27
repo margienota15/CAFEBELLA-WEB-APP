@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Booking Request</title>
+<title>Settings</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
@@ -960,6 +960,8 @@ body {
   color: #2e7d32;
   font-size: 16px;
 }
+
+
 </style>
 </head>
 <body>
@@ -977,6 +979,7 @@ body {
       <button data-page="Calendar.html"><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
       <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">Point of Sale</button>
       <button data-page="Transactionhistory.html"><img src="IMAGES/transactionhistoryicon.png" class="icon">Transaction History</button>
+      <button data-page="Reports.html"><img src="IMAGES/reporticon.png" class="icon">Reports</button>
       <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Booking Request</button>
       <button data-page="Eventmanagement.html"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
       <button data-page="Inventory.html"><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
@@ -1381,69 +1384,60 @@ body {
 
 <div id="system" class="tab">
 
-  <div class="settings-card">
-    <h3>System Preferences</h3>
-    <p>Configure system-wide behavior and display settings</p>
+<div class="settings-card">
 
-    <div class="system-grid">
+  <h2>System Preferences</h2>
+  <p>Configure system-wide behavior and display settings</p>
 
-      <!-- CURRENCY / SYSTEM -->
-      <div class="system-box">
-        <h4>General</h4>
+  <div class="setting-group">
+    <h4>General</h4>
 
-        <div class="input-group">
-          <label>Currency</label>
-          <select>
-            <option>PHP (₱)</option>
-            <option>USD ($)</option>
-          </select>
-        </div>
+    <label>Currency</label>
+    <select>
+      <option>PHP (₱)</option>
+    </select>
 
-        <div class="input-group">
-          <label>Time Format</label>
-          <select>
-            <option>24 Hour</option>
-            <option>12 Hour</option>
-          </select>
-        </div>
+    <label>Time Format</label>
+    <select>
+      <option>24 Hour</option>
+      <option>12 Hour</option>
+    </select>
+  </div>
 
+  <div class="setting-group">
+    <h4>Display Settings</h4>
+
+    <!-- DARK MODE -->
+    <div class="toggle-row">
+      <div>
+        <strong>Dark Mode</strong>
+        <p>Switch system theme appearance</p>
       </div>
-
-      <!-- DISPLAY -->
-      <div class="system-box">
-        <h4>Display Settings</h4>
-
-        <div class="toggle-row">
-          <div>
-            <strong>Dark Mode</strong>
-            <p>Switch system theme appearance</p>
-          </div>
-
-          <label class="switch">
-            <input type="checkbox" onclick="toggleTheme()">
-            <span></span>
-          </label>
-        </div>
-
-        <div class="toggle-row">
-          <div>
-            <strong>Compact Mode</strong>
-            <p>Reduce spacing for more data view</p>
-          </div>
-
-          <label class="switch">
-            <input type="checkbox">
-            <span></span>
-          </label>
-        </div>
-
-      </div>
-
+      <label class="switch">
+        <input type="checkbox" id="darkToggle">
+        <span class="slider"></span>
+      </label>
     </div>
 
-    <button class="save-btn">Apply Settings</button>
+    <!-- COMPACT MODE -->
+    <div class="toggle-row">
+      <div>
+        <strong>Compact Mode</strong>
+        <p>Reduce spacing for more data view</p>
+      </div>
+      <label class="switch">
+        <input type="checkbox" id="compactToggle">
+        <span class="slider"></span>
+      </label>
+    </div>
 
   </div>
+
+  <button onclick="applySettings()" class="apply-btn">
+    Apply Settings
+  </button>
+
+</div>
 
 </div>
 
