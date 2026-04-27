@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Sale</title>
+<title>POS</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
@@ -14,7 +14,6 @@
   font-family: 'Plus Jakarta Sans', 'Segoe UI', Roboto, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: all 0.2s ease-in-out;
 }
 body {
   font-family: Arial, sans-serif;
@@ -22,7 +21,16 @@ body {
   padding: 0;
   background: #f4f6f9;
 }
-
+:root {
+  --primary: #16a34a;
+  --primary-dark: #15803d;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #1e293b;
+  --subtext: #64748b;
+  --border: #e2e8f0;
+  --radius: 12px;
+}
 /******************************** SIDEBAR (PRO UI) ********************************/
 .sidebar {
   width: 270px;
@@ -40,13 +48,10 @@ body {
   position: fixed;
   left: 0;
   top: 0;
-
   box-shadow: 8px 0 25px rgba(0,0,0,0.15);
   z-index: 100;
-
   transition: all 0.3s ease;
 }
-
 .sidebar.hide {
   transform: translateX(-100%);
 }
@@ -96,18 +101,11 @@ body {
   transform: translateX(6px);
 }
 .menu button img.icon {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
-  filter: brightness(0) invert(1); /* 🔥 makes icons WHITE */
-  opacity: 0.95;
-  transition: 0.2s;
-}
-.menu button img.icon {
   width: 25px;
   height: 25px;
   object-fit: contain;
-  display: block; 
+  display: block;
+  filter: brightness(0) invert(1);
 }
 #menu-btn {
   font-size: 22px;
@@ -122,12 +120,11 @@ body {
 
 /*********************************** MAIN ********************************/
 .main {
-  flex: 1;
+  height: 100vh;
   margin-left: 270px;
   display: flex;
   flex-direction: column;
-  height: 100vh;   /* 🔥 CRITICAL */
-  overflow: hidden;
+  overflow: hidden; 
 }
 .main.full {
   margin-left: 0;
@@ -141,7 +138,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #e9e9e9;
   padding: 15px 25px;
   background: #ffffff;
   box-shadow: 0 4px 10px rgba(0,0,0,0.08);
@@ -259,60 +255,48 @@ body {
   color: white;
 }
 
-/******************************** NAVBAR ********************************/
-.title-container {
+/******************************** TRANSACTION ********************************/
+.POS-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 20px 24px; 
+  margin: 20px 25px;  
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+.POS-header .header-left h1 {
+  font-size: 20px;
+  margin: 0;
+  color: #114500;
+  line-height: 1.2;
+}
+.POS-header .header-left p {
+  font-size: 13px;
+  margin-top: 6px;
+  color: #6b7280;
+  line-height: 1.4;
+}
+.POS-header .date-box {
+  background: #f4f6f9;
+  padding: 10px 14px; 
+  border-radius: 10px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-weight: 500;
+  color: #333;
+}
+.container {
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding-left: 3px;
-  margin-left: 0;
-  padding-top: 9px;
-}
-
-.title-container h1 {
-  font-size: 28px;
-  margin-bottom: 10px;
-  color: #114500;
-}
-
-.title-container p {
-  font-size: 16px;  
-  color: #555;
-}
-.pos-header-card{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  background:#ffffff;
-  border:1px solid #e5e7eb;
-  border-radius:14px;
-  padding:15px 20px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.06);
-}
-
-.pos-header-left h1{
-  font-size:20px;
-  margin:0;
-  color:#114500;
-}
-
-.pos-header-left p{
-  font-size:13px;
-  margin-top:3px;
-  color:#6b7280;
-}
-
-.pos-header-right .date-box{
-  background:#f4f6f9;
-  padding:8px 12px;
-  border-radius:10px;
-  font-size:13px;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  white-space:nowrap;
-  font-weight:500;
-  color:#333;
+  overflow: visible; /* ✅ FIX */
 }
 /******************************** CONTENT ********************************/
 .content {
@@ -320,18 +304,14 @@ body {
   flex: 1;
   gap: 20px;
   overflow: hidden;
-  min-height: 0;
+  min-height: 0; 
 }
 .content-wrapper {
   flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  padding: 20px 30px;
-
-  height: 100%;
   overflow: hidden;
-
-  min-height: 0; /* 🔥 IMPORTANT */
 }
 /******************************** CATEGORIES ********************************/
 .categories {
@@ -910,6 +890,7 @@ button.action:hover {
       <button data-page="Calendar.html"><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
       <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">Point of Sale</button>
       <button data-page="Transactionhistory.html"><img src="IMAGES/transactionhistoryicon.png" class="icon">Transaction History</button>
+      <button data-page="Reports.html"><img src="IMAGES/reporticon.png" class="icon">Reports</button>
       <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Booking Request</button>
       <button data-page="Eventmanagement.html"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
       <button data-page="Inventory.html"><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
@@ -945,20 +926,22 @@ button.action:hover {
   </div>
 
 <div class="content-wrapper">
+
 <!--------------------------------------- TITLE ---------------------------------------------> 
-<div class="pos-header-card">
-  <div class="pos-header-left">
+<div class="POS-header">
+  <div class="header-left">
     <h1>Point of Sale</h1>
     <p>Handle your daily transactions and payment</p>
   </div>
 
-  <div class="pos-header-right">
+  <div class="header-right">
     <div class="date-box">
-      <i class="fa-solid fa-cash-register"></i>
-      <span id="posDate"></span>
+      <i class="fa-solid fa-calendar"></i>
+      <span id="todayDate">Today: </span>
     </div>
   </div>
 </div>
+
 
 <div class="content">
 
