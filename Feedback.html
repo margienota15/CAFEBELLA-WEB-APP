@@ -310,50 +310,6 @@ body {
   padding: 0; 
 }
 
-.feedback-form {
-  background: #fff;
-  margin: 0 25px 20px 25px;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-}
-
-.feedback-form input,
-.feedback-form select,
-.feedback-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 6px 0;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font-size: 14px;
-}
-
-.feedback-form .row {
-  display: flex;
-  gap: 10px;
-}
-
-.feedback-form textarea {
-  height: 80px;
-  resize: none;
-}
-
-.feedback-form button {
-  width: 100%;
-  padding: 10px;
-  background: #114500;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  margin-top: 10px;
-  cursor: pointer;
-}
-
-.feedback-form button:hover {
-  background: #0d3400;
-}
-
 /* TABLE */
 .table-container {
   margin: 0 25px 30px 25px;
@@ -410,7 +366,7 @@ td {
   background: #0d3400;
 }
 #feedbackTableContainer {
-  display: none; /* default hidden */
+  display: block;
 }
 
 .view-btn {
@@ -555,6 +511,7 @@ td {
       <button data-page="Calendar.html"><img src="IMAGES/calendaricon.png" class="icon">Calendar</button>
       <button data-page="POS.html"><img src="IMAGES/POSicon.png" class="icon">Point of Sale</button>
       <button data-page="Transactionhistory.html"><img src="IMAGES/transactionhistoryicon.png" class="icon">Transaction History</button>
+      <button data-page="Reports.html"><img src="IMAGES/reporticon.png" class="icon">Reports</button>
       <button data-page="Bookingrequest.html"><img src="IMAGES/Bookingicon.png" class="icon">Booking Request</button>
       <button data-page="Eventmanagement.html"><img src="IMAGES/eventmanagementicon.png" class="icon">Event Management</button>
       <button data-page="Inventory.html"><img src="IMAGES/inventoryicon.png" class="icon">Inventory</button>
@@ -604,46 +561,6 @@ td {
       <span id="todayDate">Today: </span>
     </div>
   </div>
-</div>
-
-<div class="view-toggle">
-  <button onclick="toggleView()" id="toggleBtn">
-    View Feedback Records
-  </button>
-</div>
-
-<div class="feedback-form" id="feedbackForm">
-
-  <input type="text" id="name" placeholder="Customer Name (optional)">
-  <input type="text" id="transaction" placeholder="Order / Transaction ID">
-  <input type="text" id="branch" placeholder="Branch / Location">
-
-  <div class="row">
-    <select id="rating">
-      <option value="5">★★★★★ Rating</option>
-      <option value="4">★★★★☆</option>
-      <option value="3">★★★☆☆</option>
-      <option value="2">★★☆☆☆</option>
-      <option value="1">★☆☆☆☆</option>
-    </select>
-
-    <select id="service">
-      <option>Excellent Service</option>
-      <option>Good Service</option>
-      <option>Average</option>
-      <option>Poor</option>
-    </select>
-
-    <select id="category">
-      <option>Positive</option>
-      <option>Neutral</option>
-      <option>Negative</option>
-    </select>
-  </div>
-
-  <textarea id="comment" placeholder="Write customer feedback..."></textarea>
-
-  <button onclick="submitFeedback()">Submit Feedback</button>
 </div>
 
 <!-- TABLE -->
@@ -808,31 +725,6 @@ let feedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [
   }
 ];
 
-function submitFeedback() {
-
-  const data = {
-    name: document.getElementById("name").value || "Guest",
-    transaction: document.getElementById("transaction").value,
-    branch: document.getElementById("branch").value,
-    rating: document.getElementById("rating").value,
-    service: document.getElementById("service").value,
-    category: document.getElementById("category").value,
-    comment: document.getElementById("comment").value,
-    date: new Date().toLocaleString(),
-    status: "Pending"
-  };
-
-  if (!data.transaction || !data.comment) {
-    alert("Please complete required fields!");
-    return;
-  }
-
-  feedbacks.push(data);
-  localStorage.setItem("feedbacks", JSON.stringify(feedbacks));
-
-  renderFeedback();
-}
-
 function renderFeedback() {
   const table = document.getElementById("feedbackTable");
   table.innerHTML = "";
@@ -887,25 +779,6 @@ function toggleTableView() {
   }
 }
 
-let showTable = false;
-
-function toggleView() {
-  const form = document.getElementById("feedbackForm");
-  const table = document.getElementById("feedbackTableContainer");
-  const btn = document.getElementById("toggleBtn");
-
-  showTable = !showTable;
-
-  if (showTable) {
-    form.style.display = "none";
-    table.style.display = "block";
-    btn.innerText = "Back to Feedback Form";
-  } else {
-    form.style.display = "block";
-    table.style.display = "none";
-    btn.innerText = "View Feedback Records";
-  }
-}
 function viewDetails(index) {
   const fb = feedbacks[index];
 
