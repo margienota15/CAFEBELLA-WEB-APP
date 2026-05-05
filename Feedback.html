@@ -369,21 +369,51 @@ td {
   display: block;
 }
 
-.view-btn {
-  background: #114500;
-  color: white;
-  border: none;
+.action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   padding: 6px 12px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 12px;
+  font-weight: 600;
+  border: none;
   cursor: pointer;
-  transition: 0.2s;
+  transition: all 0.25s ease;
 }
 
-.view-btn:hover {
-  background: #0d3400;
-  transform: scale(1.05);
+/* ICON */
+.action-btn i {
+  font-size: 12px;
 }
+
+/* STATUS COLORS */
+.action-btn.Pending {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.action-btn.Reviewed {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.action-btn.Resolved {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+/* HOVER EFFECT */
+.action-btn:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+
+/* OPTIONAL: subtle border for cleaner look */
+.action-btn.Pending { border: 1px solid #fed7aa; }
+.action-btn.Reviewed { border: 1px solid #bfdbfe; }
+.action-btn.Resolved { border: 1px solid #bbf7d0; }
+
 .modal {
   display: none;
   position: fixed;
@@ -394,20 +424,20 @@ td {
   z-index: 999;
   backdrop-filter: blur(6px);
 }
-
-/* CARD STYLE MODAL */
 .modal-box {
   width: 520px;
   max-width: 92%;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+  border-radius: 18px;
   overflow: hidden;
-  animation: pop 0.2s ease;
-  font-family: 'Inter', sans-serif;
+  background: linear-gradient(145deg, #ffffff, #f3f4f6);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.25);
+  animation: pop 0.25s ease;
 }
 
-/* HEADER */
+.modal-body {
+  padding: 22px 24px;
+  background: linear-gradient(to bottom, #ffffff, #f9fafb);
+}
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -416,34 +446,17 @@ td {
   background: linear-gradient(135deg, #114500, #1b5e20);
   color: white;
 }
-
 .modal-header h2 {
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.3px;
 }
-
-.close {
-  cursor: pointer;
-  font-size: 22px;
-  opacity: 0.8;
-  transition: 0.2s;
-}
-
-.close:hover {
-  opacity: 1;
-  transform: scale(1.1);
-}
-
-/* BODY */
 .modal-grid {
   padding: 20px 22px;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
-
-/* ROW STYLE */
 .modal-grid .row {
   display: flex;
   justify-content: space-between;
@@ -453,13 +466,10 @@ td {
   border: 1px solid #eef0f3;
   border-radius: 10px;
 }
-
-/* FULL ROW (COMMENT) */
 .modal-grid .row.full {
   flex-direction: column;
   align-items: flex-start;
 }
-
 .modal-grid label {
   font-size: 12px;
   font-weight: 600;
@@ -467,14 +477,12 @@ td {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
-
 .modal-grid span {
   font-size: 14px;
   color: #111827;
   font-weight: 500;
   text-align: right;
 }
-
 .modal-grid .row.full span {
   margin-top: 6px;
   text-align: left;
@@ -482,7 +490,6 @@ td {
   line-height: 1.5;
 }
 
-/* BADGES (STATUS IMPROVEMENT) */
 .status-badge {
   padding: 4px 10px;
   border-radius: 999px;
@@ -490,10 +497,235 @@ td {
   font-weight: 600;
   display: inline-block;
 }
-
 .status-Pending { background: #fff7ed; color: #c2410c; }
 .status-Reviewed { background: #eff6ff; color: #1d4ed8; }
 .status-Resolved { background: #ecfdf5; color: #047857; }
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.info-card {
+  background: linear-gradient(145deg, #ffffff, #f1f5f9);
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 14px 16px;
+  transition: 0.25s;
+}
+.info-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+}
+.info-card.full {
+  grid-column: span 2;
+}
+.info-card label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.info-card p {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+}
+
+.close {
+  cursor: pointer;
+  font-size: 22px;
+  opacity: 0.8;
+  transition: 0.2s;
+}
+.close:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* STARS */
+.stars {
+  color: #f59e0b;
+  font-size: 16px;
+}
+
+/* CATEGORY BADGE STYLE */
+.category {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  width: fit-content;
+}
+
+.category:contains("Positive") {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.status-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+#d_status {
+  width: 100%;
+  padding: 10px 36px 10px 14px;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  font-size: 13px;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background: #f9fafb;
+}
+
+/* Custom dropdown arrow */
+.status-wrapper::after {
+  content: "▾";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: #6b7280;
+  pointer-events: none;
+}
+
+/* STATUS COLORS */
+#d_status.Pending {
+  background: #fff7ed;
+  color: #c2410c;
+  border-color: #fed7aa;
+}
+
+#d_status.Reviewed {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+
+#d_status.Resolved {
+  background: #ecfdf5;
+  color: #047857;
+  border-color: #bbf7d0;
+}
+
+/* HOVER */
+#d_status:hover {
+  transform: scale(1.05);
+}
+
+.view-btn.Pending {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.view-btn.Reviewed {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.view-btn.Resolved {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.status-legend-bar {
+  margin: 0 25px 10px 25px;
+  padding: 10px 14px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* TITLE */
+.legend-bar {
+  margin: 0 25px 12px 25px;
+  padding: 14px 16px;
+  background: linear-gradient(145deg, #ffffff, #f9fafb);
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 🔥 HEADER (THIS FIXES YOUR “Legends:” LOOK) */
+.legend-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 13px;
+  color: #111827;
+  letter-spacing: 0.3px;
+}
+
+.legend-header i {
+  color: #2e7d32;
+  font-size: 14px;
+}
+
+/* ITEMS */
+.legend-items {
+  display: flex;
+  gap: 10px;
+}
+
+/* PILL STYLE */
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* DOT */
+.legend .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* COLORS */
+.legend.pending {
+  background: #fff7ed;
+  color: #c2410c;
+}
+.legend.pending .dot {
+  background: #f97316;
+}
+
+.legend.reviewed {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+.legend.reviewed .dot {
+  background: #3b82f6;
+}
+
+.legend.resolved {
+  background: #ecfdf5;
+  color: #047857;
+}
+.legend.resolved .dot {
+  background: #10b981;
+}
 </style>
 </head>
 <body>
@@ -563,6 +795,29 @@ td {
   </div>
 </div>
 
+<div class="legend-bar">
+  <div class="legend-header">
+    <i class="fa-solid fa-layer-group"></i>
+    <span>Legend</span>
+  </div>
+
+  <div class="legend-items">
+    <div class="legend pending">
+      <span class="dot"></span>
+      Pending
+    </div>
+
+    <div class="legend reviewed">
+      <span class="dot"></span>
+      Reviewed
+    </div>
+
+    <div class="legend resolved">
+      <span class="dot"></span>
+      Resolved
+    </div>
+  </div>
+</div>
 <!-- TABLE -->
 <div class="table-container" id="feedbackTableContainer">
   <table>
@@ -576,7 +831,6 @@ td {
         <th>Category</th>
         <th>Comment</th>
         <th>Date</th>
-        <th>Status</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -585,24 +839,68 @@ td {
 </div>
 
 <div id="modal" class="modal">
-<div class="modal-box">
+  <div class="modal-box">
     <div class="modal-header">
       <h2>Feedback Details</h2>
       <span class="close" onclick="closeModal()">×</span>
     </div>
 
-  <div class="modal-grid">
-    <div class="row"><label>Name</label><span id="d_name"></span></div>
-    <div class="row"><label>Transaction</label><span id="d_transaction"></span></div>
-    <div class="row"><label>Branch</label><span id="d_branch"></span></div>
-    <div class="row"><label>Rating</label><span id="d_rating"></span></div>
-    <div class="row"><label>Service</label><span id="d_service"></span></div>
-    <div class="row"><label>Category</label><span id="d_category"></span></div>
-    <div class="row full"><label>Comment</label><span id="d_comment"></span></div>
-    <div class="row"><label>Date</label><span id="d_date"></span></div>
-    <div class="row"><label>Status</label><span id="d_status"></span></div>
-  </div>
-</div>
+    <div class="modal-body">
+
+      <div class="info-grid">
+
+        <div class="info-card">
+          <label>Name</label>
+          <p id="d_name"></p>
+        </div>
+
+        <div class="info-card">
+          <label>Transaction</label>
+          <p id="d_transaction"></p>
+        </div>
+
+        <div class="info-card">
+          <label>Branch</label>
+          <p id="d_branch"></p>
+        </div>
+
+        <div class="info-card">
+          <label>Rating</label>
+          <p id="d_rating" class="stars"></p>
+        </div>
+
+        <div class="info-card">
+          <label>Service</label>
+          <p id="d_service"></p>
+        </div>
+
+        <div class="info-card">
+          <label>Category</label>
+          <p id="d_category" class="category"></p>
+        </div>
+
+        <div class="info-card full">
+          <label>Comment</label>
+          <p id="d_comment"></p>
+        </div>
+
+        <div class="info-card">
+          <label>Date</label>
+          <p id="d_date"></p>
+        </div>
+
+        <div class="info-card">
+          <label>Status</label>
+          <div class="status-wrapper">
+            <select id="d_status" onchange="updateStatus(); applyStatusStyle();">
+              <option value="Pending">Pending</option>
+              <option value="Reviewed">Reviewed</option>
+              <option value="Resolved">Resolved</option>
+            </select>
+          </div>
+        </div>
+
+    </div>
 </body>
 </html>
 <script>
@@ -689,6 +987,8 @@ function updateTodayDate() {
 
 updateTodayDate();
 
+let currentIndex = null;
+
 let feedbacks = JSON.parse(localStorage.getItem("feedbacks")) || [
   {
     name: "Juan Dela Cruz",
@@ -744,12 +1044,12 @@ function renderFeedback() {
             : fb.comment}
         </td>
         <td>${fb.date}</td>
-        <td>
-          <span class="status ${fb.status}">${fb.status}</span>
-        </td>
 
         <td>
-          <button class="view-btn" onclick="viewDetails(${index})">View</button>
+          <button class="action-btn ${fb.status}" onclick="viewDetails(${index})">
+            <i class="fa-solid fa-eye"></i>
+            View
+          </button>
         </td>
       </tr>
     `;
@@ -768,6 +1068,18 @@ function toggleStatus(index) {
 }
 
 renderFeedback();
+
+function updateStatus() {
+  if (currentIndex === null) return;
+
+  const newStatus = document.getElementById("d_status").value;
+
+  feedbacks[currentIndex].status = newStatus;
+
+  localStorage.setItem("feedbacks", JSON.stringify(feedbacks));
+
+  renderFeedback();
+}
 
 function toggleTableView() {
   const table = document.querySelector(".table-container");
@@ -791,8 +1103,8 @@ function viewDetails(index) {
   document.getElementById("d_category").innerText = fb.category;
   document.getElementById("d_comment").innerText = fb.comment;
   document.getElementById("d_date").innerText = fb.date;
-  document.getElementById("d_status").innerHTML =
-    `<span class="status-badge status-${fb.status}">${fb.status}</span>`;
+  document.getElementById("d_status").value = fb.status;
+  currentIndex = index;
 
   const modal = document.getElementById("modal");
 
@@ -801,6 +1113,42 @@ function viewDetails(index) {
   // 🔥 FIX: prevent page content bleed
   document.body.style.overflow = "hidden";
 }
+
+function applyStatusStyle() {
+  const status = document.getElementById("d_status");
+  const value = status.value;
+
+  status.classList.remove("Pending", "Reviewed", "Resolved");
+  status.classList.add(value);
+}
+
+// call when modal opens
+function viewDetails(index) {
+  const fb = feedbacks[index];
+
+  document.getElementById("d_name").innerText = fb.name;
+  document.getElementById("d_transaction").innerText = fb.transaction;
+  document.getElementById("d_branch").innerText = fb.branch;
+  document.getElementById("d_rating").innerHTML =
+    `<span style="color:#f59e0b;">${"★".repeat(fb.rating)}</span>`;
+  document.getElementById("d_service").innerText = fb.service;
+  document.getElementById("d_category").innerText = fb.category;
+  document.getElementById("d_comment").innerText = fb.comment;
+  document.getElementById("d_date").innerText = fb.date;
+  document.getElementById("d_status").value = fb.status;
+  applyStatusStyle(); // ✅ ADD THIS LINE
+
+  currentIndex = index;
+
+  applyStatusStyle(); // 🔥 ADD THIS
+
+  document.getElementById("modal").style.display = "flex";
+  document.body.style.overflow = "hidden";
+}
+
+// also update when changed
+document.getElementById("d_status").addEventListener("change", applyStatusStyle);
+
 
 function closeModal() {
   document.getElementById("modal").style.display = "none";
